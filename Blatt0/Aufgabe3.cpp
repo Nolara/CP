@@ -25,7 +25,7 @@ int main(){
 
   cout << "Start Aufgabe 3" << endl;
   double y_0 = 1.0; // Festlegung des Startwerts
-  double delta_t = 0.1 ; // Festlegung der Schrittweite
+  double delta_t = 0.1  ; // Festlegung der Schrittweite
   int n = 10/delta_t; // Anzahl der Schritte
   cout << "Anzahl der Schritte beträgt " << n << endl;
   double y_normal[n]; //Werte des normalen Eulerverfahrens
@@ -33,8 +33,8 @@ int main(){
   double y_symm[n]; //Werte des symmetrischen Eulerverfahrens
   euler_symm(n, y_0, delta_t, y_symm); // Aufruf des symmetrischen Eulerverfahrens
 
-  ofstream myfile;
-  myfile.open("./Data/three.txt");
+
+  ofstream myfile ("Data/three.txt", std::ofstream::out);
   myfile << "# t=n*delta_t euler_normal euler_symmetrisch analytisch" << endl;
   for(int i=0; i<=n; i++){
     myfile << i*delta_t << " ";
