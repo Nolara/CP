@@ -25,7 +25,7 @@ int main(){
 
   cout << "Start Aufgabe 3" << endl;
   double y_0 = 1.0; // Festlegung des Startwerts
-  double delta_t = 0.1; // Festlegung der Schrittweite
+  double delta_t = 0.1 ; // Festlegung der Schrittweite
   int n = 10/delta_t; // Anzahl der Schritte
   cout << "Anzahl der Schritte beträgt " << n << endl;
   double y_normal[n]; //Werte des normalen Eulerverfahrens

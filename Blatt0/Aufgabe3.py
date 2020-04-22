@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from uncertainties import ufloat
 from scipy.stats import sem
 
-dt, en, es, an = np.genfromtxt('Data/three.txt', unpack=True)
+dt, en, es, an = np.genfromtxt('Data/three.txt', unpack=True) #import data
 
 
 plt.plot (dt, en, 'k-', label='Normales Eulerverfahren')
@@ -16,11 +16,11 @@ plt.xlabel(r't')
 #plt.ylabel(r'')
 plt.legend(loc="best")
 plt.tight_layout()
-plt.savefig('3.pdf')
-plt.show()
+plt.savefig('Plots/3.pdf')
+#plt.show()
 
 
-en_rel=abs(an-en)/an*100
+en_rel=abs(an-en)/an*100 #calculate the relative error
 es_rel=abs(an-es)/an*100
 plt.plot (dt, en_rel, 'k-', label='Relativer Fehler des normalen Eulerverfahren')
 plt.plot (dt, es_rel, 'r-', label='Relativer Fehler des symmetrischen Eulerverfahren')
@@ -29,5 +29,5 @@ plt.xlabel(r't')
 plt.ylabel(r'Abweichung in %')
 plt.legend(loc="best")
 plt.tight_layout()
-plt.savefig('3rel.pdf')
-plt.show()
+plt.savefig('Plots/3rel.pdf')
+#plt.show()
