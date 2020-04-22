@@ -11,4 +11,5 @@ plot3: Aufgabe3.py
 
 clean:
 	rm -f Aufgabe3
-	rm -f Data/three.txt
+	rm -f Data/*
+	rm -f Plots/*
