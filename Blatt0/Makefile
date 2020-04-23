@@ -1,5 +1,5 @@
 CFLAGS = -Wall -Wextra
-all:	three plot3
+all:	three plot3 two plot2
 
 three:	Aufgabe3.cpp
 		g++ $(CFLAGS) -O3 -ffast-math -march=native Aufgabe3.cpp -o Aufgabe3
@@ -16,6 +16,8 @@ plot2: two
 	python Aufgabe2.py
 
 clean:
+	rm -f Aufgabe1
+	rm -f Aufgabe2
 	rm -f Aufgabe3
 	rm -f Data/*
 	rm -f Plots/*
