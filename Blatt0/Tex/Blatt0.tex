@@ -15,11 +15,20 @@
 
 \section*{Aufgabe 0: Verständnisfragen}
 
+\textbf{Frage 1): Was bedeutet numerische} Stabilität \textbf{und wieso tritt sie auf?}\\
+Numerische Stabilität bedeutet, dass ein Verfahren stabil ist gegenüber kleinen Störungen der Daten. Die Ursache hierfür können beispielsweise Rundungsfehler seien. Ist ein Verfahren numerisch stabil, so wirken sich solche unvermeidbaren
+Schwankungen durch das Verfahren nicht übersteigern. \\
+\textbf{Frage 2): Wieso kann eine höhere} Genauigkeit \textbf{(beispielsweise durch feinere Diskretisierung) zu numerischer Instabilität führen?}\\
+Bei feinerer Diskretisierung muss der Algorithmus häufiger angewendet werden, wobei der Fehler bei jedem Schritt verstärkt wird. Da nun mehr Schritte nötig sind, kann der Fehler auch stärker ansteigen und das Verfahren somit instabil werden.
 
 
 \section*{Aufgabe 1: Distributivgesetz in der Floating Point-Arithmetik}
-
-
+\textbf{Zu zeigen: Das Distributivgesetz }$(a\,\oplus\,b)\,\odot\,c\,=\,a\,\odot\,c\,\oplus\,b\,\odot\,c$\textbf{ ist in der Floating Point Arithmetik nicht mehr gültig, anhand eines Beispiels mit }$t\,=\,2$\textbf{ und }$l\,=\,1$.\\
+Wähle: $a=1.0\cdot10^0$, $b=4.0\cdot10^{-2}$ und $c=3.0\cdot10^{0}$ \\
+Dann gilt: $a\,\oplus\,b\,=1.04\cdot10^0\overset{\text{rd}}{\to}1.0\cdot10^0$, da die Mantissenlänge von 1.04 zu lang ist.
+Damit ist $(a\,\oplus\,b)\,\odot\,c\,=1.0\cdot10^0\odot3.0\cdot10^0=3.0\cdot10^0$.\\
+Auf der rechten Seite ergibt sich:\\$a\,\odot\,c\,\oplus\,b\,\odot\,c=3.0\cdot10^0\oplus1.2\cdot
+10^{-1}=3.12\cdot10^{-2}\overset{\text{rd}}{\to}3.1\cdot10^{-2}\neq(a\,\oplus\,b)\,\odot\,c$
 
 \section*{Aufgabe 2: Rundungsfehler}
 
@@ -29,7 +38,7 @@
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=8cm]{../plots/3.pdf}
+  \includegraphics[height=8cm]{../plots/3_a.pdf}
   \caption{Vergleich des normalen Eulerverfahrens und des symmetrischen Eulerverfahrens mit der analytischen Lösung.}
   \label{fig:Eulervergleich}
 \end{figure}
