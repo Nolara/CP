@@ -77,8 +77,8 @@ int main(){
   float xb_0 = 0.00001; // Festlegung des Startwerts Aufgabenteil a
   float xb_f = 0.002 ; // Festlegung der Endwertes Aufgabenteil a
 
-  float xc_0 = 0.01; // Festlegung des Startwerts Aufgabenteil a
-  float xc_f = 1.0 ; // Festlegung der Endwertes Aufgabenteil a
+  float xc_0 = 0.0; // Festlegung des Startwerts Aufgabenteil a
+  float xc_f = 4.0 ; // Festlegung der Endwertes Aufgabenteil a
 
   float delta= 0.000001;
 
