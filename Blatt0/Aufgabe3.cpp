@@ -34,15 +34,15 @@ int main(){
   euler_symm(n, y_0, delta_t, y_symm); // Aufruf des symmetrischen Eulerverfahrens
 
 
-  ofstream myfile ("Data/three.txt", std::ofstream::out);
-  myfile << "# t=n*delta_t euler_normal euler_symmetrisch analytisch" << endl;
+  ofstream file ("Data/three.txt", std::ofstream::out);
+  file << "# t=n*delta_t euler_normal euler_symmetrisch analytisch" << endl;
   for(int i=0; i<=n; i++){
-    myfile << i*delta_t << " ";
-    myfile << y_normal[i] << " ";
-    myfile << y_symm[i] << " ";
-    myfile << exp(-i*delta_t) << endl; // Analytische Lösung
+    file << i*delta_t << " ";
+    file << y_normal[i] << " ";
+    file << y_symm[i] << " ";
+    file << exp(-i*delta_t) << endl; // Analytische Lösung
   }
-  myfile.close();
+  file.close();
 
   cout << "Aufgabe 3 ist abgeschlossen" << endl;
   return 0;
