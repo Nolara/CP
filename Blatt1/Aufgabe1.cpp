@@ -98,17 +98,97 @@ int main()
    Matrix3f U2;
    U2=LU2.triangularView<Upper>();
 
+   ofstream afile ("Data/one.txt", std::ofstream::out); // Erstelle txt Datei für Aufgabenteil a
+   afile << "# Aufgabenteil b:" << "\n" <<  "\n";
+   afile << "# Lösungsvektor:" << "\n";
+   int n_b;
+   n_b=x.size();
+   for(int i=0; i<n_b; i++){
+       afile << x[i] << "\n";
+   }
+   afile << "\n" << "# Matrix P:" << "\n";
 
-   cout << "Here is the vector x:\n" << x << endl;
-   cout << "Here is the matrix P:\n" << P << endl;
-   cout << "Here is the matrix LU:\n" << LU << endl;
-   cout << "Here is the matrix L:\n" << L << endl;
-   cout << "Here is the matrix U:\n" << U << endl;
-   cout << "Here is the matrix pb:\n" << pb << endl;
-   cout << "Here is the matrix xzw:\n" << x_zwischen << endl;
-   cout << "Here is the matrix x2:\n" << x2 << endl;
-   cout << "Here is the matrix P2:\n" << P2 << endl;
-   cout << "Here is the matrix LU2:\n" << LU2<< endl;
-   cout << "Here is the matrix L2:\n" << L2 << endl;
-   cout << "Here is the matrix U2:\n" << U2 << endl;
+   int r=P.rows();;
+   int c=P.cols();
+
+   for (int i = 0; i < r; ++i)
+   {
+       for (int j = 0; j < c; ++j)
+       {
+           afile << P(i,j) << " ";
+       }
+       afile << "\n";
+   }
+
+    afile << "\n" << "# Matrix L:" << "\n";
+
+    for (int i = 0; i < r; ++i)
+    {
+        for (int j = 0; j < c; ++j)
+        {
+            afile << L(i,j) << " ";
+        }
+        afile << "\n";
+    }
+
+    afile << "\n" << "# Matrix U:" << "\n";
+
+    for (int i = 0; i < r; ++i)
+    {
+        for (int j = 0; j < c; ++j)
+        {
+            afile << U(i,j) << " ";
+        }
+        afile << "\n";
+    }
+
+    afile << "\n" << "# Aufgabenteil c:" << "\n" << "\n";
+    afile << "# Lösungsvektor:" << "\n";
+
+    for(int i=0; i<n_b; i++){
+        afile << x2[i] << "\n";
+    }
+
+    afile << "\n" <<  "# Aufgabenteil d:" << "\n" << "\n";
+    afile << "# Lösungsvektor:" << "\n";
+
+    for(int i=0; i<n_b; i++){
+        afile << xd[i] << "\n";
+    }
+    afile << "\n" << "# Matrix P:" << "\n";
+
+    for (int i = 0; i < r; ++i)
+    {
+        for (int j = 0; j < c; ++j)
+        {
+            afile << P2(i,j) << " ";
+        }
+        afile << "\n";
+    }
+
+     afile << "\n" << "# Matrix L2:" << "\n";
+
+     for (int i = 0; i < r; ++i)
+     {
+         for (int j = 0; j < c; ++j)
+         {
+             afile << L(i,j) << " ";
+         }
+         afile << "\n";
+     }
+
+     afile << "\n" << "# Matrix U2:" << "\n";
+
+     for (int i = 0; i < r; ++i)
+     {
+         for (int j = 0; j < c; ++j)
+         {
+             afile << U(i,j) << " ";
+         }
+         afile << "\n";
+     }
+
+
+   afile.close();
+
 }

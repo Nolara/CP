@@ -48,12 +48,4 @@ int main()
    afile.close();
    bfile.close();
 
-   cout << "Here is the matrix x:\n" << x << endl;
-   cout << "Here is the matrix a:\n" << a << endl;
-   cout << "Here is the matrix A:\n" << A << endl;
-   cout << "Here is the matrix y:\n" << y << endl;
-   cout << "Here is the matrix AT:\n" << AT << endl;
-   cout << "Here is the matrix ATA:\n" << ATA << endl;
-   cout << "Here is the matrix ATx:\n" << ATy << endl;
-   cout << "Here is the matrix x0:\n" << x0 << endl;
 }
