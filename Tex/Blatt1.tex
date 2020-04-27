@@ -39,57 +39,53 @@ Das Problem lässt sich als lineares Gleichungssystem darstellen, indem die drei
 der Matrix
 \begin{equation}
   \symbf{A}=(\vec{a_1},\vec{a_2},\vec{a_3})=
-  \[\begin{pmatrix}
+  \begin{pmatrix}
     \frac{1}{2} & -\frac{1}{2} & 0 \\
     \frac{\sqrt{3}}{2} & \frac{\sqrt{3}}{2} & 0 \\
     0 & 0 & 1 \\
-  \end{pmatrix}\] \\
+  \end{pmatrix} \\
 \end{equation}
 zusammengefasst werden, sodass sich das Problem durch die Gleichung
 \begin{equation}
-  \symbf{A}\vec{x}´=\vec{x}
+  \symbf{A}\pvec{x}'=\vec{x}
 \end{equation}
 beschreiben lässt. Durch die Verwendung der LU Zerlegung Eigen::PartialPivLu aus der Bibliothek Eigen lässt sich das Gleichungssystem lösen, wobei sich der Lösungsvektor
 \begin{equation*}
-  \vec{x}´=
-  \[\begin{pmatrix}
+  \pvec{x}'=
+  \begin{pmatrix}
     2 \\
     -2 \\
     2 \\
-  \end{pmatrix}\] \\
+  \end{pmatrix} \\
 \end{equation*}
 ergibt. Desweiteren ergeben sich die Matrizen
 \begin{equation*}
   \symbf{P}=
-  \[\begin{pmatrix}
+  \begin{pmatrix}
     0 & 1 & 0 \\
     1 & 0 & 0 \\
     0 & 0 & 1 \\
-  \end{pmatrix}\] \: ,
-\end{equation*}
-\begin{equation*}
+  \end{pmatrix} \: ,
   \symbf{L}=
-  \[\begin{pmatrix}
+  \begin{pmatrix}
     1 & 0 & 0 \\
     0.57735 & 1 & 0 \\
     0 & -0 & 1 \\
-  \end{pmatrix}\]
-\end{equation*}
-und
-\begin{equation*}
+  \end{pmatrix}
+  \text{und}
   \symbf{U}=
-  \[\begin{pmatrix}
+  \begin{pmatrix}
     0.866025 & 0.866025 & 0 \\
     0 & -1 & 0 \\
     0 & 0 & 1 \\
-  \end{pmatrix}\] \: .
+  \end{pmatrix} \: .
 \end{equation*}
 
 \subsection*{Aufgabenteil c)}
-Zur erneuten Bestimmung der Koordinaten der Störstelle $\vec{y}´$ lassen sich die bereits
+Zur erneuten Bestimmung der Koordinaten der Störstelle $\pvec{y}'$ lassen sich die bereits
 in Aufgabenteil b) berechneten Matrizen $\symbf{P}$, $\symbf{L}$ und $\symbf{U}$ wiederverwenden, für deren Berechnung ein Aufwand von $\symcal{O}(n^3)$ nötig ist für eine Matrix der Größe $n$x$n$.
 
-section*{Aufgabe 2: Ausgleichsrechnung}
+\section*{Aufgabe 2: Ausgleichsrechnung}
 \subsection*{Aufgabenteil a)}
 Das Problem lässt sich in Form eines überbestimmten Gleichungssystems des Form
 \begin{equation}
@@ -99,7 +95,7 @@ beschreiben, wobei die Matrix $\symbf{A}$ aus dem Zeilenvektor der Datenpunkte x
 Hilfsvektor mit je einer 1 als Eintrag besteht, $\vec{x}$ aus dem Wert der Steigung m und dem y-Achsenabschnitt
 n besteht und $\vec{b}$ der Zeilenvektor der Datenpunkte y ist, also
 \begin{equation}
-  \[\begin{pmatrix}
+  \begin{pmatrix}
     0 & 1 \\
     2.5 & 1 \\
     -6.3 & 1 \\
@@ -110,14 +106,14 @@ n besteht und $\vec{b}$ der Zeilenvektor der Datenpunkte y ist, also
     9.5 & 1 \\
     -5.4 & 1 \\
     12.7 & 1 \\
-  \end{pmatrix}\]
+  \end{pmatrix}
   \cdot
-  \[\begin{pmatrix}
+  \begin{pmatrix}
     m \\
     n \\
-  \end{pmatrix}\]
+  \end{pmatrix}
   =
-  \[\begin{pmatrix}
+  \begin{pmatrix}
     4 \\
     4.3 \\
     -3.9 \\
@@ -128,9 +124,7 @@ n besteht und $\vec{b}$ der Zeilenvektor der Datenpunkte y ist, also
     9.9 \\
     -3.6 \\
     15.1 \\
-  \end{pmatrix}\]
-
-  \: .
+  \end{pmatrix} \: .
 \end{equation}
 
 
