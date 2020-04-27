@@ -20,7 +20,7 @@ int main()
    A << x, a; //Erstelle Matrix aus x und a
 
    VectorXf y(10);
-   y <<4, 4.3, -.9, 6.5, 0.7, 8.6, 13, 9.9, -3.6, 15.1; //y aus der Aufgabenstellung
+   y <<4, 4.3, -3.9, 6.5, 0.7, 8.6, 13, 9.9, -3.6, 15.1; //y aus der Aufgabenstellung
 
    MatrixXf AT(2,10);
    AT << A.transpose(); //Transponiere A
