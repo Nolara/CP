@@ -90,6 +90,7 @@ in Aufgabenteil b) berechneten Matrizen $\symbf{P}$, $\symbf{L}$ und $\symbf{U}$
 Das Problem lässt sich in Form eines überbestimmten Gleichungssystems des Form
 \begin{equation}
   \symbf{A}\vec{x}=\vec{b}
+  \label{eqn:Lgs}
 \end{equation}
 beschreiben, wobei die Matrix $\symbf{A}$ aus dem Zeilenvektor der Datenpunkte x sowie einem
 Hilfsvektor mit je einer 1 als Eintrag besteht, $\vec{x}$ aus dem Wert der Steigung m und dem y-Achsenabschnitt
@@ -127,6 +128,47 @@ n besteht und $\vec{b}$ der Zeilenvektor der Datenpunkte y ist, also
   \end{pmatrix} \: .
 \end{equation}
 
-
-
+\subsection*{Aufgabenteil b)}
+Durch Multiplikation der Gleichung \eqref{eqn:Lgs} mit $\symbf{A}^{T}$ von links auf beiden Seiten, lässt sich das überbestimmte System in die Form
+\begin{equation}
+  \symbf{A}^{T}\symbf{A}\vec{x}=\symbf{A}^{T}\vec{b}
+  \label{eqn:lgs2}
+\end{equation}
+überführen mit der quadratischen Matrix $\symbf{A}^{T}\symbf{A}$, sodass die Gleichung in diesem Beispiel konkret die Form
+\begin{equation}
+  \begin{pmatrix}
+    482.98 & 29.2 \\
+    29.2 & 10 \\
+  \end{pmatrix}
+  \cdot
+  \begin{pmatrix}
+    m \\
+    n \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    541.22 \\
+    54.6 \\
+  \end{pmatrix} \: .
+\end{equation}
 \end{document}
+
+\subsection*{Aufgabenteil c)}
+Durch die Verwendung der LU Zerlegung Eigen::PartialPivLu aus der Bibliothek Eigen lässt sich das Gleichungssystem lösen, wobei sich der Lösungsvektor
+\begin{equation*}
+  \vec{x}=
+  \begin{pmatrix}
+    0.959951\\
+    2.65694\\
+  \end{pmatrix} \\
+\end{equation*}
+ergibt.
+\subsection*{Aufgabenteil d)}
+Die Datenpunkte sind zusammen mnit der errechnet Ausgleichsgerade in Abbildung \ref{fig:gerade} dargestellt.
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=8cm]{../plots/2.pdf}
+  \caption{Datenpunkte sowie die errechnete Ausgleichsgerade.}
+  \label{fig:gerade}
+\end{figure}
+Es lässt sich erkennen, dass die Gerade tatsächlich gut zu den Daten passt.
