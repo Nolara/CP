@@ -3,7 +3,7 @@
 \subject{Computational Physics}
 \title{Übungsblatt 1}
 \date{%
-  Abgabe: 24.04.2020
+  Abgabe: 1.05.2020
 }
 
 \begin{document}
@@ -49,7 +49,18 @@ zusammengefasst werden, sodass sich das Problem durch die Gleichung
 \begin{equation}
   \symbf{A}\pvec{x}'=\vec{x}
 \end{equation}
-beschreiben lässt. Durch die Verwendung der LU Zerlegung Eigen::PartialPivLu aus der Bibliothek Eigen lässt sich das Gleichungssystem lösen, wobei sich der Lösungsvektor
+beschreiben lässt.
+Dabei ist der Vektor $\vec{x}$ der Fehlstelle im Kristall durch
+\begin{equation*}
+  \pvec{x}=
+  \begin{pmatrix}
+    2 \\
+    0 \\
+    2 \\
+  \end{pmatrix} \\
+\end{equation*}
+gegeben.
+Durch die Verwendung der LU Zerlegung Eigen::PartialPivLu aus der Bibliothek Eigen lässt sich das Gleichungssystem lösen, wobei sich der Lösungsvektor
 \begin{equation*}
   \pvec{x}'=
   \begin{pmatrix}
@@ -72,7 +83,7 @@ ergibt. Desweiteren ergeben sich die Matrizen
     0.57735 & 1 & 0 \\
     0 & -0 & 1 \\
   \end{pmatrix}
-  \text{und}
+  \text{und }
   \symbf{U}=
   \begin{pmatrix}
     0.866025 & 0.866025 & 0 \\
@@ -84,17 +95,85 @@ ergibt. Desweiteren ergeben sich die Matrizen
 \subsection*{Aufgabenteil c)}
 Zur erneuten Bestimmung der Koordinaten der Störstelle $\pvec{y}'$ lassen sich die bereits
 in Aufgabenteil b) berechneten Matrizen $\symbf{P}$, $\symbf{L}$ und $\symbf{U}$ wiederverwenden, für deren Berechnung ein Aufwand von $\symcal{O}(n^3)$ nötig ist für eine Matrix der Größe $n$x$n$.
+Durch Vorwärts und Rückwerts einsetzen mit einem Aufwand von ..... %Kenne den Aufwand nicht
+lässt sich die Störstelle bestimmen.
+Die Koordinaten von $\vec{y}'$ werden zu
+\begin{equation*}
+  \pvec{x}'=
+  \begin{pmatrix}
+    5 \\
+    -1 \\
+    3 \\
+  \end{pmatrix} \\
+\end{equation*}
+errechnet.
+
+
+\subsection*{Aufgabenteil d)}
+Mit Hilfe von Eigen::PartialPivLu wird nun eine LU-Zerlegung für die Basis $\{\vec{a_3},\vec{a_2},\vec{a_1}\}$ durchgeführt. In dem Vergleich der beiden Aufgabenteile a) und d) lässt sich festellen, dass der Lösungsvekor gleich ist, was zu erwarten ist.
+Es ergeben sich in Aufgabenteil d) folgende Matrizen durch die LU-Zerlegung
+\begin{equation*}
+  \symbf{P'}=
+  \begin{pmatrix}
+    0 & 0 & 1 \\
+    0 & 1 & 0 \\
+    1 & 0 & 0 \\
+  \end{pmatrix} \: ,
+  \symbf{L'}=
+  \begin{pmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & -0.57735 & 1 \\
+  \end{pmatrix}
+  \text{und }
+  \symbf{U'}=
+  \begin{pmatrix}
+    1 & 0 & 0 \\
+    0 & 0.866025 & 0.866025 \\
+    0 & 0 & 1 \\
+  \end{pmatrix} \: .
+\end{equation*}
+Es fällt auf, dass bei dem Wechsel der Basis von $\{\vec{a_1},\vec{a_2},\vec{a_3}\}$ in die Basis $\{\vec{a_3},\vec{a_2},\vec{a_1}\}$ ebenfalls die Zeilen der Permutationsmatrix und die Einträge in den beiden Dreiecksmatrizen wechseln.
+
+\subsection*{Aufgabenteil d)}
+
+%Idee: wenn alle primitiven Gittervektoren paarweise orthogonalen sind, dann haben wir ein einfach kubisches Kristallsystem ?!
+
+
+
 
 \section*{Aufgabe 2: Ausgleichsrechnung}
+
+Gegeben seien folgende ($x,y$)-Datenpunkte:
+\begin{table}[H]
+\centering
+\label{tab:Datenpunkte}
+\begin{tabular}{c c c c c c c c c c c}
+\toprule
+x & 0 & 2.5 & -6.3 & 4 & -3.2 & 5.3 & 10.1 & 9.5 & -5.4 & 12.7 \\
+\midrule
+y & 4 & 4.3 & -3.9 & 6.5 & 0.7 & 8.6 & 13 & 9.9 & -3.6 & 15.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+Berechnen Sie eine Ausgleichsgerade
+\begin{align}
+  y(x) &=mx+n,
+  \label{eqn:Ausgleichsgerade}
+  \intertext{die den quadratischen Fehler}
+  R &= \sum_{i}(mx_i +n-y_i)^2
+\end{align}
+für die gegebenen Datenpunkte durch das Lösen eines Gleichungssystem minimiert.
+
 \subsection*{Aufgabenteil a)}
 Das Problem lässt sich in Form eines überbestimmten Gleichungssystems des Form
 \begin{equation}
   \symbf{A}\vec{x}=\vec{b}
   \label{eqn:Lgs}
 \end{equation}
-beschreiben, wobei die Matrix $\symbf{A}$ aus dem Zeilenvektor der Datenpunkte x sowie einem
+beschreiben, wobei die Matrix $\symbf{A}$ aus dem Zeilenvektor der Datenpunkte $x$ aus der Aufgabenstellung sowie einem
 Hilfsvektor mit je einer 1 als Eintrag besteht, $\vec{x}$ aus dem Wert der Steigung m und dem y-Achsenabschnitt
-n besteht und $\vec{b}$ der Zeilenvektor der Datenpunkte y ist, also
+n besteht und $\vec{b}$ der Zeilenvektor der Datenpunkte $y$ aus der Aufgabenstellung ist, also
 \begin{equation}
   \begin{pmatrix}
     0 & 1 \\
@@ -151,7 +230,6 @@ Durch Multiplikation der Gleichung \eqref{eqn:Lgs} mit $\symbf{A}^{T}$ von links
     54.6 \\
   \end{pmatrix} \: .
 \end{equation}
-\end{document}
 
 \subsection*{Aufgabenteil c)}
 Durch die Verwendung der LU Zerlegung Eigen::PartialPivLu aus der Bibliothek Eigen lässt sich das Gleichungssystem lösen, wobei sich der Lösungsvektor
@@ -164,11 +242,13 @@ Durch die Verwendung der LU Zerlegung Eigen::PartialPivLu aus der Bibliothek Eig
 \end{equation*}
 ergibt.
 \subsection*{Aufgabenteil d)}
-Die Datenpunkte sind zusammen mnit der errechnet Ausgleichsgerade in Abbildung \ref{fig:gerade} dargestellt.
+Die Datenpunkte aus der Aufgabenstellung sind zusammen mit der errechneten Ausgleichsgerade in Abbildung \ref{fig:gerade} dargestellt.
 \begin{figure}[H]
   \centering
-  \includegraphics[height=8cm]{../plots/2.pdf}
-  \caption{Datenpunkte sowie die errechnete Ausgleichsgerade.}
+  \includegraphics[height=8cm]{../Blatt1/Plots/2.pdf}
+  \caption{Datenpunkte $x$ und $y$ sowie die errechnete Ausgleichsgerade.}
   \label{fig:gerade}
 \end{figure}
 Es lässt sich erkennen, dass die Gerade tatsächlich gut zu den Daten passt.
+
+\end{document}
