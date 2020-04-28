@@ -10,17 +10,16 @@ m,n = np.genfromtxt('./Data/two_x0.txt', unpack=True) #import data
 def f(x, a,b):
     return a*x+b
 
-l = np.linspace(-7, 13, 50000)
+l = np.linspace(-7.5, 14, 50000)
 
 #Plot Verfahren aus a)
 plt.figure(1)
 plt.plot (x, y, 'kx', label='Datenpunkte')
 plt.plot(l, f(l, m,n), 'b-', label='Lineare Ausgleichsgerade')
 plt.grid()
-plt.xlabel(r'x')
-plt.ylabel(r'y')
+plt.xlim(-7,14)
+plt.xlabel(r'$x$')
+plt.ylabel(r'$y$')
 plt.legend(loc="best")
 plt.tight_layout()
 plt.savefig('Plots/2.pdf')
-
-#
