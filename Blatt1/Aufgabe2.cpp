@@ -36,17 +36,35 @@ int main()
 
    ofstream afile ("Data/two_data.txt", std::ofstream::out); // Erstelle txt Datei für Daten aus Aufgabenstellung
    ofstream bfile ("Data/two_x0.txt", std::ofstream::out); // Erstelle txt Datei Lösungsvektor
+   ofstream cfile ("Data/two_matrix.txt", std::ofstream::out); // Erstelle txt Datei für die Zwischenergebnisse
    afile << "# x y" << "\n";
    bfile << "# m n" << "\n";
    int n;
    n=x.size();
    for(int i=0; i<n; i++){
-       afile << x[i] << " ";
+       afile << x[i] << " "; //Schreibe Daten in txt Datei
        afile << y[i] << "\n";
    }
-   bfile << x0[0] << " " << x0[1] << "\n";
+   bfile << x0[0] << " " << x0[1] << "\n"; //Schreibe Lösungsvektor in txt Datei
+   cfile << "\n" << "# Matrix ATA:" << "\n";
+
+   int r=ATA.rows();;
+   int c=ATA.cols();
+
+   for (int i = 0; i < r; ++i) //Schreibe Matrix ATA in txt Datei
+   {
+       for (int j = 0; j < c; ++j)
+       {
+           cfile << ATA(i,j) << " ";
+       }
+       cfile << "\n";
+   }
+   cfile << "\n" << "# Vektor Aty:" << "\n";
+   for(int i=0; i<r; i++){
+       cfile << ATy[i] << "\n"; //Schreibe ATy in txt Datei
+   }
 
    afile.close();
    bfile.close();
-
+   cfile.close();
 }
