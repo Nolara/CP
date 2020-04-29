@@ -9,54 +9,54 @@ using namespace Eigen;
 int main()
 {
 
-   Vector3f a1;
-   Vector3f a2;
-   Vector3f a3;
+   Vector3d a1;
+   Vector3d a2;
+   Vector3d a3;
 
    //Eingabe der Vektoren aus der Aufgabenstellung
    a1 <<0.5, sqrt(3)/2, 0;
    a2 <<-0.5, sqrt(3)/2, 0;
    a3 <<0, 0, 1;
 
-   Vector3f b;
+   Vector3d b;
    b << 2, 0, 2;
 
    //Definiere Matrix aus Basisvektoren
-   Matrix3f A;
+   Matrix3d A;
    A << a1, a2, a3;
 
    //Lösen mit LU Zerlegung
-   Vector3f x;
+   Vector3d x;
    x= A.partialPivLu().solve(b);
 
    //Bestimme Matrix Pivotisierungsmatrix P
-   Matrix3f P;
+   Matrix3d P;
    P = A.partialPivLu().permutationP();
 
    //Bestimme Matrix L*U
-   Matrix3f LU;
+   Matrix3d LU;
    LU=A.partialPivLu().matrixLU();
 
    //Teile L*U in L und U auf
-   Matrix3f L;
+   Matrix3d L;
    L=LU.triangularView<StrictlyLower>();
    for(int i=0; i<=2; i++){
      L(i,i)=1;
    }
 
-   Matrix3f U;
+   Matrix3d U;
    U=LU.triangularView<Upper>();
 
    //Eingabe des Vektors aus Aufgabenteil c)
-   Vector3f b2;
+   Vector3d b2;
    b2 << 1, 2*sqrt(3), 3;
 
    //Multipliziere b mit Pivotisierungsmatrix P
-   Vector3f pb;
+   Vector3d pb;
    pb=P*b2;
 
    //Erstelle Vektor zum Speichern der Zwischenergebnisse aus der Forward Substitution
-   Vector3f x_zwischen;
+   Vector3d x_zwischen;
 
    //Erster Wert der Forward Substitution
    x_zwischen(0)=pb(0)/L(0,0);
@@ -73,7 +73,7 @@ int main()
    }
 
    //Definiere Lösungsvektor für c)
-   Vector3f x2;
+   Vector3d x2;
 
    //Erster Wert der Backward Substitution
    x2(2)=x_zwischen(2)/U(2,2);
@@ -81,7 +81,7 @@ int main()
    //Backward Substitution
    for (int i = 1; i >=0; i--)
    {
-       float s = 0;
+       double s = 0;
        for (int j = i+1; j <3; ++j)
        {
            s = s + U(i,j)*x2(j);;
@@ -90,23 +90,23 @@ int main()
    }
 
    //Umgestellte Matrix aus Aufgabenteil d)
-   Matrix3f A2;
+   Matrix3d A2;
    A2 << a3, a2, a1;
 
    //Löse d) mit LU
-   Vector3f xd;
+   Vector3d xd;
    xd= A2.partialPivLu().solve(b);
 
    //Pivotisierungsmatrix P aus d)
-   Matrix3f P2;
+   Matrix3d P2;
    P2 = A2.partialPivLu().permutationP();
 
    //Matrix LU aus d)
-   Matrix3f LU2;
+   Matrix3d LU2;
    LU2=A2.partialPivLu().matrixLU();
 
    //Matrix L aus d)
-   Matrix3f L2;
+   Matrix3d L2;
    L2=LU2.triangularView<StrictlyLower>();
    for(int i=0; i<=2; i++)
    {
@@ -114,7 +114,7 @@ int main()
    }
 
    //Matrix U aus d)
-   Matrix3f U2;
+   Matrix3d U2;
    U2=LU2.triangularView<Upper>();
 
    //Schreibe Werte in txt Datei
