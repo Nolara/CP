@@ -89,6 +89,7 @@ int main()
        x2(i)=(x_zwischen(i)-s)/U(i,i);
    }
 
+
    //Umgestellte Matrix aus Aufgabenteil d)
    Matrix3d A2;
    A2 << a3, a2, a1;
