@@ -1,6 +1,6 @@
 
-.DS_store
-build
+*.DS_store
+*build
 *.toc
 *.aux
 *.bbl
