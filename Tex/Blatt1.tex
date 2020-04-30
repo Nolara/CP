@@ -82,7 +82,7 @@ ergibt. Desweiteren ergeben sich die Matrizen
   \begin{pmatrix}
     1 & 0 & 0 \\
     0.57735 & 1 & 0 \\
-    0 & -0 & 1 \\
+    0 & 0 & 1 \\
   \end{pmatrix}
   \text{und }
   \symbf{U}=
@@ -98,11 +98,11 @@ Zur erneuten Bestimmung der Koordinaten der Störstelle $\pvec{y}'$ lassen sich 
 in Aufgabenteil b) berechneten Matrizen $\symbf{P}$, $\symbf{L}$ und $\symbf{U}$ wiederverwenden, für deren Berechnung ein Aufwand von $\symcal{O}(n^3)$ nötig ist für eine Matrix der Größe $n$x$n$.
 Durch Vorwärtseinsetzen mit
 \begin{equation}
-  z_1=b_1 \: , \quad z_i=b_i-\sum_{j=1}^{i-1}l_{ij}z_j\; i \in [2,n]
+  z_1=b_1 \: , \quad z_i=b_i-\sum_{j=1}^{i-1}l_{ij}z_j\;\quad i \in [2,n]
 \end{equation}
 und Rückwertseinsetzen durch
 \begin{equation}
-  x_n=\frac{z_n}{u_{n,n}} \: , \quad x_i=(z_i-\sum_{j=1+i}^{n}u_{ij}x_j)/u_{i,i}\; i \in [1,n-1]
+  x_n=\frac{z_n}{u_{n,n}} \: , \quad x_i=(z_i-\sum_{j=1+i}^{n}u_{ij}x_j)/u_{i,i}\;\quad i \in [1,n-1]
 \end{equation}
 mit einem Aufwand von $\symcal{O}(n^2)$ %Kenne den Aufwand nicht
 lässt sich damit die Störstelle bestimmen.
