@@ -40,7 +40,7 @@ int main()
    //Teile L*U in L und U auf
    Matrix3d L;
    L=LU.triangularView<StrictlyLower>();
-   for(int i=0; i<=2; i++){
+   for(int i=0; i<=2; i++){ //Setze Diagonale =1
      L(i,i)=1;
    }
 
