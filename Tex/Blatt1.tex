@@ -48,6 +48,7 @@ der Matrix
 zusammengefasst werden, sodass sich das Problem durch die Gleichung
 \begin{equation}
   \symbf{A}\pvec{x}'=\vec{x}
+  \label{eqn:gitter}
 \end{equation}
 beschreiben lässt.
 Dabei ist der Vektor $\vec{x}$ der Fehlstelle im Kristall durch
@@ -95,9 +96,17 @@ ergibt. Desweiteren ergeben sich die Matrizen
 \subsection*{Aufgabenteil c)}
 Zur erneuten Bestimmung der Koordinaten der Störstelle $\pvec{y}'$ lassen sich die bereits
 in Aufgabenteil b) berechneten Matrizen $\symbf{P}$, $\symbf{L}$ und $\symbf{U}$ wiederverwenden, für deren Berechnung ein Aufwand von $\symcal{O}(n^3)$ nötig ist für eine Matrix der Größe $n$x$n$.
-Durch Vorwärts und Rückwerts einsetzen mit einem Aufwand von ..... %Kenne den Aufwand nicht
-lässt sich die Störstelle bestimmen.
-Die Koordinaten von $\vec{y}'$ werden zu
+Durch Vorwärtseinsetzen mit
+\begin{equation}
+  z_1=b_1 \: , \quad z_i=b_i-\sum_{j=1}^{i-1}l_{ij}z_j\; i \in [2,n]
+\end{equation}
+und Rückwertseinsetzen durch
+\begin{equation}
+  x_n=\frac{z_n}{u_{n,n}} \: , \quad x_i=(z_i-\sum_{j=1+i}^{n}u_{ij}x_j)/u_{i,i}\; i \in [1,n-1]
+\end{equation}
+mit einem Aufwand von $\symcal{O}(n^2)$ %Kenne den Aufwand nicht
+lässt sich damit die Störstelle bestimmen.
+Die Koordinaten von $\vec{y}'$ werden somit zu
 \begin{equation*}
   \pvec{x}'=
   \begin{pmatrix}
@@ -135,10 +144,17 @@ Es ergeben sich in Aufgabenteil d) folgende Matrizen durch die LU-Zerlegung
 \end{equation*}
 Es fällt auf, dass bei dem Wechsel der Basis von $\{\vec{a_1},\vec{a_2},\vec{a_3}\}$ in die Basis $\{\vec{a_3},\vec{a_2},\vec{a_1}\}$ ebenfalls die Zeilen der Permutationsmatrix und die Einträge in den beiden Dreiecksmatrizen wechseln.
 
-\subsection*{Aufgabenteil d)}
+\subsection*{Aufgabenteil e)}
 
-%Idee: wenn alle primitiven Gittervektoren paarweise orthogonalen sind, dann haben wir ein einfach kubisches Kristallsystem ?!
-
+Wenn alle primitiven Gittervektoren paarweise orthogonal sind, dann handelt es sich bei der Matrix $\symbf{A}$  um eine orthogonale Matrix. Bei dieser Art von Matrizen ist die Inverse einfach durch die Transponierte gegeben, also
+\begin{equation}
+  \symbf{A}^{-1}=\symbf{A}^T \: ,
+\end{equation}
+sodass sich das Problem aus Gleichung \eqref{eqn:gitter} durch Matrixmultiplikation in der Form
+\begin{equation}
+  \pvec{x}'=\symbf{A}^T\vec{x}
+\end{equation}
+lösen lässt mit einem Aufwand von der Ordnung $\symcal{O}(n^2)$.
 
 
 
