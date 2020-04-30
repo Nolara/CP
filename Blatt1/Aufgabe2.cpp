@@ -42,10 +42,10 @@ int main()
    int n;
    n=x.size();
    for(int i=0; i<n; i++){
-       afile << x[i] << " "; //Schreibe Daten in txt Datei
+       afile << x[i] << "\t"; //Schreibe Daten in txt Datei
        afile << y[i] << "\n";
    }
-   bfile << x0[0] << " " << x0[1] << "\n"; //Schreibe Lösungsvektor in txt Datei
+   bfile << x0[0] << "\t" << x0[1] << "\n"; //Schreibe Lösungsvektor in txt Datei
    cfile << "\n" << "# Matrix ATA:" << "\n";
 
    int r=ATA.rows();;
@@ -55,7 +55,7 @@ int main()
    {
        for (int j = 0; j < c; ++j)
        {
-           cfile << ATA(i,j) << " ";
+           cfile << ATA(i,j) << "\t";
        }
        cfile << "\n";
    }

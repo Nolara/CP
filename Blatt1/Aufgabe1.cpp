@@ -138,7 +138,7 @@ int main()
    {
        for (int j = 0; j < c; ++j)
        {
-           afile << P(i,j) << " ";
+           afile << P(i,j) << "\t";
        }
        afile << "\n";
    }
@@ -150,7 +150,7 @@ int main()
     {
         for (int j = 0; j < c; ++j)
         {
-            afile << L(i,j) << " ";
+            afile << L(i,j) << "\t";
         }
         afile << "\n";
     }
@@ -162,7 +162,7 @@ int main()
     {
         for (int j = 0; j < c; ++j)
         {
-            afile << U(i,j) << " ";
+            afile << U(i,j) << "\t";
         }
         afile << "\n";
     }
@@ -189,7 +189,7 @@ int main()
     {
         for (int j = 0; j < c; ++j)
         {
-            afile << P2(i,j) << " ";
+            afile << P2(i,j) << "\t";
         }
         afile << "\n";
     }
@@ -201,7 +201,7 @@ int main()
      {
          for (int j = 0; j < c; ++j)
          {
-             afile << L(i,j) << " ";
+             afile << L2(i,j) << "\t";
          }
          afile << "\n";
      }
@@ -213,7 +213,7 @@ int main()
      {
          for (int j = 0; j < c; ++j)
          {
-             afile << U(i,j) << " ";
+             afile << U2(i,j) << "\t";
          }
          afile << "\n";
      }

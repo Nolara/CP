@@ -1,12 +1,13 @@
 CFLAGS = -Wall -Wextra
+INCPATH = -I ~/usr/include/eigen3
 all:	one plot1 two plot2
 
 one:	Aufgabe1.cpp | Data
-		g++ $(CFLAGS) -O3 -ffast-math -march=native Aufgabe1.cpp -o Aufgabe1
+		g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native Aufgabe1.cpp -o Aufgabe1
 		./Aufgabe1
 
 two:	Aufgabe2.cpp | Data
-		g++ $(CFLAGS) -O3 -ffast-math -march=native Aufgabe2.cpp -o Aufgabe2
+		g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native Aufgabe2.cpp -o Aufgabe2
 		./Aufgabe2
 
 plot1: one | Plots
