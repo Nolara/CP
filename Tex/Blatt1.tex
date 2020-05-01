@@ -95,23 +95,27 @@ ergibt. Desweiteren ergeben sich die Matrizen
 
 \subsection*{Aufgabenteil c)}
 Zur erneuten Bestimmung der Koordinaten der Störstelle $\pvec{y}'$ lassen sich die bereits
-in Aufgabenteil b) berechneten Matrizen $\symbf{P}$, $\symbf{L}$ und $\symbf{U}$ wiederverwenden, für deren Berechnung ein Aufwand von $\symcal{O}(n^3)$ nötig ist für eine Matrix der Größe $n$x$n$.
+in Aufgabenteil b) berechneten Matrizen $\symbf{P}$, $\symbf{L}$ und $\symbf{U}$ wiederverwenden, für deren Berechnung ein Aufwand von $\symcal{O}(n^3)$ nötig ist für eine Matrix der Größe $n$x$n$. Zunächst wird nach 
+\begin{equation}
+  \vec{b} = P^{T} \vec{y}
+\end{equation}
+der Vektor $\vec{b}$ gebildet.
 Durch Vorwärtseinsetzen mit
 \begin{equation}
-  z_1=b_1 \: , \quad z_i=b_i-\sum_{j=1}^{i-1}l_{ij}z_j\; i \in [2,n]
+   z_1=\frac{b_1}{l_{11}} \: , \quad z_i=\frac{b_i-\sum_{j=1}^{i-1}l_{ij}z_j}{l_{ii}}\; i \in [2,n]
 \end{equation}
 und Rückwertseinsetzen durch
 \begin{equation}
-  x_n=\frac{z_n}{u_{n,n}} \: , \quad x_i=(z_i-\sum_{j=1+i}^{n}u_{ij}x_j)/u_{i,i}\; i \in [1,n-1]
+  y_n´=\frac{z_n}{u_{n,n}} \: , \quad y_i´=(z_i-\sum_{j=1+i}^{n}u_{ij}y_j´)/u_{i,i}\; i \in [1,n-1]
 \end{equation}
 mit einem Aufwand von $\symcal{O}(n^2)$ %Kenne den Aufwand nicht
 lässt sich damit die Störstelle bestimmen.
 Die Koordinaten von $\vec{y}'$ werden somit zu
 \begin{equation*}
-  \pvec{x}'=
+  \pvec{y}'=
   \begin{pmatrix}
-    5 \\
-    -1 \\
+    3 \\
+    1 \\
     3 \\
   \end{pmatrix} \\
 \end{equation*}
