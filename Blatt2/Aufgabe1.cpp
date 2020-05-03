@@ -56,7 +56,7 @@ void Reduktion(int k, MatrixXd Singular, MatrixXd U, MatrixXd V, int n)
     }
 
     ofstream file;
-    file.open (name("Data/Reduktion_", k, ".txt"), ofstream::out);
+    file.open (name("Data/One_Reduktion_", k, ".txt"), ofstream::out);
     file << Reduktion.transpose();
     file.close();
     Reduktion.resize(0,0);

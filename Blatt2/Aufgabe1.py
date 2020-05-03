@@ -12,19 +12,19 @@ plt.axis('off')
 plt.tight_layout()
 plt.savefig('Plots/1_Original.pdf')
 
-a_10 = np.genfromtxt('./Data/Reduktion_10.txt') #import data
+a_10 = np.genfromtxt('./Data/one_Reduktion_10.txt') #import data
 plt.imshow(a_10, cmap='gray', interpolation='nearest')
 plt.axis('off')
 plt.tight_layout()
 plt.savefig('Plots/1_10.pdf')
 
-a_20 = np.genfromtxt('./Data/Reduktion_20.txt') #import data
+a_20 = np.genfromtxt('./Data/one_Reduktion_20.txt') #import data
 plt.imshow(a_20, cmap='gray', interpolation='nearest')
 plt.axis('off')
 plt.tight_layout()
 plt.savefig('Plots/1_20.pdf')
 
-a_50 = np.genfromtxt('./Data/Reduktion_50.txt') #import data
+a_50 = np.genfromtxt('./Data/one_Reduktion_50.txt') #import data
 plt.imshow(a_50, cmap='gray', interpolation='nearest')
 plt.axis('off')
 plt.tight_layout()

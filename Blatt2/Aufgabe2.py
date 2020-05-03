@@ -5,21 +5,22 @@ import matplotlib.pyplot as plt
 from uncertainties import ufloat
 from scipy.stats import sem
 
-x,y = np.genfromtxt('./Data/two_data.txt', unpack=True) #import data
-m,n = np.genfromtxt('./Data/two_x0.txt', unpack=True) #import data
-def f(x, a,b):
-    return a*x+b
+x1, x2 ,y,z, = np.genfromtxt('./Data/two_data.txt', unpack=True) #import data
 
-l = np.linspace(-7.5, 14, 50000)
+l = np.linspace(0, 999, 999)
 
 #Plot Verfahren aus a)
 plt.figure(1)
-plt.plot (x, y, 'kx', label='Datenpunkte')
-plt.plot(l, f(l, m,n), 'b-', label='Lineare Ausgleichsgerade')
+plt.plot (l, x1, 'k.', label='Zufallsmatrix')
+plt.plot (l, x2, 'y.', label='Zufallsvektor')
+plt.plot (l, y, 'r.', label='LU Zerlegung')
+plt.plot (l, z, 'b.', label='Lösen')
 plt.grid()
-plt.xlim(-7,14)
-plt.xlabel(r'$x$')
-plt.ylabel(r'$y$')
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel(r'Dimension N')
+plt.ylabel(r'Laufzeit in ns')
 plt.legend(loc="best")
 plt.tight_layout()
 plt.savefig('Plots/2.pdf')
+plt.show()
