@@ -63,7 +63,7 @@ int main()
     Results = Zeit(max_size);
 
     ofstream afile ("Data/two_data.txt", std::ofstream::out);
-    afile << "# Erzeugung Zufallsmatrix, Erzeugung Zufallsvektor, LU Zerlegung, Lösung";
+    afile << "# Erzeugung Zufallsmatrix, Erzeugung Zufallsvektor, LU Zerlegung, Lösung" << "\n";
     afile << Results;
     afile.close();
 

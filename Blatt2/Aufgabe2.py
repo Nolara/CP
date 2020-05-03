@@ -7,14 +7,15 @@ from scipy.stats import sem
 
 x1, x2 ,y,z, = np.genfromtxt('./Data/two_data.txt', unpack=True) #import data
 
-l = np.linspace(0, 999, 999)
+l=len(x1)
+x0 = np.linspace(0, l, l)
 
 #Plot Verfahren aus a)
 plt.figure(1)
-plt.plot (l, x1, 'k.', label='Zufallsmatrix')
-plt.plot (l, x2, 'y.', label='Zufallsvektor')
-plt.plot (l, y, 'r.', label='LU Zerlegung')
-plt.plot (l, z, 'b.', label='Lösen')
+plt.plot (x0, x1, 'k.', label='Zufallsmatrix')
+plt.plot (x0, x2, 'y.', label='Zufallsvektor')
+plt.plot (x0, y, 'r.', label='LU Zerlegung')
+plt.plot (x0, z, 'b.', label='Lösen')
 plt.grid()
 plt.xscale('log')
 plt.yscale('log')
