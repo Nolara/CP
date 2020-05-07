@@ -1,5 +1,57 @@
 \section*{Aufgabe 1: Singulärwertzerlegung}
 
 \subsection*{Aufgabenteil a)}
+Das Bild wird mittels der Routine loadData aus der Datei service.cpp eingelesen.
+Es wird eine Singuärwertzerlegung mittels Eigen::BDCSVD aus der Bibliothek Eigen durchgeführt.
 
 \subsection*{Aufgabenteil b)}
+
+Es wird eine Rang-$k$-Approximation gemäß
+\begin{equation}
+  \symbf{\tilde{A}} = \sum_{k=1}^N w_k \vec{u}_k {\vec{v}_k}^T
+\end{equation}
+durchgeführt.
+Es werden jeweils die Bilder für $k=10,20,50$ approximiert und mit Python geplottet.
+In den Abbildungen \ref{fig:k10}, \ref{fig:k20} und \ref{fig:k50} sind die jeweiligen Approximationen der Bilder dargestellt, sowie zum Vergleich das
+Orginalbild in Abbildung \ref{fig:Original}.
+
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[height=7cm]{../../Blatt2/Plots/1_10.pdf}}
+  \caption{Approximation für $k=10$.}
+  \label{fig:k10}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[height=7cm]{../../Blatt2/Plots/1_20.pdf}}
+  \caption{Approximation für $k=20$.}
+  \label{fig:k20}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[height=7cm]{../../Blatt2/Plots/1_50.pdf}}
+  \caption{Approximation für $k=50$.}
+  \label{fig:k50}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[height=7cm]{../../Blatt2/Plots/1_Original.pdf}}
+  \caption{Das Orginalbild.}
+  \label{fig:Original}
+\end{figure}
+
+Es fällt auf, dass je höher der $k$-Wert der Approximation gewählt wird, desto mehr gleicht die Approximation des Bildes dem Orginalbild.
+Das Orginalbild ist eine 512x512 Matrix mit 265 verschiedenen Grauleveln und für dessen Speicherung 304.787 Byte notwendig sind.
+Die Speicherung der Matrizen für $k=10$ erfordert 161.160 Byte, was zu einer Kompressionsrate von $\SI{1.9}{\percent}$ führt.
+Die Speicherung der Matrizen für $k=20$ und $k=50$ benötigen 173.456 Byte und 190.764 Byte. Diese haben eine Kompressionsrate von
+$\SI{1.8}{\percent}$ und $\SI{1.6}{\percent}$.
+Die Kompressionsrate $K$ wird gemäß der Formel
+\begin{equation}
+  K=\frac{\text{Daten}_{\text{unkomp.}}}{\text{Daten}_{\text{komp.}}}
+\end{equation}
+berechnet. Die angegebnen Größen der Bilder beziehen sich dabei auf die gegegebenen Größen der pdf-Dokumente.
