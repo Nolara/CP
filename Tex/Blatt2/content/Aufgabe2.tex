@@ -1,5 +1,49 @@
 \section*{Aufgabe 2: Profiling zur Untersuchung eines Algorithmus}
 
-\subsection*{Aufgabenteil a)}
+\subsection*{b)}
 
-\subsection*{Aufgabenteil b)}
+  \begin{figure}
+    \includegraphics{./Data/plot2.jpg}
+    \caption{Laufzeiten für das Erstellen der Matrix M, die LU-Zerlegung und das Lösen des Gleichungssystems in Abhängigkeit von N.}
+    \label{fig:A2}
+  \end{figure}
+
+  \noindent Die in der Abbildung \ref{fig:A2} dargestellten Fits wurden mit der Funktion
+  \begin{equation}
+    f(x)=a x^b
+  \end{equation}
+  gefittet. Dabei ergeben sich die Parameter für die Erstellung einer random $N$x$N$ Matrix
+  $$a_M = (10.54 \pm 0.27) s$$
+  $$b_M = 2.05 \pm 0.003 ,$$
+  für die LU-Zerlegung dieser Matrix
+  $$a_{LU} = (0.09 \pm 0.004) s$$
+  $$b_{LU} = 2.87 \pm 0.005$$
+  und das Lösen
+  $$a_x = (0.38 \pm 0.02) s$$
+  $$b_x = 2.09 \pm 0.005.$$
+  Dies sind natürlich nur die zu der Abbildung gehörenden Werte. Bei erneutem Durchlauf des Programmes
+  können die Ergebnisse leicht von diesen Abweichen. Zu erkennen ist, dass die Werte erst ab höheren $N$
+  auf der Ausgleichsgeraden liegen, für kleinere $N$ liegen sie über den Fits, daher wurden auch diese
+  Werte nicht im Fit berücksichtigt.
+
+  \subsection*{c)}
+
+    \noindent i) Gesammtlaufzeit
+
+    \noindent Mithilfe der Ausgleichsgeraden lässt sich abschätzen, dass für $N=1000000$
+    die Laufzeit ca bei
+    $$t= 15280987.51 s =  4244.72 h = 176.86 = 0.48 a$$
+    liegt.
+
+    \noindent ii) Optimierungspotential
+
+    \noindent Die LU-Zerlegung hat das größte $b$, mit höheren $N$ steigt die Laufzeit für die Zerlegung
+    also stärker an als die für das Erstellen der Matrix und das Lösen der Gleichung. Daher
+    würde es sich am meisten auszahlen, die LU-Zerlegung zu optimieren.
+
+
+  \subsection*{d)}
+
+    \noindent Je größer die Matrix ist, desto mehr Schritte werden benötigt, um Eigenwerte zu Berechnen. Daher
+    werden auch Rundungsfehler immer größer, sodass die Eigenwerte bei zu großen $N$ nicht mehr vernünftig bestimmt
+    werden können.
