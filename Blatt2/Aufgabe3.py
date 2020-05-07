@@ -13,10 +13,39 @@ diff1, diff2, diff3 = np.genfromtxt('./Data/three_relative_error.txt', unpack=Tr
 
 l=len(x_inv)
 x0 = np.linspace(0, l, l)
+xwert=np.linspace(0,l,10000)
+
+
+def f(x, a,b):
+    return a*x+b
+
+lx0=np.log(2**x0)
+
+lxinv=np.log(x_inv)
+
+params1, cov1 = curve_fit(f, lx0[2:], lxinv[2:])
+covv1 = np.sqrt(np.diag(cov1))
+print('a1 ist ',params1[0],'pm',covv1[0])
+print('b1 ist ',params1[1],'pm',covv1[1])
+
+lxfull=np.log(x_fullLU)
+
+params2, cov2 = curve_fit(f, lx0[2:], lxfull[2:])
+covv2 = np.sqrt(np.diag(cov2))
+print('a1 ist ',params2[0],'pm',covv2[0])
+print('b1 ist ',params2[1],'pm',covv2[1])
+
+lxpar=np.log(x_parLU)
+
+params3, cov3 = curve_fit(f, lx0[2:], lxpar[2:])
+covv3 = np.sqrt(np.diag(cov3))
+print('a1 ist ',params3[0],'pm',covv3[0])
+print('b1 ist ',params3[1],'pm',covv3[1])
 
 #Plot Verfahren aus a)
 plt.figure(1)
 plt.plot (2**x0, x_inv, 'kx', label='Invertierung')
+#plt.plot (xwert, f(xwert, *params1), 'r-', label='Lineare Ausgleichsgerade')
 plt.plot (2**x0, x_fullLU, 'yx', label='Full LU')
 plt.plot (2**x0, x_parLU, 'rx', label='Partial LU')
 plt.grid()
@@ -45,29 +74,3 @@ plt.legend(loc="best")
 plt.tight_layout()
 plt.savefig('Plots/3_diff.pdf')
 plt.show()
-
-def f(x, a,b):
-    return a*x+b
-
-lx0=np.log(2**x0)
-
-lxinv=np.log(x_inv)
-
-params1, cov1 = curve_fit(f, lx0[2:], lxinv[2:])
-covv1 = np.sqrt(np.diag(cov1))
-print('a1 ist ',params1[0],'pm',covv1[0])
-print('b1 ist ',params1[1],'pm',covv1[1])
-
-lxfull=np.log(x_fullLU)
-
-params2, cov2 = curve_fit(f, lx0[2:], lxfull[2:])
-covv2 = np.sqrt(np.diag(cov2))
-print('a1 ist ',params2[0],'pm',covv2[0])
-print('b1 ist ',params2[1],'pm',covv2[1])
-
-lxpar=np.log(x_parLU)
-
-params3, cov3 = curve_fit(f, lx0[2:], lxpar[2:])
-covv3 = np.sqrt(np.diag(cov3))
-print('a1 ist ',params3[0],'pm',covv3[0])
-print('b1 ist ',params3[1],'pm',covv3[1])
