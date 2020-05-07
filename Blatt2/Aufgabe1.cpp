@@ -52,7 +52,7 @@ void Reduktion(int k, MatrixXd Singular, MatrixXd U, MatrixXd V, int n)
 {
     MatrixXd Reduktion(n, n);
 
-    for (float i = 0; i < k; i++)
+    for (int i = 0; i < k; i++)
     {
         //Die ersten k Singulärwerte werden zusammen mit den entsprechenden Eigenvektoren
         //zur Matrix "Reduktion hinzugefügt"
