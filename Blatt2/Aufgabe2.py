@@ -2,7 +2,7 @@ import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
-N,M,LU = np.genfromtxt('./Data/two.txt', unpack=True) #import data
+N,M,LU, v = np.genfromtxt('./Data/two.txt', unpack=True) #import data
 
 N_M  =np.zeros(len(N) -3)
 M_kl  =np.zeros(len(N) -3)
