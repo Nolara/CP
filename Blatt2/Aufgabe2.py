@@ -2,13 +2,16 @@ import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
-N,M,LU, v = np.genfromtxt('./Data/two.txt', unpack=True) #import data
+N, M, LU, x  = np.genfromtxt('./Data/two.txt', unpack=True)
 
-N_M  =np.zeros(len(N) -3)
-M_kl  =np.zeros(len(N) -3)
+
+
+N_M  =np.zeros(len(N) -3)           ### Ignorieren der ersten paar Werte, da diese noch stark von
+M_kl  =np.zeros(len(N) -3)          ### den eigentlichen Werten abweichen und daher den Fitt verfälschen
 
 N_lu  =np.zeros(len(N) -3)
 LU_kl =np.zeros(len(N) -3)
+
 N_x  =np.zeros(len(N) -6)
 x_kl  =np.zeros(len(N) -6)
 
@@ -24,6 +27,7 @@ while(i<len(N)-6):
     N_x[i]=N[i+6]
     x_kl[i]=x[i+6]
     i=i+1
+
 
 def f(x,a,b):
     return a*x**b
@@ -50,6 +54,7 @@ print("b ",parLU[1],"\pm", errLU[1])
 plt.plot(n,f(n,*parLU),label=r"Fit LU")
 plt.plot(N,LU,'yx',label=r"Laufzeit LU")
 
+
 print("  ")
 print('Lösung von random NxN Matrix')
 parx, cov = curve_fit(f,N_x,x_kl)
@@ -58,6 +63,15 @@ print("a ",parx[0],"\pm", errx[0])
 print("b ",parx[1],"\pm", errx[1])
 plt.plot(n,f(n,*parx),label=r"Fit x")
 plt.plot(N,x,'gx',label=r"Laufzeit x")
+
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel(r'N')
+plt.ylabel(r't [ns]')
+plt.legend()
+plt.savefig("./Data/plot2.jpg")
+plt.close()
+
 
 print("   ")
 print("Abschätzung der Laufzeit für N=1.000.000")
