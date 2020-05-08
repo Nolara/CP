@@ -2,7 +2,7 @@ import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
-N, M, LU, x  = np.genfromtxt('two.txt', unpack=True)
+N, M, LU, x  = np.genfromtxt('./Data/.txt', unpack=True)
 
 
 
@@ -69,7 +69,7 @@ plt.yscale('log')
 plt.xlabel(r'N')
 plt.ylabel(r't [ns]')
 plt.legend()
-plt.savefig("plot2.jpg")
+plt.savefig("Plots/plot2.jpg")
 plt.close()
 
 
