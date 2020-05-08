@@ -41,7 +41,7 @@ int main()
       Profiler::resetAll();
     }
 
-    ofstream filea ("two.txt", std::ofstream::out);    // Speichern der Laufzeiten in Abhängigkeit von N
+    ofstream filea ("Data/two.txt", std::ofstream::out);    // Speichern der Laufzeiten in Abhängigkeit von N
     filea << "#N   Laufzeiten für 1)   2)    3)" << '\n' ;
     filea << Zeit ;
     filea.flush();
