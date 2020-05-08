@@ -86,7 +86,7 @@ VectorXd PartLu(int size, MatrixXd M, VectorXd b){
 
 int main()
 {
-    int steps =13; //Festlegung der Anzahl der Schriite
+    int steps =14; //Festlegung der Anzahl der Schriite
 
     //txt Dateien erstellen
     ofstream afile ("Data/three_t_inverse.txt", std::ofstream::out);
