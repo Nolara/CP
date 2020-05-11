@@ -9,7 +9,7 @@ Um zu überprüfen, ob alle Methoden dieselben Ergebnisse liefern wird die relat
 berechnet. Diese Abweichungen sind in Abbildung \ref{fig:abw} dargestellt.
 \begin{figure}[H]
   \centering
-  \includegraphics[height=8cm]{../Blatt2/Plots/3_diff.pdf}
+  \includegraphics[height=8cm]{../../Blatt2/Plots/3_diff.pdf}
   \caption{Abweichungen der unterschiedlichen Algorithmen in Abhängigkeit der Dimension N der Matrix.}
   \label{fig:abw}
 \end{figure}
@@ -21,7 +21,7 @@ deutliche Vor- oder Nachteile im Vergleich zu den anderen im Hinblick auf Genaui
 Die Laufzeit der Algorithmen wurde in logarithmischen Schritten bestimmt. Die Werte sind in Abbildung \ref{fig:laufzeit} doppellogarithmisch in Abhängigkeit der Dimension N der Matrix dargestellt.
 \begin{figure}[H]
   \centering
-  \includegraphics[height=8cm]{../Blatt2/Plots/3.pdf}
+  \includegraphics[height=8cm]{../../Blatt2/Plots/3.pdf}
   \caption{Laufzeit der unterschiedlichen Algorithmen in Nanosekunden in Abhängigkeit der Dimension N der Matrix.}
   \label{fig:laufzeit}
 \end{figure}
@@ -37,21 +37,21 @@ Um diese Ergebnisse zu quantifizieren wird zudem der Exponent $a$ des jeweiligen
 \end{equation}
 mit ln(N) durchgeführt werden. Dabei werden nur Werte ab N$\geq2^5$ berücksichtigt, da erst ab hier im doppellogarithmischen Diagramm \ref{fig:laufzeit} eine Gerade zu erkennen ist. Dabei ergeben sich die Werte
 \begin{align*}
-  a_{inv}&= 2.57 \pm 0.07\\
-  a_{full}&= 2.98 \pm 0.06\\
-  a_{par}&= 2.55 \pm 0.07 \: ,
+  a_{inv}&= 2.58 \pm 0.07\\
+  a_{full}&= 2.95 \pm 0.08\\
+  a_{par}&= 2.56 \pm 0.06 \: ,
 \end{align*}
 woran sich erneut erkennen lässt, dass der Aufwand für die LU Zerlegung mit vollständiger Pivotisierung
 bei großen N am stärksten ansteigt mit nahezu $\mathcal{O}(\text{N}^3)$. Die LU Zerlegung ohne vollständige Pivotisierung und die Inverse unterscheiden sich hingegen kaum im Exponenten, sondern stattdessen im Parameter $b$ mit Werten
 \begin{align*}
   b_{inv}&= (2.7 \pm 0.4)\text{s} \\
-  b_{full}&= (1.2 \pm 0.4)\text{s} \\
+  b_{full}&= (1.4 \pm 0.5)\text{s} \\
   b_{par}&= (1.6 \pm 0.4)\text{s} \: ,
 \end{align*}
 woran sich erkennen lässt, dass die Laufzeit der LU Zerlegung ohne vollständige Pivotisierung im Allgemeinen unter der, der Inversen liegt. Die Ausgleichsgeraden sind zudem in Abbildung \ref{fig:gerade} dargestellt.
 \begin{figure}[H]
   \centering
-  \includegraphics[height=8cm]{../Blatt2/Plots/3_Geraden.pdf}
+  \includegraphics[height=8cm]{../../Blatt2/Plots/3_Geraden.pdf}
   \caption{Laufzeit der unterschiedlichen Algorithmen in Nanosekunden in Abhängigkeit der Dimension N der Matrix mit Ausgleichsgeraden für N$\geq2^5$.}
   \label{fig:gerade}
 \end{figure}
