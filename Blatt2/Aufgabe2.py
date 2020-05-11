@@ -69,7 +69,7 @@ plt.yscale('log')
 plt.xlabel(r'N')
 plt.ylabel(r't [ns]')
 plt.legend()
-plt.savefig("./Plots/plot2.jpg")
+plt.savefig("./Plots/plot2.pdf")
 plt.close()
 
 
