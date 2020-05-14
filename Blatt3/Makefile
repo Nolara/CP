@@ -11,8 +11,8 @@ two:	Aufgabe2.cpp | Data
 		./Aufgabe2
 
 three:	Aufgabe3.cpp | Data
-				g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe30.cpp -o Aufgabe30
-				./Aufgabe30
+				g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe3.cpp -o Aufgabe3
+				./Aufgabe3
 
 plot1: one | Plots
 	python Aufgabe1.py
