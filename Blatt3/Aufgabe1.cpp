@@ -2,22 +2,21 @@
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
-#include <Eigen/SVD>
 #include <math.h>
 #include <Eigen/Eigenvalues>
-#include <thread>
 
 using namespace std;
 using namespace Eigen;
 
 
-
+//Funktion zum Erstellen der Hamiltonmatrix
 MatrixXd Hamilton(int n, double t, double eps){
 	if (n % 2 !=0)
 	{
 		cout << "Bitte gerade Zahl eingeben!";
 	}
 	MatrixXd M(n,n);
+	M.setZero();
 	M(n/2-1,n/2-1) = eps;
 	for (int i = 0; i < n; ++i)
 	{
@@ -32,19 +31,17 @@ MatrixXd Hamilton(int n, double t, double eps){
 		}
 	}
 	return M;
+
 }
 
-
+//Funktion zur Durchführung der Jacobirotation
 MatrixXd Jacobi(MatrixXd M){
 	int n=M.rows();
-	vector<VectorXd> Eigenvalues;
-	VectorXd ev0(n);
-	ev0=VectorXd::Zero(n);
-	Eigenvalues.push_back(ev0);
 	int z=0;
 	double Offdiagonal=0;
 	do
 	{
+		//Finde maximalen Wert der Nebendiagonale und deren Position
 		double max = 0;
 		int row = 0;
 		int col = 0;
@@ -71,7 +68,6 @@ MatrixXd Jacobi(MatrixXd M){
 			col=a;
 		}
 		double omega=(M(col,col)-M(row,row))/(2*M(row,col));
-		//cout << M <<"\n" << "\n"<< row << "\n" << col << "\n" << "\n"
 		double t;
 		if (omega<0) {
 		    t=1/(omega-sqrt(1+omega*omega));
@@ -84,6 +80,8 @@ MatrixXd Jacobi(MatrixXd M){
 			break;
 		}
 		double s=c*t;
+
+		//Erstelle Rotationsmatrix
 		MatrixXd Rot(n,n);
 		Rot.setIdentity();
 		Rot(col,col)=c;
@@ -95,38 +93,36 @@ MatrixXd Jacobi(MatrixXd M){
 		MatrixXd Mat(n,n);
 		Mat.setZero();
 		M=Rott*M*Rot;
-		VectorXd ev(n);
-		for (int j = 0; j < n; ++j)
-		{
-			ev(j)=M(j,j);
-		}
-		Eigenvalues.push_back(ev);
 		z+=1;
-	} while (abs(Offdiagonal)>1e-3);
+	} while (abs(Offdiagonal)>1e-3); //Prüfe ob Nebendiagonale gering genug
 
 	return M;
 }
 
-
+//Funktion zum Durchführen des Lanczos Algorithmus
 double Lanczos(MatrixXd A){
 
 	int size = A.rows();
-
 	vector<VectorXd> Krylov;
 	VectorXd q0(size);
 	q0= VectorXd::Zero(size);
 	Krylov.push_back(q0);
 	VectorXd k1(size);
-	k1=VectorXd::Random(size);
+	for (int i = 0; i < size; ++i)
+	{
+		k1(i)=1;
+	}
 	VectorXd q1(size);
 	q1=k1/k1.norm();
 	Krylov.push_back(q1);
 
-	VectorXd gamma(size+4);
+	VectorXd gamma(size);
+	gamma= VectorXd::Zero(size);
 	gamma(0)=0;
 	gamma(1)=1;
 
 	VectorXd delta(size);
+	delta= VectorXd::Zero(size);
 	delta(0)=0;
 
 	MatrixXd Eins(size,size);
@@ -150,8 +146,11 @@ double Lanczos(MatrixXd A){
 		i+=1;
 		gamma.conservativeResize(i+2);
 		delta.conservativeResize(i+1);
+		k.setZero();
+		q.setZero();
 	} while (i<size);
 
+	//Erstelle Tridiagonalmatrix
 	int m=delta.size();
 	int n=m-1;
 	MatrixXd M(n,n);
@@ -163,12 +162,16 @@ double Lanczos(MatrixXd A){
 		M(i,i+1)=gamma(i+2);
 		M(i+1,i)=gamma(i+2);
 	}
+	//Führe Jacobirotation mit Tridiagonalmatrix durch
 	MatrixXd D;
 	D = Jacobi(M);
 	VectorXd x(n);
 	x = D.diagonal();
 
 	double e0=x.minCoeff();
+	Krylov.clear();
+	x.setZero();
+	D.setZero();
 
 	return e0;
 }
@@ -177,10 +180,9 @@ double Lanczos(MatrixXd A){
 
 int main()
 {
-	const auto processor_count = std::thread::hardware_concurrency();
-	setNbThreads(processor_count);
 	VectorXd e0(41);
 	double epsilon = -20;
+	vector<VectorXd> grund;
 
 
 	for (int i = 0; i < 41; ++i)
@@ -189,8 +191,50 @@ int main()
 		Ham=Hamilton(50,1,epsilon);
 		e0(i)=Lanczos(Ham);
 		epsilon = epsilon +1;
+
+		SelfAdjointEigenSolver<MatrixXd> es(Ham);
+		VectorXd ev= es.eigenvalues();
+		int minIndex;
+		ev.minCoeff(&minIndex);
+		VectorXd g(50);
+		MatrixXd V(50,50);
+		V= es.eigenvectors();
+		g=V.col(minIndex);
+
+		grund.push_back(g);
 	}
-	ofstream afile ("Data/one.txt", std::ofstream::out);
+	//Test ob Funktion durchläuft
+	cout << e0.maxCoeff();
+	cout << e0.minCoeff();
+
+	//Speichere Resultate
+	ofstream afile ("Data/one_Energie.txt", std::ofstream::out);
 	afile << e0;
+	afile.close();
+	e0.setZero();
+
+
+	ofstream bfile ("Data/one_EV.txt", std::ofstream::out);
+	for (int i = 0; i < 41; ++i)
+	{
+		bfile << "\n" << "#epsilon:" << -20+i << "\n" << grund[i] << "\n";
+	}
+
+	//Erstelle Dichtematrix
+	MatrixXd Dichte(41,50);
+	for (int i = 0; i < 41; ++i)
+	{
+		VectorXd grundz(50);
+		grundz=grund[i];
+		for (int k = 0; k < 50; ++k)
+		{
+			Dichte(i,k)=grundz(k)*grundz(k);
+		}
+	}
+
+	ofstream cfile ("Data/one_Dichte.txt", std::ofstream::out);
+	cfile << Dichte;
+	grund.clear();
+
 
 }

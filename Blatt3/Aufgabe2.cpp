@@ -25,8 +25,6 @@ MatrixXd Hamilton(VectorXd m, VectorXd k){
         M(i,i+1)=k(i)/m(i);
         M(i+1,i)=k(i)/m(i+1);
     }
-    ofstream bfile ("Data/two_matrix.txt", std::ofstream::out);
-	bfile << M;
     return M;
 
 }
@@ -103,10 +101,6 @@ VectorXd Jacobi(MatrixXd M){
 
     VectorXd x(n);
 	x = M.diagonal();
-	ofstream afile ("Data/two.txt", std::ofstream::out);
-	afile << x;
-
-
 	return x;
 }
 
@@ -129,8 +123,20 @@ int main()
     M=Hamilton(m,k);
     VectorXd L(size);
     L=Jacobi(M);
-    double x=L.minCoeff();
-    double ev=sqrt(-x);
+    
+    VectorXd ev(size);
+    for (int i = 0; i < size; ++i)
+    {
+        if (L(i)<0)
+        {
+            ev(i)=sqrt(-L(i));
+        }
+        else
+        {
+            ev(i)=0;
+        }
+    }
+    ofstream afile ("Data/two.txt", std::ofstream::out);
+    afile << ev;
 
-    //cout << "\n" << M.eigenvalues() << "\n"<< "\n"<< L  ;
 }
