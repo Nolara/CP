@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
-#include <Eigen/SVD>
 #include <math.h>
 #include <Eigen/Eigenvalues>
 #include <thread>
@@ -73,7 +72,6 @@ MatrixXd Jacobi(MatrixXd M){
 			col=a;
 		}
 		double omega=(M(col,col)-M(row,row))/(2*M(row,col));
-		//cout << M <<"\n" << "\n"<< row << "\n" << col << "\n" << "\n"
 		double t;
 		if (omega<0) {
 		    t=1/(omega-sqrt(1+omega*omega));
@@ -94,7 +92,6 @@ MatrixXd Jacobi(MatrixXd M){
 		Rot(col,row)=-s;
 		MatrixXd Rott(n,n);
 		Rott=Rot.transpose();
-		//cout << Rott << "\n" << "\n" << M << "\n" << "\n" << Rot << "\n" << "\n";
 		MatrixXd Mat(n,n);
 		Mat.setZero();
 		M=Rott*M*Rot;
@@ -104,9 +101,8 @@ MatrixXd Jacobi(MatrixXd M){
 			ev(j)=M(j,j);
 		}
 		Eigenvalues.push_back(ev);
-		cout << ev;
 		z+=1;
-	} while (abs(Offdiagonal)>1e-3);
+	} while (abs(Offdiagonal)>1e-1);
 
 	return M;
 }
