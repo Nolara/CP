@@ -103,6 +103,9 @@ VectorXd Jacobi(MatrixXd M){
 
     VectorXd x(n);
 	x = M.diagonal();
+	for(int i=0; i<n; ++i){
+       		x(i)=sqrt(abs(x(i)));
+  	}
 	ofstream afile ("Data/two.txt", std::ofstream::out);
 	afile << x;
 
