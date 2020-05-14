@@ -1,22 +1,57 @@
 \section*{Aufgabe 2: Federkette }
 
+\subsection*{Aufgabenteil a)}
+
+  Um ein Programm zu schreiben, das für belibige N alle Eigenfrequenzen ausgibt,
+  muss die zum Problem gehörige Matrix aufgestellt werden.
+  Dazu werden die Bewegungegleichungen in eine Matrix geschrieben.
+  \begin{equation}
+    \vec{\ddot{x}} = M \vec{x}
+  \end{equation}
+  Beispielsweise für N=4 ist die erset Bewegungegleichung
+  \begin{equation}
+    \ddot{x}_0 = k_0 \frac{x_0}{m_0} - k_0 \frac{x_1}{m_1}
+  \end{equation}
+  Die Zweite, Dritte und Vierte lauten
+  \begin{equation}
+    m_1 \ddot{x}_1 = k_0 (\frac{x_1}{m_1}-\frac{x_0}{m_0}) + k_1 (\frac{x_2}{m_2}-\frac{x_1}{m_1} )
+  \end{equation}
+  \begin{equation}
+    m_2 \ddot{x}_2 = + k_1 (\frac{x_2}{m_2}-\frac{x_1}{m_1} )+ k_2(\frac{x_3}{m_3}-\frac{x_2}{m_2})
+  \end{equation}
+  \begin{equation}
+    m_3 \ddot{x}_3 = k_2 (\frac{x_3}{m_3}-\frac{x_2}{m_2}) + k_2 \frac{x_3}{m_3}
+  \end{equation}
+  Daraus lässt sich die Matrix $M$  zusammenfassen als
+  \begin{equation}
+    M =
+    \left(\begin{array}{r r r r}
+     k_0/m_0   & -k_0/m_1       & 0               &  0        \\
+     -k_0/m_0  & (k_0+k_1)/m_1  &  -k_1/m_2       &  0        \\
+      0        & -k_1/m_1       & (k_1+k_2)/m_2   & -k_2/m_3  \\
+      0        & 0              &  -k_2/m_2       & k_2/m_3   \\
+    \end{array}\right)
+  \end{equation}
+  Diese lässt sich nun auf belibige $N$ erweitern.
+
+
 
 \subsection*{Aufgabenteil b)}
 
-Die Eigenfrequenzen $\omega_i$ des Systems sind
-$$\omega_1 = 4.26119$$
-$$\omega_2 = 2.56538$$
-$$\omega_3 = 1.83944$$
-$$\omega_4 = 1.40319$$
-$$\omega_5 = 1.10969$$
-$$\omega_6 =       1$$
-$$\omega_7 = 0.790569$$
-$$\omega_8 = 0.768119$$
-$$\omega_9 = 0.57735$$
-$$\omega_{10} = 0.333333$$
+  Die Eigenfrequenzen $\omega_i$ des Systems sind mithilfe von Eigen/Eigenvalue
+  und der Gleichung $\lambda = \omega^2$
+  bestimmt worden
+  $$ \omega_1 = 3.95439  $$
+  $$ \omega_2 = 2.62228  $$
+  $$ \omega_3 = 1.95382  $$
+  $$ \omega_4 = 1.51083  $$
+  $$ \omega_5 = 1.17586  $$
+  $$ \omega_6 = 0.901489  $$
+  $$ \omega_7 = 0.664894  $$
+  $$ \omega_8 = 1.04981\cdot 10^{-8}  $$
+  $$ \omega_9 = 0.453722  $$
+  $$ \omega_{10} = 0.250241  $$
+  Die größte Eigenfrequenz lieg wie im Hinweis angegeben bei
+  $\omega=3.95439$.
 
-Leider stimmt die von uns bestimmte größte Eigenfrequenz $\omega=4.26119$ nicht
-mit der in der Aufgabenstellung angegebenen Frequenz von $\omega_{max}=3.95439$
-überein. Dies kann daran liegen, dass wir auch die in der Aufgabe angegebenen
-Federruhelängen nicht benutzt haben.
 
