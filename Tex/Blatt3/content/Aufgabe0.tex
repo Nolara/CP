@@ -1,5 +1,17 @@
 \section*{Aufgabe 0: Verständnisfragen}
 
-\textbf{Frage 1): }\\
+\textbf{Frage 1): Erklären Sie, wieso das Matrix-Vektor-Produkt $\symcal{A}^n\vec{v}$ für steigende Potenzen $n$ gegen den (unnormierten) Eigenvektor zum höchsten Eigenwert der Matrix $\symcal{A}$ konvergiert. Was muss dabei für $\vec{v}$ und $\symcal{A}$ gelten ? }\\
 
-\textbf{Frage 2): }\\
+Die Matrix $\symbfcal{A}$ muss diagonalisierbar sein, also in der Darstellung
+\begin{equation*}
+  \symcal{A}=\symcal{M}\symcal{D}^n\symcal{D}^{-1}
+\end{equation*}
+darstellbar sein. Des Weiter muss gelten
+\begin{equation*}
+   \symcal{A}\vec{v}_0\neq0\; ,
+\end{equation*}
+wobei $\vec{v}_0$ der Startvektor ist.
+
+\textbf{Frage 2): Welche Grundidee verbirgt sich hinter der Integrationsformel von Newton und Cotes?}\\
+Die Grundidee ist, dass die zu integrierende Funktion durch ein Polynom zu interpolieren. Diese Polynom wird exat integriet und dann als Näherung verwendet.
+Das Intervall $[a,b]$ wird dabei in $n$ äquidistante Teilintervalle unterteilt, woraus man $n+1$ Stützstellen erhält. Die Funtkionswerte dieser mal die jeweilige Gewichtsfunktion ergibt aufsummiert die Näherung des Integrals. Die Gewichtsfunktionen sind dabei durch die integrieten Lagrange Polynome gegeben.
