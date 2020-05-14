@@ -131,9 +131,6 @@ int main()
     L=Jacobi(M);
     double x=L.minCoeff();
     double ev=sqrt(-x);
-    cout << ev;
 
-    cout << M.eigenvalues();
-    cout << sqrt(18.1653);
     //cout << "\n" << M.eigenvalues() << "\n"<< "\n"<< L  ;
 }
