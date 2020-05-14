@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
+#include <Eigen/SVD>
 #include <math.h>
 #include <Eigen/Eigenvalues>
 #include <thread>
@@ -30,8 +31,6 @@ MatrixXd Hamilton(int n, double t, double eps){
 			M(0,i)=-t;
 		}
 	}
-	ofstream afile ("Data/one.txt", std::ofstream::out);
-	afile << M;
 	return M;
 }
 
@@ -72,6 +71,7 @@ MatrixXd Jacobi(MatrixXd M){
 			col=a;
 		}
 		double omega=(M(col,col)-M(row,row))/(2*M(row,col));
+		//cout << M <<"\n" << "\n"<< row << "\n" << col << "\n" << "\n"
 		double t;
 		if (omega<0) {
 		    t=1/(omega-sqrt(1+omega*omega));
@@ -102,7 +102,7 @@ MatrixXd Jacobi(MatrixXd M){
 		}
 		Eigenvalues.push_back(ev);
 		z+=1;
-	} while (abs(Offdiagonal)>1e-1);
+	} while (abs(Offdiagonal)>1e-3);
 
 	return M;
 }
@@ -129,13 +129,15 @@ double Lanczos(MatrixXd A){
 	VectorXd delta(size);
 	delta(0)=0;
 
+	MatrixXd Eins(size,size);
+	Eins.setIdentity();
+
 	int i=1;
 
 	do {
 		delta(i)=Krylov[i].transpose()*A*Krylov[i];
 		VectorXd k(size);
-		MatrixXd Eins(size,size);
-		Eins.setIdentity();
+
 		k=((A-delta(i)*Eins)*Krylov[i]-gamma(i)*Krylov[i-1]);
 		gamma(i+1)=k.norm();
 		if (abs(gamma(i+1))<1e-7)
@@ -145,14 +147,10 @@ double Lanczos(MatrixXd A){
 		VectorXd q(size);
 		q=k*(1/gamma(i+1));
 		Krylov.push_back(q);
-		if (Krylov[i].dot(Krylov[i+1])>1e-7)
-		{
-			cout << "not orthogonal!";
-		}
 		i+=1;
 		gamma.conservativeResize(i+2);
 		delta.conservativeResize(i+1);
-	} while (abs(gamma(i))>1e-7);
+	} while (i<size);
 
 	int m=delta.size();
 	int n=m-1;
@@ -181,22 +179,18 @@ int main()
 {
 	const auto processor_count = std::thread::hardware_concurrency();
 	setNbThreads(processor_count);
-	VectorXd eps(41);
 	VectorXd e0(41);
+	double epsilon = -20;
 
-	for (int i = 1; i < 20; ++i)
-	{
-		eps(i)=-20+i;
-	}
 
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < 41; ++i)
 	{
 		MatrixXd Ham(50,50);
-		Ham=Hamilton(50,1,-20);
+		Ham=Hamilton(50,1,epsilon);
 		e0(i)=Lanczos(Ham);
-		cout << Ham.eigenvalues();
-
+		epsilon = epsilon +1;
 	}
-
+	ofstream afile ("Data/one.txt", std::ofstream::out);
+	afile << e0;
 
 }
