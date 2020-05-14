@@ -104,7 +104,7 @@ MatrixXd Jacobi(MatrixXd M){
 			ev(j)=M(j,j);
 		}
 		Eigenvalues.push_back(ev);
-		cout << ev;
+		//cout << ev;
 		z+=1;
 	} while (abs(Offdiagonal)>1e-3);
 
