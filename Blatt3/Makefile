@@ -3,7 +3,7 @@ INCPATH = -I ~/usr/include/eigen3
 all:	one plot1 two plot2 three plot3
 
 one:	Aufgabe1.cpp | Data
-		g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -openmp -march=native -std=c++11 Aufgabe1.cpp -o Aufgabe1
+		g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe1.cpp -o Aufgabe1
 		./Aufgabe1
 
 two:	Aufgabe2.cpp | Data
@@ -11,8 +11,8 @@ two:	Aufgabe2.cpp | Data
 		./Aufgabe2
 
 three:	Aufgabe3.cpp | Data
-				g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe3.cpp -o Aufgabe3
-				./Aufgabe3
+				g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe30.cpp -o Aufgabe30
+				./Aufgabe30
 
 plot1: one | Plots
 	python Aufgabe1.py
