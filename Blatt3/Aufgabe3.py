@@ -12,17 +12,17 @@ import matplotlib.pyplot as plt
 from uncertainties import ufloat
 from scipy.stats import sem
 
-I11, h11, a11 , b11= np.genfromtxt('./Data/3_1_1.txt', unpack=True) #import data
-I12, h12, a12 , b12= np.genfromtxt('./Data/3_1_2.txt', unpack=True) #import data
-I13, h13, a13 , b13= np.genfromtxt('./Data/3_1_3.txt', unpack=True) #import data
+I11, a11, h11, b11= np.genfromtxt('./Data/3_1_1.txt', unpack=True) #import data
+I12, a12, h12 , b12= np.genfromtxt('./Data/3_1_2.txt', unpack=True) #import data
+I13, a13, h13 , b13= np.genfromtxt('./Data/3_1_3.txt', unpack=True) #import data
 
 
 #Plot für Integral 1
 plt.figure(1)
 plt.title(r"Integral 1")
-plt.plot (h11, a11, 'x', label='Trapezregel', color='darkblue')
-plt.plot (h12, a12, 'o', label='Mittelpunktsregel', color='darkorange')
-plt.plot (h13, a13, 'x', label='Simpsonsregel', color='forestgreen')
+plt.plot (h11, b11, 'x', label='Trapezregel', color='darkblue')
+plt.plot (h12, b12, 'o', label='Mittelpunktsregel', color='darkorange')
+plt.plot (h13, b13, '+', label='Simpsonsregel', color='forestgreen')
 
 plt.grid()
 plt.xlabel(r'Schrittweite $h$')
@@ -43,7 +43,7 @@ plt.figure(2)
 plt.title(r"Integral 2")
 plt.plot (h21, a21, 'x', label='Trapezregel', color='darkblue')
 plt.plot (h22, a22, 'o', label='Mittelpunktsregel', color='darkorange')
-plt.plot (h23, a23, 'x', label='Simpsonsregel', color='forestgreen')
+plt.plot (h23, a23, '+', label='Simpsonsregel', color='forestgreen')
 
 plt.grid()
 plt.xlabel(r'Schrittweite $h$')

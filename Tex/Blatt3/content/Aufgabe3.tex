@@ -1,5 +1,69 @@
 \section*{Aufgabe 3: }
 
-%\subsection*{Aufgabenteil a)}
 
-%\subsection*{Aufgabenteil b)}
+In der Aufgabe3.cpp werden für die jweiligen Integrationsroutinen die Funktionen implementiert.
+Die (summierte) Trapezregel ergibt sich dabei nach folgender Formel
+\begin{equation*}
+  \int_a^{b} f(x) \symup{d}x \approx h\left( \frac{1}{2} f(a)+\frac{1}{2} f(b) + \sum_{i=1}^{N-1} f(a+i\cdot h) \right) \; ,
+\end{equation*}
+wobei $h$ durch
+\begin{equation*}
+  h=\frac{b-a}{N}
+\end{equation*}
+mit den $N$ gleich großen Teilintervallen. Die Stützstellen $x_i$
+Mit der gleichen Definition ergibt sich die Gleichung
+\begin{equation*}
+  \int_a^{b} f(x) \symup{d}x \approx h\cdot \left( \sum_{i=1}^{N-1} f(x_i) \right)
+\end{equation*}
+für die Mittelpunktsregel mit den Stützstellen $x_i=a-\frac{h}{2}+i\cdot h$.
+Die Simpsonregel ist durch
+\begin{equation*}
+  \int_a^{b} f(x) \symup{d}x \approx \frac{h}{6} \left( f(a)+f(b)+2\sum_{i=1}^{N-1} f(x_i) + \sum_{i=1}^N f\left(\frac{x_{i-1}+x_i}{2} \right) \right)
+\end{equation*}
+gegeben.
+Die Stützstellen $x_i$ sind hier durch $x_i=a+i\cdot h$ gegeben.
+Die Integrationsroutinen werden an den beiden Integralen
+\begin{align*}
+  I_1 =\int_1^{100} \symup{d}x \; \frac{\symup{e}^-x}{x} \quad \text{und} \quad & I_2 =\int_0^1 \symup{d}x \; x\sin\left(\frac{1}{x}\right)
+\end{align*}
+getestet.
+Für den Test der implementierten Integrationsroutinen wird Integral $I_1$ mit den Beispielstartwert der Schrittweite von $h=45,5$ gewählt und die Schrittweite solange halbiert bis das Ergebnis eine Abweichung kleiner als $10^{-4}$ aufweist. Der Integralwert, die Anzahl der Teilintervalle, die Schrittweite und die relative Abweichung werden gespeichert und mittels Python graphisch dargestellt. Analog wird das Integral $I2$ mit einem Startwert von $h=0,5$ für die verschiedenen Routienen genähert.
+
+\begin{figure}[H]
+  \includegraphics{../../Blatt3/Plots/A3_Integral1.pdf}
+  \caption{Auswertung des Integrals $I1$ mit den verschiedenen Integrationsroutinen.}
+  \label{fig:I1}
+\end{figure}
+
+\begin{figure}[H]
+  \includegraphics{../../Blatt3/Plots/A3_Integral2.pdf}
+  \caption{Auswertung des Integrals $I2$ mit den verschiedenen Integrationsroutinen.}
+  \label{fig:I2}
+\end{figure}
+
+
+In den Abbildungen \ref{fig:I1} und \ref{fig:I2} ist die relative Abweichung gegen die Schrittweite $h$ doppellogarithmisch aufgetragen.
+Anhand der Abbildungen lässt sich bei beiden erkennen, dass je kleiner die Schrittweite gewählt wird, desto kleiner wird die relative Abweichung und der Wert des Integrals konvergiert. Die Endergebnisse der Verfahren für die jeweiligen Integrale sind in Tabelle \ref{tab:Ergebnisse} dargestellt.
+
+\begin{table}
+\centering
+\caption{Ergebnisse der Beispiele.}
+\label{tab:Ergebnisse}
+  \begin{tabular}{S[table-format=3.1] S S }
+    \toprule
+    & \multicolumn{2}{c}{Integral 1} \\
+    \cmidrule(lr){2-3}
+    {Routine} & {$h$} & {$I$} \\
+    \midrule
+    \text{Trapezregel} & 0.0080566 & 0.219388  \\
+    \text{Mittelpunktsregel} & 0.011108 & 0.21938  \\
+    \text{Simpsonregel} & 0.012085 & 0.219379  \\
+    \midrule
+    & \multicolumn{2}{c}{Integral 2} \\
+    \cmidrule(lr){2-3}
+    \text{Trapezregel}  & 0.000488281 & 0.378546 \\
+    \text{Mittelpunktsregel} & 0.000488 & 0.378546 \\
+    \text{Simpsonregel} & $\num{3.05176e-5}$ & 0.378504 \\
+    \bottomrule
+ \end{tabular}
+\end{table}
