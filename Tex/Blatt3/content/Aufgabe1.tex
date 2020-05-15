@@ -1,5 +1,67 @@
 \section*{Aufgabe 1: }
 
-%\subsection*{Aufgabenteil a)}
+\subsection*{Aufgabenteil b)}
+In der vorgegebenen Basis sieht die Matrix des Hamilton-Operators
+für eine Kette aus N~=~6 Gitterplätzen folgendermaßen aus:
+\begin{equation}
+  \begin{pmatrix}
+    0 & -t & 0 & 0 & 0 & -t \\
+    -t & 0 & -t & 0 & 0 & 0 \\
+    0 & -t & \epsilon & -t & 0 & 0 \\
+    0 & 0 & -t & 0 & -t & 0 \\
+    0 & 0 & 0 & -t & 0 & -t \\
+    -t & 0 & 0 & 0 & -t & 0 \\
+  \end{pmatrix} \\
+\end{equation}
+Die errechneten Grundzustandsenergien für eine Matrix der Dimension 50 lauten in Abhängigkeit von $\epsilon$:
+\begin{table}[H]
+  \centering
+  \caption{Grundzustandsenergien für gegebene $\epsilon$.}
+  \label{tab:tab1}
+    \begin{tabular}{c c|c c|c c}
+    \toprule
+    $ \epsilon $ & E$_0$ &$ \epsilon $ & E$_0$&  $\epsilon $ & E$_0$\\
+    \midrule
+    -20 & -20.0998 & -6 & -6.32456 & 8 & -1.99613\\
+    -19 & -19.105 & -5 & -5.38516 & 9 & -1.99612\\
+    -18 & -18.1108 & -4 & -4.47214 & 10 & -1.99612\\
+    -17 & -17.1172 & -3 & -3.60555 & 11 & -1.99611\\
+    -16 & -16.1245 & -2 & -2.82843 & 12 & -1.99611\\
+    -15 & -15.1327 & -1 & -2.23607 & 13 & -1.9961\\
+    -14 & -14.1421 & 0 & -1 & 14 & -1.9961\\
+    -13 & -13.1529 & 1 & -1.99661 & 15 & -1.9961\\
+    -12 & -12.1655 & 2 & -1.99635 & 16 & -1.99609\\
+    -11 & -11.1803 & 3 & -1.99626 & 17 & -1.99609\\
+    -10 & -10.198 & 4 & -1.99621 & 18 & -1.99609\\
+    -9 & -9.21954 & 5 & -1.99618 & 19 & -1.99609\\
+    -8 & -8.24621 & 6 & -1.99616 & 20 & -1.99608\\
+    -7 & -7.28011 & 7 & -1.99614 &  & \\
+      \bottomrule
+    \end{tabular}
+\end{table}
+Diese Werte sind zudem graphisch in Abbildung \ref{fig:Energie}
+dargestellt.
+\begin{figure}[H]
+  \includegraphics[height=8cm]{../../Blatt3/Plots/1_Energie.pdf}
+  \caption{Grundzustandsenergie in Abhängigkeit von $\epsilon$.}
+  \label{fig:Energie}
+\end{figure}
+Es lässt sich erkennen, dass die Grundzustandsenergie für negative $\epsilon$ einen
+linearen Anstieg zeigt, ein globales Maximum mit E=-1 bei $\epsilon=0$ besitzt
+und sich anschließend bei positiven $\epsilon$ auf einem Plateau bei ungefähr E=-2 bewegt. \\
+Der Grundzustand $\ket{\Psi_0}$ ist dabei durch den entsprechenden Eigenvektor gegeben. Die Teilchenzahldichte ergibt sich somit in der gegebenen Basis als quadrierte Vektoreinträge der Eigenvektoren.
+Der Verlauf der Teilchenzahldichte für die einzelnen Zustände $\ket{i}$ ist in Abbildung \ref{fig:dichte} in Abhängigkeit von $\epsilon$
+dargestellt.
+\begin{figure}[H]
+  \includegraphics[height=8cm]{../../Blatt3/Plots/1.pdf}
+  \caption{Teilchenzahldichte in Abhängigkeit von $\epsilon$.}
+  \label{fig:dichte}
+\end{figure}
+Somit wird ersichtlich, dass die Teilchenzahldichte für sehr kleine (negative) epsilon sich stark
+um $\ket{N/2}$ konzentriert, da hier das durch den Hamiltonoperator gegebene Potential ein Minimum aufweist und dieser Zustand somit energetisch günstiger wird.
+Für positive $\epsilon$ wird die Energie dieses Zustands jedoch zu einem Maximum, sodass die Besetzung dieses Zustands energetisch ungünstig ist und der Zustand $\ket{N/2}$ somit die geringste Besetzungswahrscheinlichkeit aufweist. Für die anderen Zustände ist die Teilchenzahldichte relativ gleichmäßig verteilt, wobei die Zustände
+etwas stärker besetzt sind, wenn sie weiter von $\ket{N/2}$ entfernt liegen.
 
-%\subsection*{Aufgabenteil b)}
+\subsection*{Aufgabenteil c)}
+Für große $N$ bietet sich die Speicherorganisation als Sparse an, da nur wenige Matrixelemente ungleich 0 sind und bei diesem Speicherformat nur ebendiese Elemente sowie ihre Position gespeichert wird, sodass
+der benötigte Speicherplatz signifikant reduziert werden kann, von $N^2$ zu $\symcal{O}(M_{i,j}\neq0)$.
