@@ -108,6 +108,14 @@
 % Verbesserungen am Schriftbild
 \usepackage{microtype}
 
+\setlength\parindent{0pt}
+\DeclarePairedDelimiter{\bra}{\langle}{\rvert}
+\DeclarePairedDelimiter{\ket}{\lvert}{\rangle}
+% <name> <#arguments> <left> <right> <body>
+\DeclarePairedDelimiterX{\braket}[2]{\langle}{\rangle}{
+  #1 \delimsize| #2
+}
+
 % Literaturverzeichnis
 \usepackage[
   backend=biber,
