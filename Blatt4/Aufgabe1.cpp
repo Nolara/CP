@@ -82,12 +82,10 @@ double simpson(double (*f)(double), double a, double b, int n) {
 double Funktion1(double x) {
     return exp(x)/x;
 }
-double PartI2(double x) {
+double Funktion2(double x) {
     return (exp(x)-exp(-x))/x;
 }
-double PartI3(double x) {
-    return (exp(x)-exp(-x))/x;
-}
+
 double PartII(double x) {
     return exp(-x)/sqrt(x);
 }
@@ -125,7 +123,7 @@ int main(){
 
   double delta=1e-6;
   double delta_z=0-delta;
-  double integral1 = calculate(Funktion1,simpson,-1,-delta,n,1e-7)+calculate(Funktion1,simpson,delta,1,n,1e-7)+calculate(PartI2,mittelpunkt,delta_z,0,n,1e-7);
+  double integral1 = calculate(Funktion1,simpson,-1,-delta,n,1e-7)+calculate(Funktion1,simpson,delta,1,n,1e-7)+calculate(Funktion2,mittelpunkt,delta_z,0,n,1e-7);
 
 
 	const double xmax=1e3;
@@ -133,7 +131,7 @@ int main(){
   double integral22 = calculate(PartII,mittelpunkt,0, 1, n, 1e-5)+calculate(PartII,mittelpunkt,1, xmax, n, 1e-5);
 
 
-	double integral3=2*calculate(PartIII2,mittelpunkt,0, 1, n, 1e-7)+calculate(PartIII,mittelpunkt,1, xmax, n, 1e-7);
+	double integral3=2*calculate(PartIII,mittelpunkt,1, xmax, n, 1e-7)+calculate(PartIII2,mittelpunkt,0, 1, n, 1e-7);
 
 
 
