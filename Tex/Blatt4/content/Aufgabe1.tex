@@ -2,17 +2,83 @@
 
 \subsection*{Aufgabenteil a)}
 Das zu lösende Hauptwertintegral ist durch
-\begin{equation}
-  I_1= \fint_{-1}^1 \frac{\exp{t}}{t} \symup{d}t
-\end{equation}
+\begin{equation*}
+  I_1= \fint_{-1}^1 \frac{\exp({t})}{t} \; \symup{d}t
+\end{equation*}
 gegeben. Das Vorgehen zum numerischen Lösen des Integrals ist analog zu dem Verfahren in der Vorlesung.
 Da eine Singularität bei $t=0$ im Intervall liegt, wird diese zunächst isoliert.
 Dies erfolgt durch aufteilen des Integrals gemäß
+\begin{equation*}
+    I_1 = \int_{-1}^{-\Delta} \frac{\exp(t)}{t}\; \symup{d}t + \int_{\Delta}^{1} \frac{\exp({t})}{t}\; \symup{d}t +\int_{0-\Delta}^{\Delta} \frac{\exp(t)-\exp(-t)}{t} \;\symup{d}t \quad .
+\end{equation*}
+Die ersten Intervalle werden mittels der Simpsonregel ausgewertet. Das letzte Integral ist so umgeformt, dass die Singularität eine hebbare ist und mittels ONC (Mittelpunktsregel) ausgewertet wird. Bei beiden wird das Intervall in $n=1000$ Teilintervalle eingeteilt und $\Delta=\num{1e-6}$ gewählt.
+Es ergibt sich
+\begin{equation*}
+  I_1=2,11474
+\end{equation*}
+für den Wert des ersten Integrals.
+\subsection*{Aufgabenteil b)}
+Das Integral
+\begin{equation*}
+  I_2=\int_{0}^\infty \frac{\exp(t)}{\sqrt{t}} \;\symup{d}t
+\end{equation*}
+kann auf verschiedenen Weisen ausgewertet werden.
+Dazu kann es einerseits so umgeformt werden, dass die Singutätität wieder eine hebbare ist
+\begin{align*}
+  I_2 &= \int_{0}^1 \frac{\exp(t)}{\sqrt{t}} \;\symup{d}t + \int_{0}^1 \frac{\exp(-\frac{1}{t})}{t^{3/2}} \;\symup{d}t \\
+  \intertext{oder das Integral wird bis zu einer oberen Grenze $x_\text{max}$ abgeschätzt}\\
+  I_2 &= \int_{0}^1 \frac{\exp(t)}{\sqrt{t}} \;\symup{d}t + \int_{1}^{x_{\text{max}}} \frac{\exp(t)}{\sqrt{t}} \;\symup{d}t. \quad.
+\end{align*}
+Es ergibt sich bei beiden Rechnungen
+\begin{equation*}
+  I_2 = 1,77243
+\end{equation*}
+für den Wert des zweiten Integrals, ausgewertet mit Mittelpunktsregel, sowie $n=1000$ und $x_{\text{max}}=1000$. Um Abzuschätzen wie groß der Fehler ist wird es mit dem analytischen Ergebnis vergliechen.
+Das Intergal $I_2$ ist auf dem Intervall $(0,\infty)$ eine bijektive Funktion, daher kann die Substitution $t=u^2$ vorgenommen werden.
+Dies ergibt dann
+\begin{align*}
+  I_2 &=\int_{0}^\infty \frac{\exp(t)}{\sqrt{t}} \;\symup{d}t \\
+  &\overset{\mathclap{\text{sub.}}}{=}2\cdot \underbrace{\int_{0}^\infty \exp(-u^2) \;\symup{d}u}_{\mathclap{\text{Gaußintegral}}} = 2\cdot\frac{\sqrt{\pi}}{2}=\sqrt{\pi} \quad.
+\end{align*}
+Damit ergibt sich ein relativer Fehler von
+\begin{align*}
+  \text{rel. Err} = 1-\frac{1,77243}{\sqrt{\pi}} = \num{1.35e-5}\quad.
+\end{align*}
 
-
-
-
-
-  //schritt 1 Isolierung der Singularität bei z=0
-  //Schritt 2 hebare Singularität mit ONC berechnen
-%\subsection*{Aufgabenteil b)}
+\subsection*{Aufgabenteil c)}
+Das Integral
+\begin{align*}
+  I_3 &=\int_{-\infty}^{\infty} \frac{\sin(t)}{t} \;\symup{d}t \\
+  \intertext{wird zu dem Integral}\\
+  I_3 &= 2 \cdot \left( \int_{0}^{1} \frac{\sin(t)-\sin(t)}{t}\;\symup{d}t + \int_{1}^{x_{\text{max}}} \frac{\sin(x)}{x}\;\symup{d}t \right)
+\end{align*}
+mit $x_{\text{max}}=1000$ umgeschrieben und mit Hilfe der Mittelpunktsregel mit $n=1000$ Teilintervallen ausgewertet.
+Daraus folgt
+\begin{equation}
+  I_3 = 3,14047
+\end{equation}
+als Ergbenis für das Integral.
+Analtisch kann das Integral ebenfalls berechnet werden mit Hilfe des Residuensatzes und der Verwendung von $\sin(x)=\mathit{Im}\; \exp(\symup{i}x)$
+kann das Integral wie folgt geschrieben werden
+\begin{align*}
+  I_3 &=\int_{-\infty}^{\infty} \frac{\sin(t)}{t} \;\symup{d}t = \lim_{\epsilon \to 0} \mathit{Im} \; \int_{-\infty}^{\infty} \frac{exp(\symup{i}x)}{x-\symup{i}\epsilon}
+  \overset{\text{Residuensatz}}{=} 2\pi\symup{i} \\
+  \intertext{Wird nun der Imagniärteil vergliechen, so ergibt sich}
+  &\implies \lim_{\epsilon \to 0} \mathit{Im} \int_{-\infty}^{\infty} \frac{(x+\symup{i}\epsilon)\cdot \exp(\symup{i}x)}{x^2+{\epsilon}^2} \overset{!}{=} 2\pi \\
+  &\iff \lim_{\epsilon \to 0} \int_{-\infty}^{\infty} \frac{x\sin(x)+\epsilon\cos(x)}{x^2+{\epsilon}^2} = 2\pi
+\end{align*}
+Es gilt für $\epsilon\to 0$
+\begin{equation*}
+  \delta_{\epsilon}(x)= \frac{1}{\pi}\frac{\epsilon}{x^2+{\epsilon}^2}\quad .
+\end{equation*}
+Daraus ergibt sich das Integral
+\begin{align*}
+  &\implies \int_{-\infty}^{\infty} \frac{\sin(x)}{x} + \pi\delta(x)\cos(x) \;\symup{d}x = 2 \pi \\
+  \intertext{und ingesamt dann}
+  &\implies \int_{-\infty}^{\infty} \frac{\sin(x)}{x} \;\symup{d}x = \pi\; ,
+\end{align*}
+da $\cos(0)=1$.
+Damit ergibt sich ein relativer Fehler von
+\begin{align*}
+  \text{rel. Err} = 1-\frac{3,14047}{\pi} = \num{3.57e-4}\quad.
+\end{align*}
