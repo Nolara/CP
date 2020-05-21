@@ -79,7 +79,7 @@ double simpson(double (*f)(double), double a, double b, int n) {
       return integral;
 }
 
-double PartI(double x) {
+double Funktion1(double x) {
     return exp(x)/x;
 }
 double PartI2(double x) {
@@ -117,33 +117,28 @@ double calculate(double (*func)(double), double (*integrater)(double (*f)(double
 
     }
 
-int main() {
-	double eps=1e-3;
-	int n=1000;
-	double part1i= calculate(PartI,simpson,-1, -eps, n, 1e-7);
-	double part2i=calculate(PartI,simpson,eps, 1, n, 1e-7);
-	double part3i=calculate(PartI2,mittelpunkt,-eps, 0, n, 1e-7);
 
-	double integral1=part1i+part2i+part3i;
+int main(){
 
-	double xmax2=1000;
-	double part1ii= calculate(PartII,mittelpunkt,0, 1, n, 1e-5);
-	double part2ii=calculate(PartII2,mittelpunkt,0, 1, n, 1e-7);
-	double part3ii=calculate(PartII,mittelpunkt,1, xmax2, n, 1e-5);
+	const int n=1e3;
 
-	double integral21=part1ii+part2ii;
-	double integral22=part1ii+part3ii;
 
-	double xmax3=1000;
-	double part1iii= calculate(PartIII,mittelpunkt,1, xmax3, n, 1e-7);
-	double part2iii=calculate(PartIII2,mittelpunkt,0, 1, n, 1e-7);
+  double delta=1e-6;
+  double delta_z=0-delta;
+  double integral1 = calculate(Funktion1,simpson,-1,-delta,n,1e-7)+calculate(Funktion1,simpson,delta,1,n,1e-7)+calculate(Funktion1,mittelpunkt,delta_z,0,n,1e-7);
 
-	double integral3=2*part1iii+part2iii;
+
+	const double xmax=1e3;
+	double integral21 = calculate(PartII,mittelpunkt,0, 1, n, 1e-5)+calculate(PartII2,mittelpunkt,0, 1, n, 1e-7) ;
+  double integral22 = calculate(PartII,mittelpunkt,0, 1, n, 1e-5)+calculate(PartII,mittelpunkt,1, xmax, n, 1e-5);
+
+
+	double integral3=2*calculate(PartIII2,mittelpunkt,0, 1, n, 1e-7)+calculate(PartIII,mittelpunkt,1, xmax, n, 1e-7);
 
 
 
 	ofstream afile ("Data/one.txt", std::ofstream::out); // Erstelle txt Datei
-    afile << integral1 << "\n";
+  afile << integral1 << "\n";
 	afile << integral21 << "\n";
 	afile << integral22 << "\n";
 	afile << integral3 << "\n";
