@@ -1,0 +1,69 @@
+\section*{Aufgabe 2: }
+
+\subsection*{Aufgabenteil a)}
+Zur Berechnung des elektrostatische Potentials auf der x-Achse, wird das Integral zunächst einheitenlos
+gemacht indem alle Längen in Einheiten von a angegeben werden und das Potential in Einheiten
+von $\frac{\rho_0}{4\pi\epsilon_0}$, also
+\begin{align}
+  \{x,x',y',z'\}&\mapsto \Big\{\frac{x}{a},\frac{x'}{a},\frac{y'}{a},\frac{z'}{a}\Big\} \\
+  \Phi &\mapsto \frac{\Phi}{\sfrac{\rho_0}{4\pi\epsilon_0}} \: ,
+\end{align}
+sodass sich das Integral zur Bestimmung des elektrostatischen Potentials in entsprechenden Einheiten für die Ladungsverteilung
+\begin{equation}
+  \rho(x,y,z)=
+  \begin{cases}
+    \rho_0, & \lvert x \rvert < a, \lvert y \rvert < a, \lvert z \rvert < a \\
+    0, & \text{sonst}
+  \end{cases}
+\end{equation}
+zu
+\begin{equation}
+  \Phi(x)=\int_{-1}^{1}\text{d}x'\int_{-1}^{1}\text{d}y'\int_{-1}^{1}\text{d}z'\frac{1}{\sqrt{(x-x')^2+y'^2+z'^2}}
+\end{equation}
+ergibt.
+Zur Berechnung dieses Integrals wird der Würfel in $n^3$ kleine Würfel mit Kantenlängen
+$h=\frac{2}{n}$ unterteilt, bei denen jeweils der Funktionswert in der Mitte berechnet wird. Also wird einem Würfel im Bereich $[x'_a,x'_a]\times[y'_a,y'_b] \times[z'_a,z'_b]$ der Funktionswert $f\left(x,\frac{x'_a+x'_b}{2},\frac{y'_a+y'_b}{2},\frac{z'_a+z'_b}{2}\right)$ zugewiesen, wobei die Funktion $f(x,x',y',z')$
+dem Integranten entspricht. Da nie ein Funktionswert am "Rand" eines Würfels berechnet wird, sind zumindest
+$y'^2$ und $z'^2$ stets ungleich wenn man den Würfel in eine gerade Anzahl von Intervallen teilt, da die Achse mit $\{y',z'\}=\{0,0\}$ stets auf dem Rande der kleinen Würfel liegt, sodass es zu keinen Problemen mit eventuellen Singularitäten bei $x'=x$ kommt. \\
+Mit dieser Methode wird mit $n=1000$ das Integral zunächst außerhalb des Würfels für die $x$-Werte
+$x$=0.1$m$ mit $m\in\{11,12,...,80\}$ und anschließend innerhalb des Würfels mit $m\in{0,1,..,10}$. Zudem wird die Asymptotik abgeschätzt, indem eine Multipolentwicklung bis zur ersten nichtverschwindenden Ordnung durchgeführt wird, also in der Form
+\begin{equation}
+  \frac{1}{\sqrt{(x-x')^2+y'^2+z'^2}}\approx \frac{1}{\lvert x \rvert}+ x'\frac{x}{\lvert x \rvert^3} \: ,
+\end{equation}
+sodass sich das Integral in dieser Näherung für $x>>x'$ durch
+\begin{equation}
+  \Phi(x)\approx\int_{-1}^{1}\text{d}x'\int_{-1}^{1}\text{d}y'\int_{-1}^{1}\text{d}z'\frac{1}{\lvert x \rvert}+x'\frac{x}{\lvert x \rvert^3} = \frac{8}{\lvert x \rvert}
+\end{equation}
+analytisch berechnen lässt, wobei der Term linear in $x'$, also das Dipolmoment, wegfällt, da es eine ungerade Funktion ist die über ein gerades Intervall integriert wird. Somit bleibt in diesem Fall in erster Ordnung der Monopolterm $\frac{8}{\lvert x \rvert}$ übrig, der zusammen mit dem numerische errechneten Werten in Abbildung \ref{fig:Phi_a} dargestellt ist.
+\begin{figure}[H]
+  \includegraphics[height=8cm]{../../Blatt4/Plots/2_a.pdf}
+  \caption{Numerisch errechnete Werte des elektrostatischen Potentials sowie analytische abgeschätzter Monopolterm.}
+  \label{fig:Phi_a}
+\end{figure}
+Es lässt sich erkennen, dass die Werte für große $x$ sich asymptotisch dem Monopolterm annähern.
+
+
+\subsection*{Aufgabenteil b)}
+Für die Ladungsverteilung
+\begin{equation}
+  \begin{cases}
+    \rho_0\frac{x}{a}, & \lvert x \rvert < a, \lvert y \rvert < a, \lvert z \rvert < a \\
+    0, & \text{sonst}
+  \end{cases}
+\end{equation}
+wird analog zum ersten Aufgabeteil vorgegangen, also das Integral
+\begin{equation}
+  \Phi(x)=\int_{-1}^{1}\text{d}x'\int_{-1}^{1}\text{d}y'\int_{-1}^{1}\text{d}z'\frac{x}{\sqrt{(x-x')^2+y'^2+z'^2}}
+\end{equation}
+numerisch berechnet. Durch die Multipolentwicklung
+ergibt sich
+\begin{equation}
+  \Phi(x)\approx\int_{-1}^{1}\text{d}x'\int_{-1}^{1}\text{d}y'\int_{-1}^{1}\text{d}z'\frac{1}{\lvert x \rvert}+x'\frac{x}{\lvert x \rvert^3} = \frac{8x}{3\lvert x \rvert^3}
+\end{equation}
+wobei der Monopolterm verschwindet und nur der Dipolterm $\frac{8x}{3\lvert x \rvert^3}$ übrig bleibt. Dieser ist zusammen mit den
+numerischen Ergebnissen in Abbildung \ref{fig:Phi_b} dargestellt.
+\begin{figure}[H]
+  \includegraphics[height=8cm]{../../Blatt4/Plots/2_a.pdf}
+  \caption{Numerisch errechnete Werte des elektrostatischen Potentials sowie analytische abgeschätzter Monopolterm.}
+  \label{fig:Phi_b}
+\end{figure}

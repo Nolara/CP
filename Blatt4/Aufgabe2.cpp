@@ -44,7 +44,7 @@ double mittelpunkt(double (*f)(double,double,double,double), double a, double b,
         {
             for (int k = 0; k < n; ++k)
             {
-                integral += h*f(x,(x1+x2)/2,(y1+y2)/2,(z1+z2)/2);
+                integral += h*4*f(x,(x1+x2)/2,(y1+y2)/2,(z1+z2)/2);
                 x1 += h;
                 x2 += h;
             }
