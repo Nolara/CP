@@ -1,5 +1,36 @@
 \section*{Aufgabe 0: Verständnisfragen}
 
-\textbf{Frage 1): }\\
+\textbf{Frage 1): Wieso ist es häufig nicht sinnvoll, eine feste Schrittweite für eine Integration zu verwenden?
+Lässt sich das Problem beheben?}\\
 
-\textbf{Frage 2): }\\
+Bei zu großer Schrittweite ist der Fehler ($\sim \Delta x^2$) zu groß,
+wird die Schrittweite zu klein gewählt, entstehen Rundungsfehler im Quotienten.
+Der Bereich zwischen zu kleiner und zu großer Schrittweite ist meist ausreichend
+groß, sodass eine numerische Berechnung möglich ist.
+
+Desweiteren kann sich eine zu integrierende Funktion in einem Gebiet sehr schnell ändern, hier
+wird für die Genauigkeit eine kleine Schrittweite benötigt, und in einem anderen
+Gebiet nur schwach variieren, hier ist eine große Schrittweite sinnvoll für
+eine schnellere numerische Lösung.
+Dabei sind die Gebiete nicht unbedingt klar, in denen die Schrittweite
+verkleinert werden kann bzw vergrößert werden muss.
+
+Durch die relativen Fehler lässt sich abschätzen, ob in einem Gebiet die
+Schrittweite erhöht werden kann oder verringert werden muss.
+
+\noindent \,
+
+
+\textbf{Frage 2): Welche anderen Probleme können bei numerischer Integration typischerweise auftreten?}\\
+
+
+\begin{itemize}
+  \item unendliche Integrationsgrenzen
+  \item stark variierende Integranden in verschiedenen Intervallen
+
+  \rightarrow Probleme beim Aufaddieren von sehr kleinen und sehr großen Zahlen
+  \item Hauptwertintegrale
+  \item Singuläre, integrable Integranden
+
+\end{itemize}
+
