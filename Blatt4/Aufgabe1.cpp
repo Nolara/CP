@@ -83,7 +83,7 @@ double Funktion1(double x) {
     return exp(x)/x;
 }
 double PartI2(double x) {
-    return 1+x*x/6;
+    return (exp(x)-exp(-x))/x;
 }
 double PartI3(double x) {
     return (exp(x)-exp(-x))/x;
@@ -125,7 +125,7 @@ int main(){
 
   double delta=1e-6;
   double delta_z=0-delta;
-  double integral1 = calculate(Funktion1,simpson,-1,-delta,n,1e-7)+calculate(Funktion1,simpson,delta,1,n,1e-7)+calculate(Funktion1,mittelpunkt,delta_z,0,n,1e-7);
+  double integral1 = calculate(Funktion1,simpson,-1,-delta,n,1e-7)+calculate(Funktion1,simpson,delta,1,n,1e-7)+calculate(PartI2,mittelpunkt,delta_z,0,n,1e-7);
 
 
 	const double xmax=1e3;
