@@ -12,6 +12,7 @@ typedef complex<double> dcomp;
 const complex<double> I(0.0,1.0);
 const complex<double> pi(M_PI,0.0);
 
+
 dcomp fexp(double x) {
     return exp(-x*x/2);
 }
@@ -25,10 +26,11 @@ dcomp frechteck(double x) {
     return f;
 }
 
+//Erstellen eines Vektors mit Funktionswerten
 VectorXcd make_f (dcomp (*f)(double),int m, double xa, double xb) {
     double l=xb-xa;
     int n = pow(2,m);
-    double delta=l/(n-1);
+    double delta=l/(n);
 
     VectorXd x(n);
     VectorXcd vec(n);
@@ -40,34 +42,7 @@ VectorXcd make_f (dcomp (*f)(double),int m, double xa, double xb) {
     return vec;
 }
 
-void Rechteck_analytisch (int a, int b, double xa, double xb) {
-    int l=xb-xa;
-    dcomp L=l;
-    VectorXd f=VectorXd::Zero(101*l);
-    for (int i = 0; i <= 100*l; ++i)
-    {
-        dcomp i_index=i;
-        for (int j = a; j <= b; ++j)
-        {
-            double J=j;
-            //dcomp xA=xa;
-            f(i)+=4.0/J*sin(M_PI*J/2.0);
-        }
-    }
-
-
-    ofstream cfile ("Data/1_rechteck.txt", std::ofstream::out);
-
-    cfile << "#Rechteck analytisch" << "\n" << "\n";
-
-    for (int i = 0; i <= 100*l; ++i)
-    {
-        cfile << real(f(i)) <<  "\t" << imag(f(i)) << "\n";
-    }
-    cfile << "\n" << "\n";
-
-}
-
+//Zuordnung der Zahlen durch Umordnung der binären Zahlen
 int reverse(int n, int m) {
     VectorXd binaryNumber(m);
     binaryNumber.setZero();
@@ -90,6 +65,8 @@ int reverse(int n, int m) {
     }
     return decimalNumber;
 }
+
+//FFT Algorithmus
 VectorXcd FFT( int m, VectorXcd f) {
     int n = pow(2,m);
     vector<MatrixXcd> s;
@@ -160,6 +137,8 @@ VectorXcd Phasenfaktor(VectorXcd f, double xa, double xb, int m) {
 
 
 int main() {
+
+    //Verifizieren des Algorithmus
     ofstream afile ("Data/1_1.txt", std::ofstream::out);
     for (int m = 3; m < 5; ++m)
     {
@@ -195,19 +174,22 @@ int main() {
     int n=pow(2,m);
     dcomp N=n;
 
+    //Fouriertrafo Exponentialfunktion
     VectorXcd f1= make_f(fexp,m,-10,10);
     VectorXcd F1=FFT(m,f1);
     F1=sortiere(F1, m);
     F1=Phasenfaktor(F1,-10,10, m);
+
+    //Fouriertrafo Rechteckschwingung
     VectorXcd f2= make_f(frechteck,m,-M_PI,M_PI);
-
-
     VectorXcd F2=FFT(m,f2);
     sortiere(F2, m);
     Phasenfaktor(F2,-M_PI,M_PI, m);
+
+    //Daten speichern
     ofstream bfile ("Data/1_2.txt", std::ofstream::out);
     bfile << "#FFT[Exponentialfunktion]" << "\t" << "FFT[Rechteckschwingung] bei m=" << m << "\n" << "\n";
-    bfile << "#Abs" << "\t" << "Re"<< "\t" << "Im" << "Abs" << "\t" << "\t" << "Re" << "\t"  << "Im" << "\n";
+    bfile << "# k"  << "\t" << "Abs" << "\t" << "Re"<< "\t" << "Im" << "k"  << "\t" << "Abs" << "\t" << "\t" << "Re" << "\t"  << "Im" << "\n";
     VectorXcd Fdirekt2 = VectorXcd::Zero(n);
     for(double j=0; j<n; j++){
         dcomp J=j;
@@ -218,9 +200,9 @@ int main() {
     }
     for (int i = 0; i < n; ++i)
     {
-        bfile << abs(F1(i)) << "\t" << real(F1(i)) << "\t" << imag(F1(i)) << "\t" << abs(Fdirekt2(i)) << "\t" << real(F2(i)) << "\t" << imag(F2(i)) << "\n";
+        double kexp=(i-n/2.0)*2*M_PI/(20);
+        bfile << kexp  << "\t" << abs(F1(i)) << "\t" << real(F1(i)) << "\t" << imag(F1(i)) << "\t" << abs(Fdirekt2(i)) << "\t" << real(F2(i)) << "\t" << imag(F2(i)) << "\n";
     }
-    Rechteck_analytisch(-100,100,-M_PI,M_PI);
 
 
 }

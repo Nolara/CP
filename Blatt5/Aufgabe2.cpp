@@ -11,18 +11,22 @@ double f(double x) {
     return x*x-2;
 }
 
+//Erste Ableitung
 double Ableitung1 (double (*f)(double), double x) {
     double delta=1e-9;
     double abl = (f(x+delta)-f(x-delta))/(2*delta);
     return abl;
 }
 
+//Zweite Ableitung
 double Ableitung2 (double (*f)(double), double x) {
     double delta=1e-3;
     double abl=(f(x+delta)+f(x-delta)-2*f(x))/(delta*delta);
     return abl;
 }
-void IH (double (*f)(double), double a, double b, double c) {
+
+//Intervallhalbierungs-Verfahren
+void IH (double (*f)(double), double a, double b, double c, double accuracy) {
     int n=0;
     int m=0;
     do
@@ -51,7 +55,7 @@ void IH (double (*f)(double), double a, double b, double c) {
                 c=d;
             }
         }
-    } while (c-a>1e-9);
+    } while (c-a>accuracy);
     ofstream bfile ("Data/2_Intervallhalbierung.txt", std::ofstream::out); // Erstelle txt Datei
     bfile << "Anzahl Iterationsschritte:" << n << "\n";
     bfile << "Minimum bei x=" << (c-a)/2 << " mit Funktionswert f(x)=" << f((c-a)/2) << "\n";
@@ -59,8 +63,8 @@ void IH (double (*f)(double), double a, double b, double c) {
     bfile.close();
 }
 
-
-void Newton (double (*f)(double), double x0) {
+//Newton-Verfahren
+void Newton (double (*f)(double), double x0, double accuracy) {
     int n =0;
     int m=0;
     double delta_x=0;
@@ -79,7 +83,7 @@ void Newton (double (*f)(double), double x0) {
         }
         m+=2;
         x0+=delta_x;
-    } while (abs(delta_x)>1e-9);
+    } while (abs(delta_x)>accuracy);
     ofstream afile ("Data/2_Newton.txt", std::ofstream::out); // Erstelle txt Datei
     afile << "Anzahl Iterationsschritte:" << n << "\n";
     afile << "Minimum bei x=" << x0 << " mit Funktionswert f(x)=" << f(x0) << "\n";
@@ -88,7 +92,8 @@ void Newton (double (*f)(double), double x0) {
 }
 
 int main() {
+    double accuracy=1e-9;
 
-    Newton(f, 1);
-    IH(f, -0.5,-0.1,2);
+    Newton(f, 1, accuracy);
+    IH(f, -0.5,-0.1,2, accuracy);
 }
