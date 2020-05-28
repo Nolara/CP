@@ -3,3 +3,16 @@
 %\subsection*{Aufgabenteil a)}
 
 %\subsection*{Aufgabenteil b)}
+
+Als eindimensionale Minimierungsverfahren werden sowohl das Intervallhalbierungs-Verfahren und das
+Newtonverfahren implementiert. Dabei wird eine Genauigkeitsschranke von $x_c=10^{-9}$ verwendet.
+Diese werden an der Funktion
+\begin{equation}
+  f(x)=x^2-2
+\end{equation}
+getestet, wobei für das Intervallhalbierungs-Verfahren $a=-0.5$, $b=-0.1$ und $c=2$ verwendet wird und
+für das Newton Verfahren $x_0=1$.
+Als Ergebniss des Newtonverfahrens ergibt sich $ {x=2.70598\cdot 10^{-26}}$ und für das Intervallhalbierungs-Verfahren ${x=3.72529\cdot 10^{-10}}$ mit einem Funktionswert von jeweils ${f(x)=-2}$.
+Die Anzahl der Iterationsschritte beträgt beim Intervallhalbierungs-Verfahren 33 und nur 3 beim Newtonverfahren, sie ist beim Newtonverfahren also um einen Faktor 11 geringer. Die Anzahl der Funktionsaufrufe beträgt beim Intervallhalbierungs-Verfahren
+42, da in jedem Schritt die Funktionswerte an den Rändern des Intervalls berechnet werden müssen, welche jedoch zum Teil aus der vorherigen Iteration übernommen werden können. Beim Newtonverfahren sind
+es mit 21 nur die Hälfte, da pro Iterationsschritt zwei Funktionswerte zur Berechnung der ersten Ableitung benötigt werden und drei Funktionswerte zur Berechnung der zweiten Ableitung. In diesem Fall ist das Newtonverfahren also deutlich effektiver.
