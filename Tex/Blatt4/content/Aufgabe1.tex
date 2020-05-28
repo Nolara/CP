@@ -3,7 +3,7 @@
 \subsection*{Aufgabenteil a)}
 Das zu lösende Hauptwertintegral ist durch
 \begin{equation*}
-  I_1= \fint_{-1}^1 \frac{\exp({t})}{t} \; \symup{d}t
+  I_1= \int_{-1}^1 \frac{\exp({t})}{t} \; \symup{d}t
 \end{equation*}
 gegeben. Das Vorgehen zum numerischen Lösen des Integrals ist analog zu dem Verfahren in der Vorlesung.
 Da eine Singularität bei $t=0$ im Intervall liegt, wird diese zunächst isoliert.
@@ -33,7 +33,7 @@ Es ergibt sich bei beiden Rechnungen
 \begin{equation*}
   I_2 = 1,77243
 \end{equation*}
-für den Wert des zweiten Integrals, ausgewertet mit Mittelpunktsregel, sowie $n=1000$ und $x_{\text{max}}=1000$. Um Abzuschätzen wie groß der Fehler ist wird es mit dem analytischen Ergebnis vergliechen.
+für den Wert des zweiten Integrals, ausgewertet mit Mittelpunktsregel, sowie $n=1000$ und $x_{\text{max}}=1000$. Um Abzuschätzen wie groß der Fehler ist wird es mit dem analytischen Ergebnis verglichen.
 Das Intergal $I_2$ ist auf dem Intervall $(0,\infty)$ eine bijektive Funktion, daher kann die Substitution $t=u^2$ vorgenommen werden.
 Dies ergibt dann
 \begin{align*}
@@ -63,7 +63,7 @@ kann das Integral wie folgt geschrieben werden
 \begin{align*}
   I_3 &=\int_{-\infty}^{\infty} \frac{\sin(t)}{t} \;\symup{d}t = \lim_{\epsilon \to 0} \mathit{Im} \; \int_{-\infty}^{\infty} \frac{exp(\symup{i}x)}{x-\symup{i}\epsilon}
   \overset{\text{Residuensatz}}{=} 2\pi\symup{i} \\
-  \intertext{Wird nun der Imagniärteil vergliechen, so ergibt sich}
+  \intertext{Wird nun der Imagniärteil verglichen, so ergibt sich}
   &\implies \lim_{\epsilon \to 0} \mathit{Im} \int_{-\infty}^{\infty} \frac{(x+\symup{i}\epsilon)\cdot \exp(\symup{i}x)}{x^2+{\epsilon}^2} \overset{!}{=} 2\pi \\
   &\iff \lim_{\epsilon \to 0} \int_{-\infty}^{\infty} \frac{x\sin(x)+\epsilon\cos(x)}{x^2+{\epsilon}^2} = 2\pi
 \end{align*}

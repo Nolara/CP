@@ -9,7 +9,7 @@
 using namespace std;
 using namespace Eigen;
 
-
+//Definiere Integranten für Aufgabeteil a)
 double rho(double x0, double x, double y, double z){
     double rho=0;
     if (abs(x)<1 && abs(y)<1 && abs(z)<1)
@@ -19,6 +19,7 @@ double rho(double x0, double x, double y, double z){
     return rho;
 }
 
+//Definiere Integranten für Aufgabeteil b)
 double rho2(double x0, double x, double y, double z){
     double rho=0;
     if (abs(x)<1 && abs(y)<1 && abs(z)<1)
@@ -28,6 +29,7 @@ double rho2(double x0, double x, double y, double z){
     return rho;
 }
 
+//Funktion zur dreidimensionalen Mittelpunktsregel
 double mittelpunkt(double (*f)(double,double,double,double), double a, double b, int n, double x) {
     double integral=0;
 
@@ -62,6 +64,8 @@ double mittelpunkt(double (*f)(double,double,double,double), double a, double b,
 
 
 int main() {
+
+    //Aufgabeteil a) außerhalb
     VectorXd xa(70);
     VectorXd Phi(70);
     for (int i = 0; i < 70; ++i)
@@ -76,7 +80,7 @@ int main() {
     }
     afile.close();
 
-
+    //Aufgabeteil a) innerhalb
     VectorXd xa2(11);
     VectorXd Phi2(11);
     for (int i = 0; i < 11; ++i)
@@ -91,7 +95,7 @@ int main() {
     }
     bfile.close();
 
-
+    //Aufgabeteil b) außerhalb
     VectorXd xb(70);
     VectorXd Phi3(70);
     for (int i = 0; i < 70; ++i)
@@ -106,7 +110,7 @@ int main() {
     }
     cfile.close();
 
-
+    //Aufgabeteil b) innerhalb
     VectorXd xb2(11);
     VectorXd Phi4(11);
     for (int i = 0; i < 11; ++i)
