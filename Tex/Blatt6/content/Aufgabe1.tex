@@ -1,5 +1,149 @@
 \section*{Aufgabe 1: }
 
-%\subsection*{Aufgabenteil a)}
+\subsection*{Aufgabenteil a)}
 
-%\subsection*{Aufgabenteil b)}
+Zur Minimierung von Funktionen $f: \mathbb{R}^n\to \mathbb{R}$ werden das Gradienten-Verfahren und das
+Konjugierte-Gradienten-Verfahren implementiert. Zur Bestimmung der optimalen Schrittweite wird dabei das
+eindimensionale Intervallhalbierungs-Verfahren des letzten Übungsblatts verwendet. \\
+Die Implementierung wird an der Rosenbrock-Funktion
+\begin{equation}
+  f(x_1,x_2)=(1-x_1)^2+100(x_2-x_1^2)^2
+  \label{eqn:rosen}
+\end{equation}
+mit dem Startwert $\vec{x_0}^{\text{T}}=(-1,-1)$ getestet. Analytisch wird dabei der Gradient zu
+\begin{equation}
+  \nabla f(x_1,x_2)=
+  \begin{pmatrix}
+    2(x_1-1)+400x_1(x_1^2-x_2) \\
+    200(x_2-x_1^2)
+  \end{pmatrix} \\
+\end{equation}
+bestimmt.
+Zur Veranschaulichung werden die einzelnen Schritte $\vec{x}$ in einem Contourplot in Abbildung \ref{fig:contour1}
+dargestellt, wobei in Abbildung \ref{fig:contour1a} die Schritte des Gradienten-Verfahrens dargestellt sind und in
+Abbildung \ref{fig:contour1b} die Schritte des Konjugierten-Gradienten-Verfahrens.
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_Rosenbrock_grad.pdf}
+\subcaption{Schritte des Gradienten-Verfahrens.}
+\label{fig:contour1a}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_Rosenbrock_conj.pdf}
+\subcaption{Schritte des Konjugierten-Gradienten-Verfahrens.}
+\label{fig:contour1b}
+\end{subfigure}
+\caption{Contour Plots mit einzelnen Minimierungsschritten $\vec{x}$ zur Rosenbrock-Funktion \eqref{eqn:rosen}.}
+\label{fig:contour1}
+\end{figure}
+Dabei ist der Startwert in grün dargestellt und das gefundene Minimum in weiß, zudem sind bei Stellen, bei denen die Folge der Schritte nicht offensichtlich ist zur Veranschaulichung Pfeile eingezeichnet, die die Reihenfolge der Schritte andeuten. \\
+Zudem sind die Fehler $\epsilon_k=\norm{\vec{x}^k-\vec{x}^*}$ in Abbildung \ref{fig:plot_abw_r} in Abbhängigkeit von $k$ dargestellt.
+
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_abw_rosenbrock_g.pdf}
+\subcaption{Fehler des Gradienten-Verfahren.}
+\label{fig:abw1a}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_abw_rosenbrock_c.pdf}
+\subcaption{Fehler des Konjugierten-Gradienten-Verfahrens.}
+\label{fig:abw1b}
+\end{subfigure}
+\caption{Fehler $\epsilon_k$ der Minimierung in Abhängigkeit von $k$ zur Rosenbrock Funktion \eqref{eqn:rosen}.}
+\label{fig:plot_abw_r}
+\end{figure}
+ Es lässt sich erkennen, dass das Konjugierte-Gradienten-Verfahren deutlich weniger Minimierungsschritte braucht und schneller konvergiert als das normale Gradienten-Verfahren. Beide finden jedoch dasselbe Minimum bei $\vec{x}_{\text{min}}^{\text{T}}=(1,1)$ mit $f(\vec{x}_{\text{min}})=0$. Auffällig ist zudem, dass das Konjugierte-Gradienten-Verfahren kurz vor dem Minimum noch einmal eine große Abweichung aufweist und somit nicht gleichmäßig konvergiert. Zudem lässt sich bei beiden Verfahren erkennen, dass die Konvergenz zunächst schnell erfolgt, in der Nähe des Minimums jedoch immer langsamer wird.
+
+\subsection*{Aufgabenteil a)}
+Mithilfe der beiden Verfahren aus Aufgabenteil a) wird die Funktion
+\begin{equation}
+  f(x_1,x_2)=\left[1+\frac{\text{exp}\{-10(x_1x_2-3)^2\}}{x_1^2+x_2^2}   \right]
+  \label{eqn:b}
+\end{equation}
+minimiert, deren Gradient sich analytisch zu
+\begin{equation}
+  \nabla f(x_1,x_2)=
+  \begin{pmatrix}
+    \text{exp}\{-10(x_1 x_2-3)^2\}\frac{20x_1^3 x_2^2-60x_1^2 x_2+20 x_1 x_2^4+2x_1-60x_2^3}{(1+\text{exp}\{-10(x_1x_2-3)^2\}(x_1^2+x_2^2))^2} \\
+    \text{exp}\{-10(x_1x_2-3)^2\}\frac{20x_2^3x_1^2-60x_2^2x_1+20x_2 x_1^4+2x_2-60x_1^3}{(1+\text{exp}\{-10(x_1x_2-3)^2\}(x_1^2+x_2^2))^2}
+  \end{pmatrix} \\
+\end{equation}
+bestimmen lässt.
+Als Startwerte werden
+\begin{equation}
+  \vec{x}_{0,1}=
+  \begin{pmatrix}
+    1.5 \\
+    2.3
+  \end{pmatrix} \quad
+  \vec{x}_{0,2}=
+  \begin{pmatrix}
+    -1.7 \\
+    -1.9
+  \end{pmatrix} \quad
+  \vec{x}_{0,3}=
+  \begin{pmatrix}
+    0.5 \\
+    0.6
+  \end{pmatrix} \quad
+\end{equation}
+verwendet. Da jedoch bei $\vec{x}_{0,3}$ ein lokales Maximum vorliegt und der Gradient somit $\nabla f(\vec{x}_{0,3})=\vec{0}$ ist, lässt sich mit beiden Verfahren kein Minimum bestimmen. Dieser Startwert ist somit ungeeignet für diese Funktion. \\
+Für die Startwerte $\vec{x}_{0,1}$ und $\vec{x}_{0,2}$ sind in Abbildung \ref{fig:contour2} Contourplots mit den einzelnen Schritten analog zu Aufgabenteil a) gezeigt und in Abbildung \ref{fig:plot_abw_b} die Fehler $\epsilon_k$ in Abhängigkeit von $k$.
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_b1_grad.pdf}
+\subcaption{Schritte des Gradienten-Verfahrens mit Startwert $\vec{x}_{0,1}$.}
+\label{fig:contour2a1}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_b1_conj.pdf}
+\subcaption{Schritte des Konjugierten-Gradienten-Verfahrens mit Startwert $\vec{x}_{0,1}$.}
+\label{fig:contour2b1}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_b2_grad.pdf}
+\subcaption{Schritte des Gradienten-Verfahrens mit Startwert $\vec{x}_{0,2}$.}
+\label{fig:contour2a2}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_b2_conj.pdf}
+\subcaption{Schritte des Konjugierten-Gradienten-Verfahrens mit Startwert $\vec{x}_{0,2}$.}
+\label{fig:contour2b2}
+\end{subfigure}
+\caption{Contour Plots mit einzelnen Minimierungsschritten $\vec{x}$ zur Funktion \eqref{eqn:b}.}
+\label{fig:contour2}
+\end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_abw_b1_g.pdf}
+\subcaption{Fehler des Gradienten-Verfahren mit Startwert $\vec{x}_{0,1}$.}
+\label{fig:abw_b1g}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_abw_b1_c.pdf}
+\subcaption{Fehler des Konjugierten-Gradienten-Verfahrens mit Startwert $\vec{x}_{0,1}$.}
+\label{fig:abw_b1c}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_abw_b2_g.pdf}
+\subcaption{Fehler des Gradienten-Verfahren mit Startwert $\vec{x}_{0,2}$.}
+\label{fig:abw_b1g}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt6/Plots/1_abw_b2_c.pdf}
+\subcaption{Fehler des Konjugierten-Gradienten-Verfahrens mit Startwert $\vec{x}_{0,2}$.}
+\label{fig:abw_b1c}
+\end{subfigure}
+\caption{Fehler $\epsilon_k$ der Minimierung in Abhängigkeit von $k$ zur Funktion \eqref{eqn:b}.}
+\label{fig:plot_abw_b}
+\end{figure}
+
+Da die Funktion symmetrisch ist bezüglich des Austauschs
+$x_1 \longleftrightarrow x_2$, \\ sowie
+${x_1 \to -x_1 \wedge x_2 \to -x_2}$, gibt es Minima sowohl bei\\ ${\vec{x}_{\text{min},1}^{\text{T}}=(1.7272,1.7272)=(\sqrt{\frac{3}{2}+\sqrt{\frac{11}{5}}},\sqrt{\frac{3}{2}+\sqrt{\frac{11}{5}}})}$ als auch bei \\
+${\vec{x}_{\text{min},2}^{\text{T}}=(-1.7272,-1.7272)}$.
+Für den Startwert $\vec{x}_{0,1}$ konvergieren beide Verfahren gegen $\vec{x}_{\text{min},1}$, wohingegen für den
+Startwert $\vec{x}_{0,2}$ das Gradienten-Verfahren gegen $\vec{x}_{\text{min},2}$ konvergiert und das Konjugierte-Gradienten-Verfahren gegen $\vec{x}_{\text{min},1}$. Es werden somit mit unterschiedlichen Verfahren in diesem Fall auch unterschiedliche Minima gefunden. \\
+Auch hier lässt sich erkennen, dass das Konjugierte-Gradienten-Verfahren für $\vec{x}_{0,1}$ schneller konvergiert als das normale Gradienten-Verfahren, für den Startwert $\vec{x}_{0,2}$ konvergiert jedoch das Gradienten-Verfahren etwas schneller, auch wenn das konjugierte Gradienten-Verfahren in ebenfalls verhältnissmäßig wenigen Schritten konvergiert.
