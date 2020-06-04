@@ -104,6 +104,11 @@ void BFGS(string name,std::function<double(VectorXd)> f, std::function<VectorXd(
         k++;
         VectorXd pk=-c[k]*b[k];
         p.push_back(pk);
+        //double a=-1000;
+        //double mid=1;
+        //double c=1000;
+        //IH(f,x[k],pk, a,mid,c);
+        //double lam=(a+c)/2.0;
         VectorXd xkp1=x[k]+p[k];
         x.push_back(xkp1);
         VectorXd sk=p[k];
@@ -112,19 +117,19 @@ void BFGS(string name,std::function<double(VectorXd)> f, std::function<VectorXd(
         b.push_back(bkp1);
         VectorXd yk=bkp1-b[k];
         y.push_back(yk);
-        if (k>100)
+        if (k>10000)
         {
             cout << "Keine Konvergenz!";
             break;
         }
-    } while (b[k].squaredNorm()>epsilon);
+    } while (b[k].squaredNorm()>epsilon*epsilon);
 
     ofstream afile;
     afile.open (give_name("Data/2_", name, ".txt"), ofstream::out);
     afile << "# xk(0), xk(1), f(xk), abw" << "\n";
     for (int j = 0; j < k; ++j)
     {
-        afile << x[j](0) << "\t" << x[j](1) << "\t" << f(x[j]) << "\t" << (x[j]-x[k]).norm() << "\n";
+        afile <<j <<"\t" << x[j](0) << "\t" << x[j](1) << "\t" << f(x[j]) << "\t" << (x[j]-x[k]).norm() << "\n";
     }
     afile.close();
 
@@ -147,13 +152,14 @@ int main() {
 
 
     MatrixXd H(2,2);
-    H << 1201,400,400,200;
+    H << 802,400,400,200;
     MatrixXd C1= H.inverse();
     MatrixXd C2(2,2);
-    C2 << 1/1201, 0,0, 1/200;
+    C2 << 1/802.0, 0,0, 1/200.0;
     double f0=f(x0);
     MatrixXd C3(2,2);
-    C2 << f0, 0,0, f0;
+    C3 << f0, 0,0, f0;
+    //cout << C1 << "\n" << C2 << "\n" << C3;
 
 
     const double epsilon=1e-5;

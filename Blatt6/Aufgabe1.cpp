@@ -9,6 +9,7 @@
 using namespace std;
 using namespace Eigen;
 
+//Funktion zur Namensgebung der txt Dateien
 string give_name( const string& basename, string index, const string& ext)
 {
 	ostringstream name;
@@ -16,10 +17,11 @@ string give_name( const string& basename, string index, const string& ext)
 	return name.str();
 }
 
+//Eindimensionales Intervallhalbierungs Verfahren
 void IH(std::function<double(VectorXd)> f, VectorXd x, VectorXd g, double &a, double &b, double &c)
 {
   double d;
-  while((c-a)>1e-4)
+  while((c-a)>1e-6)
   {
     if(abs(c-b)>abs(b-a))
     {
@@ -44,7 +46,7 @@ void IH(std::function<double(VectorXd)> f, VectorXd x, VectorXd g, double &a, do
   }
 }
 
-
+//Gradientenverfahren
 void Gradient(string name,std::function<double(VectorXd)> f,std::function<VectorXd(VectorXd)> g, VectorXd x0, double epsilon) {
 
     vector<VectorXd> grad;
@@ -57,25 +59,23 @@ void Gradient(string name,std::function<double(VectorXd)> f,std::function<Vector
         VectorXd gi=VectorXd::Zero(size);
         gi=-g(x[i]);
         grad.push_back(gi);
-        double a=-1000;
-        double b=1;
-        double c=1000;
-        VectorXd lambd=VectorXd::Zero(size);
-        //lambd= IH(f, x[i], gi, a,b,c);
-        //double lam=(lambd(0)+lambd(2))/2;
-        //cout << lam;
+        double a=-100;
+        double b=0;
+        double c=100;
         IH(f,x[i],gi, a,b,c);
         double lam=(a+c)/2.0;
         VectorXd xi=VectorXd::Zero(size);
         xi=x[i]+gi*lam;
         x.push_back(xi);
         i++;
-        if (i>100)
+        //Verhindere Endlosschleife
+        if (i>100000)
         {
             cout << "Keine Konvergenz!";
             break;
         }
     } while (grad[i-1].squaredNorm()>epsilon*epsilon);
+    //speichern der Ergebnisse
     ofstream afile;
     afile.open (give_name("Data/1_gradient_", name, ".txt"), ofstream::out);
     afile << "# xk(0), xk(1), f(xk), abw" << "\n";
@@ -87,6 +87,7 @@ void Gradient(string name,std::function<double(VectorXd)> f,std::function<Vector
 
 }
 
+//Konjugiertes Gradientenverfahren
 void conjugate_gradient(string name,std::function<double(VectorXd)> f,std::function<VectorXd(VectorXd)> g, VectorXd x0, double epsilon) {
 
     vector<VectorXd> p;
@@ -120,12 +121,14 @@ void conjugate_gradient(string name,std::function<double(VectorXd)> f,std::funct
         pi=gi+p[i]*mu;
         p.push_back(pi);
         i++;
-        if (i>100)
+        //Verhindere Endlosschleife
+        if (i>10000)
         {
             cout << "Keine Konvergenz!";
             break;
         }
     } while (g_norm_squared[i]>epsilon*epsilon);
+    //Speichere Ergebnisse
     ofstream afile;
     afile.open (give_name("Data/1_conjugate_", name, ".txt"), ofstream::out);
     afile << "# xk(0), xk(1), f(xk), abw" << "\n";
@@ -140,23 +143,26 @@ void conjugate_gradient(string name,std::function<double(VectorXd)> f,std::funct
 
 
 int main() {
-
+    //Implemetiere Rosenbrock Funktion und Gradient
     std::function<double(VectorXd)> rosen;
-    rosen=[](VectorXd x) { return (1-x(0))*(1-x(0))+100*(x(1)-x(0)*x(0))*(x(1)-x(0)*x(0));};
+    rosen=[](VectorXd x) { return (1.0-x(0))*(1.0-x(0))+100.0*(x(1)-x(0)*x(0))*(x(1)-x(0)*x(0));};
     std::function<VectorXd(VectorXd)> rosen_grad;
     rosen_grad=[](VectorXd x) {
         VectorXd grad(2);
-        grad(0)=(x(0)-1)*2+400*x(0)*(x(0)*x(0)-x(1));
-        grad(1)=200*(x(1)-x(0)*x(0));
+        grad(0)=(x(0)-1.0)*2.0+400.0*x(0)*(x(0)*x(0)-x(1));
+        grad(1)=200.0*(x(1)-x(0)*x(0));
         return grad;};
 
+    //Startwert Rosenbrock
     VectorXd x0a(2);
-    x0a<<-1,1;
+    x0a<<-1,-1;
+
+    //Minimierung Rosenbrock
     string name1="rosenbrock";
-    Gradient(name1,rosen,rosen_grad,x0a,1e-5);
-    conjugate_gradient(name1,rosen,rosen_grad,x0a,1e-5);
+    Gradient(name1,rosen,rosen_grad,x0a,1e-3);
+    conjugate_gradient(name1,rosen,rosen_grad,x0a,1e-3);
 
-
+    //Implemetiere Funktion aus Teil b)
     std::function<double(VectorXd)> f_b;
     f_b=[](VectorXd x) { double x1=x(0);
         double x2=x(1);
@@ -167,28 +173,34 @@ int main() {
     f_b_grad=[](VectorXd x) {
         double x1=x(0);
         double x2=x(1);
-        double g=1+exp(-10*(x1*x2-3)*(x1*x2-3))/(x1*x1+x2*x2);
-        double g_inv=-exp(-10*(x1*x2-3)*(x1*x2-3))/(g*g*(x1*x1+x2*x2));
-        double inx1=-20*(x1*x2-3)*x2-2*x1/((x1*x1+x2*x2)*(x1*x1+x2*x2));
-        double inx2=-20*(x1*x2-3)*x1-2*x2/((x1*x1+x2*x2)*(x1*x1+x2*x2));
+        double ex=exp(10*(x1*x2-3)*(x1*x2-3));
+        double g=2*ex/((ex*(x1*x1+x2*x2)+1)*(ex*(x1*x1+x2*x2)+1));
+        double g1=(10*pow(x1,3)*pow(x2,2)-30*pow(x1,2)*x2+10*x1*pow(x2,4)+x1-30*pow(x2,3));
+        double g2=(10*pow(x2,3)*pow(x1,2)-30*pow(x2,2)*x1+10*x2*pow(x1,4)+x2-30*pow(x1,3));
         VectorXd grad(2);
-        grad(0)=g_inv*inx1;
-        grad(1)=g_inv*inx2;
+        grad(0)=g*g1;
+        grad(1)=g*g2;
         return grad;};
 
+    //Minimierung mit Startwert 1
     VectorXd x0b1(2);
     x0b1<<1.5,2.3;
     string name2="b_1";
     Gradient(name2,f_b,f_b_grad,x0b1,1e-3);
     conjugate_gradient(name2,f_b,f_b_grad,x0b1,1e-3);
 
+    //Minimierung mit Startwert 2
     VectorXd x0b2(2);
     x0b2<<-1.7,-1.9;
     string name3="b_2";
     Gradient(name3,f_b,f_b_grad,x0b2,1e-3);
+    conjugate_gradient(name3,f_b,f_b_grad,x0b2,1e-3);
 
+    //Minimierung mit Startwert 3
     VectorXd x0b3(2);
     x0b3<<0.5,0.6;
     string name4="b_3";
-    Gradient(name4,f_b,f_b_grad,x0b1,1e-3);
+    Gradient(name4,f_b,f_b_grad,x0b3,1e-3);
+    conjugate_gradient(name4,f_b,f_b_grad,x0b3,1e-3);
+
 }
