@@ -1,5 +1,59 @@
-\section*{Aufgabe 2: }
+\section*{Aufgabe 2: BFGS-Verfahren }
 
-%\subsection*{Aufgabenteil a)}
 
-%\subsection*{Aufgabenteil b)}
+  \begin{figure}
+    \centering
+    \includegraphics[width=10cm]{./Plots/plot_A2_a}
+    \caption{Die berechneten f($x_k$) in Abhängigkeit der Iterationsanzahl k für die  exakte inverse Hesse-Matrix.}
+    \label{fig:A2a1}
+  \end{figure}
+  \begin{figure}
+    \centering
+    \includegraphics[width=10cm]{./Plots/plot_A2_a1}
+    \caption{Die berechneten f($x_k$), die kleiner als 6 sind, in Abhängigkeit der Iterationsanzahl k für die  exakte inverse Hesse-Matrix.}
+    \label{fig:A2a2}
+  \end{figure}
+  \begin{figure}
+    \centering
+    \includegraphics[width=10cm]{./Plots/plot_A2_b}
+    \caption{Die berechneten f($x_k$) in Abhängigkeit der Iterationsanzahl k für die Diagonalmatrix auf deren Diagonale die inversen Diagonalelemente der Hesse-Matrix stehen.}
+    \label{fig:A2b1}
+  \end{figure}
+  \begin{figure}
+    \centering
+    \includegraphics[width=10cm]{./Plots/plot_A2_b1}
+    \caption{Die berechneten f($x_k$), die kleiner als 6 sind, in Abhängigkeit der Iterationsanzahl k für die Diagonalmatrix, auf deren Diagonale die inversen Diagonalelemente der Hesse-Matrix stehen.}
+    \label{fig:A2b2}
+  \end{figure}
+  \begin{figure}
+    \centering
+    \includegraphics[width=10cm]{./Plots/plot_A2_c}
+    \caption{Die berechneten f($x_k$) in Abhängigkeit der Iterationsanzahl k für ein Vielfaches der Einheitsmatrix mit einem Vorfaktor f($\vec{x}_0$).}
+    \label{fig:A2c1}
+  \end{figure}
+  \begin{figure}
+    \centering
+    \includegraphics[width=10cm]{./Plots/plot_A2_c1}
+    \caption{Die berechneten f($x_k$), die kleiner als 6 sind, in Abhängigkeit der Iterationsanzahl k für ein Vielfaches der Einheitsmatrix mit einem Vorfaktor f($\vec{x}_0$)}
+    \label{fig:A2c2}
+  \end{figure}
+
+  In den Abbildungen \ref{fig:A2a1}, \ref{fig:A2b1} und \ref{fig:A2c1} sind die berechneten Werte für $f(\vec{x}_k)$ gegen $k$ aufgetragen. Für einen
+  besseren Vergleich wurde in den Abbildungen \ref{fig:A2a2}, \ref{fig:A2b2} und \ref{fig:A2c2} die y-Achse auf Werte unter 6 eingeschränkt. Die blaue
+  Linie zeichnet dabei das Minimum der Funktion $f(\vec{x}_\text{min})=0$ für $\vec{x}_\text{min}=(1,1)^T$ ein, welchens analytisch bestimmt wurde.
+
+  Die Endergebnisse der numerisch bestimmten Werte sind für die  exakte inverse Hesse-Matrix
+  $$k_a = 84 $$
+  $$ \vec{x}_\text{min,a}= (0.999918 , 0.999918)^T $$
+  $$f(\vec{x}_\text{min,a})=8.48384e-09, $$
+  für die Diagonalmatrix, auf deren Diagonale die inversen Diagonalelemente der Hesse-Matrix stehen,
+  $$k_b= 145$$
+  $$\vec{x}_\text{min,b}=(0.999992 , 0.999992)^T$$
+  $$f(\vec{x}_\text{min,b})=6.91759e-11$$
+  und für das Vielfaches der Einheitsmatrix mit einem Vorfaktor f($\vec{x}_0$)
+  $$k_c= 159$$
+  $$\vec{x}_\text{min,c}=(1.00001 , 1.00001)^T$$
+  $$ f(\vec{x}_\text{min,c})=6.87231e-11.$$
+
+  Die Iterationsanzahl für die erste Mäglichkeit ist geringer als die für die Zweite, die wiederrum geringer ist als die für die Dritte.
+  
