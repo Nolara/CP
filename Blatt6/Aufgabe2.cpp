@@ -57,7 +57,7 @@ void BFGS(string name, std::function<double(VectorXd)> f, std::function<VectorXd
     }while(bk.squaredNorm()>epsilon);
     file.flush();
     file.close();
-    //cout << name << " k= " << k << "  x_min=(" << xk(0) <<  " , " << xk(0) << ")^T    f(xmin)=" << f(xk) << '\n';
+    cout << name << " k= " << k << "  x_min=(" << xk(0) <<  " , " << xk(0) << ")^T    f(xmin)=" << f(xk) << '\n';
 }
 
 
@@ -72,7 +72,7 @@ int main()
         VectorXd grad(2);
         grad(0)=(x(0)-1)*2+400*x(0)*(x(0)*x(0)-x(1));
         grad(1)=200*(x(1)-x(0)*x(0));
-        return grad;};
+        return -grad;};
     VectorXd x0(2);
     x0(0)=-1;
     x0(1)=1;
