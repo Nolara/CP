@@ -88,7 +88,6 @@ void Newton (double (*f)(double, int &), double x0, double accuracy) {
 
 int main() {
     double accuracy=1e-9;
-
     Newton(f, 1, accuracy);
     IH(f, -0.5,-0.1,2, accuracy);
 }
