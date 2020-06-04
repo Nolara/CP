@@ -1,5 +1,39 @@
 \section*{Aufgabe 0: Verständnisfragen}
 
-\textbf{Frage 1): }\\
+\textbf{Frage 1): Nennen Sie Ihnen bekannte Verfahren zur Minimierung von Funktionen der Form $f: \mathbb{R}^N \to \mathbb{R}$
+mit $N>1$. Beschreiben Sie das generelle Vorgehen bei derartigen Minimierungsaufgaben und
+diskutieren Sie Vor- bzw. Nachteile der jeweiligen Verfahren.} \\
+\begin{itemize}
+  \item Gradientenverfahren
+    \begin{itemize}
+      \item[*] geht von einem Startpunkt aus entlang einer Abstiegsrichtung, bis keine numerische Verbesserung mehr erfolgt
+      \item[+] konervergiert immer in ein Minimum
+      \item[-] langsam
+      \item[-] evt. tritt das Problem auf, dass zwei aufeinanderfolgende Gradienten orthogonal zueinander, aber nicht konjungiert sind
+    \end{itemize}
+  \item[→] konjungiert Gradientenverfahren
+    \begin{itemize}
+      \item[*]alle Richtungen, in die eindim. minimiert wird, sind näherungsweise konjungiert (exakt bei quad. Form)
+      \item[+] effizienter
+      \item[-] bei großen $N$ müssen die Minimierungen oft durchgeführt werden
+    \end{itemize}
+\end{itemize}
+Bemerkung: Beide Verfahren gelangen bei hohen $N$ schnell in "die Nähe" des Minimums, dann ist aber Konvergenz sehr langsam. Dann ist eine Kombination mit dem Newton-Verfahren besser.
+\begin{itemize}
+  \item Newton-Verfahren im $\mathbb{R}^N$
+  \begin{itemize}
+    \item[+] wenn Konvergenz, dann sehr schnell $\sim\frac{1}{k^2}$
+    \item[-] Aufwand Hessematrix $\symcal{H}$ zu bestimmen wird bei großen $N$ sehr aufwendig
+  \end{itemize}
+  \item[→] Quasi-Newton-Verfahren
+  \begin{itemize}
+    \item[*] keine direkte Berechnung der Hessematrix, sondern iterative Approximation
+    \item[*] BFGS-Verfahren oder DFP-Verfahren
+  \end{itemize}
+\end{itemize}
 
-\textbf{Frage 2): }\\
+\textbf{Frage 2): Diskutieren Sie den Grundgedanken von Minimierung unter Nebenbedingungen. Erläutern Sie
+dabei insbesondere die Funktionsweise und den Einsatz von penalty functions.}\\
+Problemstellung: Minima von $f(\vec{x})$ in der Menge $x\in\mathbb{R}^N$ mit den NB zu finden, wobei die NB durch setzen von Funktionen auf gegebene Werte definiert ist.
+Also wird nicht $f(\vec{x})$ minimiert, sondern die Lagrangefunktion $F(\vec{x},\mu)$, wobei $\mu$ der Lagrangeparameter ist.
+Mit Hilfe der Einführung der sogenannten penalty function wird versucht das aufgeführte Problem auf Minimierung ohne NB zuruückzuführen.
