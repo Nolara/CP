@@ -6,8 +6,8 @@ one:	Aufgabe1.cpp | Data
 		g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe1.cpp -o Aufgabe1
 		./Aufgabe1
 
-two:	Aufgabe2.cpp | Data
-		g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe2.cpp -o Aufgabe2
+two:	Aufgabe2.cpp Profiler.cpp Profiler.h| Data
+		g++ $(CFLAGS) $(INCPATH) -O3 -ffast-math -march=native -std=c++11 Aufgabe2.cpp profiler.cpp -o Aufgabe2
 		./Aufgabe2
 
 plot1: one | Plots
