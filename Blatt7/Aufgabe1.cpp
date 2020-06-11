@@ -92,7 +92,7 @@ int main() {
     y04.head(3)=r04;
     y04.tail(3)=v04;
 
-    double h=0.01;
+    double h=0.001;
     double tf=5*2*M_PI;
     double m=2;
 
@@ -103,7 +103,7 @@ int main() {
 
     // double hb=0.1;
     // double tfb=20*2*M_PI;
-
+	//
     // VectorXd r0(3);
     // r0 <<1,0,0;
     // VectorXd v0(3);
@@ -128,6 +128,6 @@ int main() {
     //     {
     //         break;
     //     }
-    // } while (abw(i)>1e-5);
+    // } while (abw(i)>1e-2);
 
 }

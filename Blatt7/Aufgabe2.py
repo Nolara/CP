@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 from uncertainties import ufloat
 from scipy.stats import sem
 
-t1, x1,v1, E1= np.genfromtxt('./Data/2_1.txt', unpack=True)
-t2, x2,v2, E2= np.genfromtxt('./Data/2_2.txt', unpack=True)
-t3, x3,v3, E3= np.genfromtxt('./Data/2_3.txt', unpack=True)
-t4, x4,v4, E4= np.genfromtxt('./Data/2_4.txt', unpack=True)
-t5, x5,v5, E5= np.genfromtxt('./Data/2_5.txt', unpack=True)
-tb, xb,vb, Eb= np.genfromtxt('./Data/2_b.txt', unpack=True)
+t1, x1,v1, E1k, E1p= np.genfromtxt('./Data/2_1.txt', unpack=True)
+t2, x2,v2, E2k, E2p= np.genfromtxt('./Data/2_2.txt', unpack=True)
+t3, x3,v3, E3k, E3p= np.genfromtxt('./Data/2_3.txt', unpack=True)
+t4, x4,v4, E4k, E4p= np.genfromtxt('./Data/2_4.txt', unpack=True)
+t5, x5,v5, E5k, E5p= np.genfromtxt('./Data/2_5.txt', unpack=True)
+tb, xb,vb, Ebk, Ebp= np.genfromtxt('./Data/2_b.txt', unpack=True)
 tc, l_ab, f_ab, l_rk, f_rk= np.genfromtxt('./Data/2_Vergleich.txt', unpack=True)
 
 
@@ -67,7 +67,8 @@ plt.savefig('Plots/2_5.pdf')
 plt.figure(6)
 plt.plot (tb,xb, 'b-', label='Ort')
 plt.plot (tb,vb, 'r-', label='Geschwindigkeit')
-plt.plot (tb,Eb, 'g-', label='Energie/m')
+plt.plot (tb,Ebp, 'g-', label=' Potentielle Energie/m')
+plt.plot (tb,Ebk, 'y-', label=' Kinetische Energie/m')
 plt.grid()
 plt.xlabel('t')
 plt.ylabel('')

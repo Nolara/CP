@@ -36,7 +36,7 @@ MatrixXd RK (VectorXd (*f)(VectorXd, VectorXd, double, int &), VectorXd y0, doub
         VectorXd k4=h*f(y.col(i).head(dim)+k3,y.col(i).tail(dim),a,count);
         VectorXd v_np1=(k1+2*k2+2*k3+k4)*1/6+y.col(i).tail(dim);
         VectorXd y_np1(size);
-        y_np1.head(dim)=y.col(i).head(dim)+y.col(i).tail(dim)*h,
+        y_np1.head(dim)=y.col(i).head(dim)+y.col(i).tail(dim)*h;
         y_np1.tail(dim)=v_np1;
         y.col(i+1)=y_np1;
 
@@ -68,8 +68,9 @@ void Adams_Bashforth (string name,VectorXd (*f)(VectorXd, VectorXd, double, int 
     afile << "# t,x,v" << "\n";
     for (int j = 0; j < n; ++j)
     {
-		double E=0.5*y.col(j)(0)*y.col(j)(0)+a*y.col(j)(0)*y.col(j)(1)+0.5*y.col(j)(1)*y.col(j)(1);
-        afile << h*j << "\t" << y.col(j)(0) << "\t" << y.col(j)(1) << "\t" << E << "\n";
+		double Ekin =0.5*y.col(j)(1)*y.col(j)(1);
+		double Epot=a*y.col(j)(0)*y.col(j)(1)+0.5*y.col(j)(0)*y.col(j)(0);
+        afile << h*j << "\t" << y.col(j)(0) << "\t" << y.col(j)(1) << "\t" << Ekin << "\t" << Epot << "\n";
     }
     afile.close();
 }
