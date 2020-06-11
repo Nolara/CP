@@ -3,14 +3,10 @@
 #include <vector>
 #include <Eigen/Dense>
 #include <math.h>
-#include <complex>
 
 
 using namespace std;
 using namespace Eigen;
-
-
-
 
 string give_name( const string& basename, string index, const string& ext)
 {
@@ -19,115 +15,102 @@ string give_name( const string& basename, string index, const string& ext)
 	return name.str();
 }
 
-void RK (string name, std::function<VectorXd(VectorXd, double m)> f, VectorXd &y0, double h, double tf, double m) {
-    int n=tf/h;
-	int size=y0.size();
-	int dim =size/2;
-    MatrixXd y=MatrixXd::Zero(size,n+1);
-	y.col(0)=y0;
 
-    VectorXd E(n);
-
-
-    for (int i = 0; i < n; ++i)
-    {
-        E(i)=0.5*m*(y.col(i).tail(dim).squaredNorm()+y.col(i).head(dim).squaredNorm());
-        VectorXd k1=h*f(y.col(i).head(dim),m)/m;
-        VectorXd k2=h*f(y.col(i).head(dim)+0.5*k1,m)/m;
-        VectorXd k3=h*f(y.col(i).head(dim)+0.5*k2,m)/m;
-        VectorXd k4=h*f(y.col(i).head(dim)+k3,m)/m;
-        VectorXd v_np1=(k1+2*k2+2*k3+k4)*1/6+y.col(i).tail(dim);
-        VectorXd y_np1(6);
-        y_np1.head(dim)=y.col(i).head(dim)+y.col(i).tail(dim)*h,
-        y_np1.tail(dim)=v_np1;
-        y.col(i+1)=y_np1;
-
-    }
-    y0=y.col(n-1);
-
-    ofstream afile;
-    afile.open (give_name("Data/1_", name, ".txt"), ofstream::out);
-    afile << "# t,x1, x2, x3, v1,v2,v3" << "\n";
-    for (int j = 0; j < n; ++j)
-    {
-        afile << h*j << "\t" << y.col(j)(0) << "\t" << y.col(j)(1) << "\t" << y.col(j)(2) << "\t" << y.col(j)(3) << "\t" << y.col(j)(4) << "\t" << y.col(j)(5) << "\t" <<  E(j) <<"\n";
-    }
-    afile.close();
+VectorXd funkt(VectorXd r, double m){
+    return -m*r;
 }
 
-int main() {
-    std::function<VectorXd(VectorXd, double)> f;
-    f=[](VectorXd r, double m) { return -m*r;};
+void RungeKutta(string name,std::function<VectorXd(VectorXd,double m)> f,VectorXd &r0,VectorXd &v0, double &h,double t_stopp,double m){
+    ofstream file (give_name("Data/one",name,".txt"), std::ofstream::out);
+    file << "#n  y, y2 y3 y v1 v2 v3 v Eges \n\n";
 
-    VectorXd r01(3);
-    r01 <<1,0,0;
-    VectorXd v01(3);
-    v01 <<0,0,0;
-    VectorXd y01(6);
-    y01.head(3)=r01;
-    y01.tail(3)=v01;
+    VectorXd k1,k2,k3,k4,yn,vn;
+    double tn;
+    double E;
+    yn=r0;
+    vn=v0;
+    E=0.5*m*(vn.squaredNorm()+yn.squaredNorm());   
+    int N=t_stopp/h;
+    file << 0 << '\t' << yn.transpose() <<'\t' << yn.norm() <<'\t' << vn.transpose() <<'\t' << vn.norm()<<'\t'<<E<<'\n';
+    for(int n=1; n<=N; n++){
+        tn = n*h;
+        k1=h*f(yn,m)/m;
+        k2=h*f(yn+k1/2,m)/m;
+        k3=h*f(yn+k2/2,m)/m;
+        k4=h*f(yn+k3,m)/m;
+        yn= yn + vn*h;  
+        vn= vn +(k1+2*k2+2*k3+k4)/6;  
+        E=0.5*m*(vn.squaredNorm()+yn.squaredNorm());
+        file << tn << '\t' << yn.transpose() <<'\t' << yn.norm()<<'\t' << vn.transpose() <<'\t' << vn.norm() <<'\t'<<E << '\n';
+    }
+    file.flush();
+    file.close();
+}
 
 
-    VectorXd r02(3);
-    r02 <<2,0,0;
-    VectorXd v02(3);
-    v02 <<3,0,0;
-    VectorXd y02(6);
-    y02.head(3)=r02;
-    y02.tail(3)=v02;
+// Hier wie in void RungeKutta, nur ohne Abspeicherung der Daten und ohne tn,E -> Schnelleres rechnenfür die b)
+void RungeKutta2(std::function<VectorXd(VectorXd,double m)> f,VectorXd &r0,VectorXd &v0, double &h,double t_stopp,double m){
+    VectorXd k1,k2,k3,k4,yn,vn;
+    yn=r0;
+    vn=v0;
+    int N=t_stopp/h;
+    for(int n=1; n<=N; n++){
+        k1=h*f(yn,m)/m;
+        k2=h*f(yn+k1/2,m)/m;
+        k3=h*f(yn+k2/2,m)/m;
+        k4=h*f(yn+k3,m)/m;
+        yn= yn + vn*h;  
+        vn= vn +(k1+2*k2+2*k3+k4)/6;  
+    }
+    r0=yn;  // Um die Abweichung r0-ri außerhalb dieser Fkt bestimmen zu können
+}
 
-    VectorXd r03(3);
-    r03 <<2,0,0;
-    VectorXd v03(3);
-    v03 <<-3,0,0;
-    VectorXd y03(6);
-    y03.head(3)=r03;
-    y03.tail(3)=v03;
 
-    VectorXd r04(3);
-    r04<<2,4,0;
-    VectorXd v04(3);
-    v04 <<0,-1,3;
-    VectorXd y04(6);
-    y04.head(3)=r04;
-    y04.tail(3)=v04;
+int main()
+{
+    double h = 1./100;
+    double t_stopp = 20.;
+    double m = 1.;
 
-    double h=0.01;
-    double tf=5*2*M_PI;
-    double m=2;
+    VectorXd v0(3);
+    v0<< 0,0,0;
+    VectorXd r0 = VectorXd::Random(3); 
+    RungeKutta("1",funkt, r0,v0, h,t_stopp,m);      //r0 beliebig, v0=0
+    double h1 = 1./10;
+    RungeKutta("1b",funkt, r0,v0, h1,t_stopp,m);     
+    double h2 = 1./1000;
+    RungeKutta("1c",funkt, r0,v0, h2,t_stopp,m);      
 
-    RK("1",f,y01,h,tf,m);
-    RK("2",f,y02,h,tf,m);
-    RK("3",f,y03,h,tf,m);
-    RK("4",f,y04,h,tf,m);
 
-    // double hb=0.1;
-    // double tfb=20*2*M_PI;
+    v0 = VectorXd::Random(3);
+    r0 = v0; 
+    RungeKutta("2",funkt, r0,v0, h,t_stopp,m);  //v0 beliebig, r0=v0
+    
+    v0 = VectorXd::Random(3);
+    r0 = VectorXd::Random(3);
+    RungeKutta("3",funkt, r0,v0, h,t_stopp,m);   // r0, v0 beliebig
 
-    // VectorXd r0(3);
-    // r0 <<1,0,0;
-    // VectorXd v0(3);
-    // v0 <<0,0,0;
-    // VectorXd y0(6);
-    // y0.head(3)=r0;
-    // y0.tail(3)=v0;
-	//
-	//
-    // ofstream bfile ("Data/1_abw.txt", std::ofstream::out); // Erstelle txt Datei
-    // VectorXd abw(20);
-    // int i=0;
-    // do
-    // {
-    //     i++;
-    //     hb=hb/2;
-    //     VectorXd y=y0;
-    //     RK("for_abw",f,y,hb,tfb,m);
-    //     abw(i)=(r01-y.head(3)).norm();
-    //     bfile << hb << "\t" << abw(i) << "\n";
-    //     if (i>15)
-    //     {
-    //         break;
-    //     }
-    // } while (abw(i)>1e-5);
 
+    /// b) 
+    ofstream fileb ("Data/one_abw.txt", std::ofstream::out); 
+    fileb << "# h  abw" << "\n\n";
+    t_stopp = 20*M_PI;
+    v0<< 0,0,0;
+    r0 = VectorXd::Random(3); 
+    VectorXd ri = r0; 
+    double abw; 
+    h = 1./100;
+    do{
+        RungeKutta2(funkt, ri,v0,h,t_stopp,m);
+        abw=(r0-ri).norm();
+        fileb << h << '\t' << abw << '\n';
+        ri=r0;
+        h=h/2;
+    }while(abw>pow(10,-5));
+    fileb.flush();
+    fileb.close();
+    
+
+
+    cout << '\n'<< "Ende Aufgabe 1" << '\n'<< '\n';
 }
