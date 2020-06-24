@@ -1,0 +1,28 @@
+\section*{Aufgabe 0: Verständnisfragen}
+
+\textbf{Frage 1): Erklären Sie, woraus die Formeln der Adams-Bashforth- und Adams-Moulton-Methode im Wesentlichen
+folgen. }\\ Die Adams Varianten basieren auf den Quadraturformeln und der Integration. Das Problem der Form
+\begin{align*}
+  y'(x)=f(t,y(t)) \\
+\intertext{wird so umgeformt, dass}
+  y(t_{i+1}) = y(t_i)+\int_{t_i}^{t_{i+1}} f(t,y(t))
+\end{align*}
+vorliegt. Die Idee ist $t \mapsto f(t,y(t))$ in geeigneten Punkten zu interpolieren und das Interpolationspolynom zu integrieren.
+Also wird das Integral mittels Quadraturformel unter Verwendung der Stützstellen approximiert.\\
+
+\textbf{Frage 2): Was ist der Unterschied zwischen einem expliziten und einem impliziten Mehrschrittverfahren?
+Welches Problem kann bei Letzterem auftreten? }\\
+Bei dem expliziten Adams-Bashforth-Methoden gilt, dass die Schrittzahl ($s$) gleich der Ordnung ($p$) ist. Zum Beispiel
+\begin{align*}
+  s&=1 && y_{i+1}=y_i+h\cdot f_{i} \\
+  p&=1
+\end{align*}
+Die Konvergenzordnung liegt bei einem explizieten $k$-Schritten Verfahren bei $k$.
+Bei den impliziten Adams-Moulton Methode gilt, dass die Ordnung gleich Schrittzahl plus eins $(s+1=p)$ entspricht.
+Also
+\begin{align*}
+  s&=0 && y_{i+1}=y_i+h\cdot f_{i+1} \\
+  p&=1
+\end{align*}
+Beim impliziten Verfahren wird zur Berechnung also auch der zu berechnende Wert selbst verwendet.
+Die Konvergenzordnung liegt bei $k+1$.

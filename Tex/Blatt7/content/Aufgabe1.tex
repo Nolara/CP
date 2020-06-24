@@ -1,0 +1,121 @@
+\section*{Aufgabe 1: Runge-Kutta-Verfahren}
+
+  \subsection*{a)}
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_1}
+      \caption{Lösung der Newtonsche Bewegungsgleichung für die AB \ref{eqn:AB1} und $h=1/100$.}
+      \label{fig:A11}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_1b}
+      \caption{Lösung der Newtonsche Bewegungsgleichung für die AB \ref{eqn:AB1} und $h=1/10$.}
+      \label{fig:A11b}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_1c}
+      \caption{Lösung der Newtonsche Bewegungsgleichung für die AB \ref{eqn:AB1} und $h=1/1000$.}
+      \label{fig:A11c}
+    \end{figure}
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_2}
+      \caption{Lösung der Newtonsche Bewegungsgleichung für die AB \ref{eqn:AB2} und $h=1/100$.}
+      \label{fig:A12}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_3}
+      \caption{Lösung der Newtonsche Bewegungsgleichung für die AB \ref{eqn:AB3} und $h=1/100$.}
+      \label{fig:A13}
+    \end{figure}
+
+    In den Abbildungen \ref{fig:A11}, \ref{fig:A11b}, \ref{fig:A11c}, \ref{fig:A12} und \ref{fig:A13} sind Lösungen der
+    Newtonsche Bewegungsgleichung für ein Teilchen in dem Kraftfeld $\vec{F}(\vec{r})$ graphisch
+    dargestellt.
+    \begin{equation}
+      \dot{\vec{r}} = \vec{v}
+    \end{equation}
+    \begin{equation}
+      \dot{\vec{v}}= \vec{F}(\vec{r})/m
+    \end{equation}
+    \begin{equation}
+      \vec{F}(\vec{r}) = - \vec{r} m \omega^2
+    \end{equation}
+    Dabei wurde $\omega=1$ gesegtzt.
+    Es wurden drei unterschiedliche Anfangsbedingungen gewählt
+    \begin{equation}
+      \vec{r}_0 \text{ belibig},\,\,\,\, \vec{v}_0=0,
+      \label{eqn:AB1}
+    \end{equation}
+    \begin{equation}
+      \vec{r}_0\text{ belibig},\,\,\,\,  \vec{v}_0= \vec{r}_0,
+      \label{eqn:AB2}
+    \end{equation}
+    und
+    \begin{equation}
+      \vec{r}_0,\, \vec{v}_0 \text{ belibig}
+      \label{eqn:AB3}
+    \end{equation}
+
+    In den Abbildungen \ref{fig:A11}, \ref{fig:A11b} und \ref{fig:A11c} wurden
+    die Anfangsbedingungen aus Gleichung \ref{eqn:AB1} benutzt und die Schrittweite $h$ variiert.
+    Zu erkennen ist, dass die Amplituden mit der Zeit größer werden und dass dieser
+    Anstieg mit kleinerem $h$ kleiner wird.
+
+    In den Abbildungen \ref{fig:A11},  \ref{fig:A12} und \ref{fig:A13} wurde
+    für die selbe Schrittweite $h=1/100$ die Anfangsbedingungen aus
+    den Gleichungen \ref{eqn:AB1}, \ref{eqn:AB2} und \ref{eqn:AB3} genutzt.
+    Dabei fällt auf, dass für die Anfangsbedingung aus \ref{eqn:AB3} im Gegensatz
+    zu den anderen beiden die einzelnen $r_i$ und $v_i$ Komponenten zuweinander
+    verschoben schwingen.
+
+    In der Abbildung \ref{fig:A11} ist eine Frequenz von $T= 2\pi$ zu erkennen.
+
+
+  \subsection*{b)}
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_abw}
+      \caption{Abweichung $|\vec{r}_0 - \vec{r}_i|$ gegen die Schrittweite $h$ nach 10 Schwingungen.}
+      \label{fig:A1abw}
+    \end{figure}
+    Da wie in der a) bestimmt die Frequenz $2\pi$ ist, ist die Zeit, die nach
+    10 Schwinungen vergangen ist, $t_\text{stopp}=10\cdot2\pi$. In der Abbildung \ref{fig:A1abw}
+    ist die Abweichung $|\vec{r}_0 - \vec{r}(t_\text{stopp})|$ gegen die Schrittweite $h$
+    aufgetragen.
+    Es ist zu erkennen, dass für eine Schrittweite von 1.52588$\cdot10^{-7}$ die Genauigkeit bei 6.95042$\cdot10^{-6}$ liegt, also unter $10^{-5}$. Dazu wurde die Schrittweite beginnend ab 0.01 so lange halbiert, bis die Genauigkeit erreicht war. Es ist zu erkennen, dass die Genauigkeit linear mit der Schrittweite steigt.
+
+  \subsection*{c)}
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_E}
+      \caption{Gesammtenergie für AB \ref{eqn:AB1} und verschiedene Schrittweiten.}
+      \label{fig:A1E}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=10cm]{../../Blatt7/Plots/plot_A1_E2}
+      \caption{Gesammtenergie für verschiedene Anfangsbedingungen und Schrittweite $h=1/100$.}
+      \label{fig:A1E2}
+    \end{figure}
+
+    In der Abbildunge \ref{fig:A1E} ist die Gesammtenergie für die
+    Anfangsbedingungen \ref{eqn:AB1} für unterschiedliche Schrittweiten
+    gegen die Zeit dargestellt. Die Energie nimmt mit der Zeit bei allen drei
+    Schrittweiten zu, je kleiner die Schrittweite, desto geringer ist der Energieanstieg
+    und desto genauer ist die Lösung.
+
+    In der Abbildunge \ref{fig:A1E2} ist die Gesammtenergie für die drei verschiedenen
+    Anfangsbedingungen gegen die Zeit aufgetragen. Die Schrittweite ist hier $h=1/100$.
+
+    Die Gesammtenergie berechnet sich nach
+    \begin{equation}
+      E_\text{ges}(t) = \frac{m}{2}(v^2(t)+r^2(t)).
+    \end{equation}

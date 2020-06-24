@@ -1,0 +1,116 @@
+\section*{Aufgabe 2: }
+
+\subsection*{Aufgabenteil a)}
+
+Zur Lösung d-dimensionaler Bewegungsgleichungen wird das Adams-Bashforth-Verfahren 4. Ordnung implementiert.
+Die ersten Iterationsschritte werden dabei mit Hilfe des Runge-Kutta Verfahrens 4. Ordnung durchgeführt. \\
+Die Implementierung wird an der Bewegungsgleichung
+\begin{equation}
+  \ddot{x}=-x-\alpha\dot{x}
+  \label{eqn:Bwgl_2}
+\end{equation}
+getestet.
+Für den Algorithmus wird der Ansatz
+\begin{align}
+  \dot{x}&=v \\
+  \dot{v}&=-x-\alpha v
+\end{align}
+gewählt um das Problem auf ein System der Ordnung 1 zu reduzieren. \\
+Mit dem Ansatz $x=\text{e}^{\lambda t}$ ergeben sich analytisch für $\lambda$ in Abhängigkeit von $\alpha$ die Lösungen
+\begin{align}
+  &\lambda^2+\alpha\lambda +1=0 \\
+  &\lambda_{1,2}=-\frac{\alpha}{2}\pm \sqrt{\frac{\alpha^4}{4}-1} \: .
+\end{align}
+Daraus ergeben sich folgende Fälle:
+\begin{itemize}
+  \item $\alpha=0$: $\lambda_{1,2}=\pm i$ ungedämpfte, periodische Schwingung mit Schwingungsfrequenz 1, Abbildung \ref{fig:2_1}
+  \item $0<\alpha<2$: $\lambda_{1,2}=-\frac{\alpha}{2} \pm i\underbrace{\sqrt{\frac{1-\alpha^4}{4}}}_{>0}$: Gedämpfte Schwingung mit Schwingungsfrequenz $\sqrt{1-\frac{\alpha^4}{4}}$ und Dämpfung $\frac{\alpha}{2}$, Abbildung \ref{fig:2_2}
+  \item $\alpha=2$: $\lambda_{1,2}=-1$ Aperiodischer Grenzfall, exponentieller Abfall mit Dämpfung 1, entartete Lösungen, Abbildung \ref{fig:2_3}
+  \item $\alpha>2$: $\lambda_{1,2}=-\frac{\alpha}{2}\pm \underbrace{\sqrt{\frac{\alpha^4}{4}-1}}_{>0}$ Überdämpfter Fall (Kriechfall): exponentieller Abfall mit Dämpfung $\frac{\alpha}{2}\mp \sqrt{\frac{\alpha^4}{4}-1}$, Abbildung \ref{fig:2_4}
+  \item $\alpha<0$: $\lambda_{1,2}=\underbrace{-\frac{\alpha}{2}}_{>0} \pm i\underbrace{\sqrt{\frac{1-\alpha^4}{4}}}_{>0}$ \textbf{unphysikalisch}, negative Dämpfung $\to$ Schwingung mit Frequenz $\sqrt{1-\frac{\alpha^4}{4}}$ mit ansteigender Amplitude, Abbildung \ref{fig:2_5}
+\end{itemize}
+Die Lösung der einzelnen Fälle mit dem Adams-Bashforth Verfahren 4. Ordnung  sind in Abbildung \ref{fig:2} dargestellt. Dazu wurde jeweils die Startwerte $x_0=1$ und $v_0=0$ gewählt, sowie eine Schrittweite von h=0.0001
+und eine Zeitspanne von $t=5\cdot 2\pi$. In den gedämpften Fällen sind zudem die Einhüllenden des exponentiellen  Abfalls eingezeichnet.
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_4.pdf}
+\subcaption{$\alpha=0$, Ungedämpfter Fall}
+\label{fig:2_1}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_1.pdf}
+\subcaption{$\alpha=0.5$, Gedämpfte Schwingung}
+\label{fig:2_2}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_2.pdf}
+\subcaption{$\alpha=2$, Aperiodischer Grenzfall}
+\label{fig:2_3}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_3.pdf}
+\subcaption{$\alpha=4$, Überdämpfter Fall}
+\label{fig:2_4}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_5.pdf}
+\subcaption{$\alpha=-0.1$, unphysikalischer Fall mit negativer Dämpfung}
+\label{fig:2_5}
+\end{subfigure}
+\caption{Lösung der Bewegungsgleichung \eqref{eqn:Bwgl_2} mit dem Adams-Bashforth-Verfahren 4. Ordnung.}
+\label{fig:2}
+\end{figure}
+
+Es lässt sich erkennen, dass die Fälle den jeweils erwarteten Verläufen entspricht.
+
+\subsection*{Aufgabenteil b)}
+
+Zur Untersuchung der Energieerhaltung wird die Energie
+\begin{align}
+  E_{\text{kin}}&=\frac{1}{2}mv^2 \\
+  E_{\text{pot}}&=\frac{1}{2}mx^2+\alpha x v \\
+  E&=E_{\text{kin}}+E_{\text{pot}}
+\end{align}
+
+über einen Zeitraum $t = 20$ für $\alpha = 0.1$ beobachtet. Diese ist, geteilt durch $m$, zusammen mit der Schwingung in Abbildung \ref{fig:2_E} dargestellt. Um die Abweichungen von der Energieerhaltung darzustellen, wird das Verhältniss der Energie zur ursprünglichen Energien $\frac{E}{E_0}$ in Abbildung \ref{fig:2_E_rel} dargestellt.
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_b.pdf}
+\subcaption{Verlauf der Energie.}
+\label{fig:2_E}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_b_rel.pdf}
+\subcaption{Verlauf des Energieverhältnisses.}
+\label{fig:2_E_rel}
+\end{subfigure}
+\end{figure}
+Es lässt sich erkennen, dass die Energie über die Zeit immer weiter abnimmt bis auf etwa 13 \% des Ursprungswertes, was vermutlich an der Dämpfung mit $\frac{\alpha}{2}=0.05$ liegt.
+
+\subsection*{Aufgabenteil c)}
+
+Zum Vergleich des Adams-Bashforth-Verfahrens 4. Ordnung mit dem Runge-Kutta Verfahren 4. Ordnung im Hinblick auf Laufzeit und Anzahl an Funktionsaufrufen werden beide Verfahren verwendet um die Bewegungsgleichung \eqref{eqn:Bwgl_2} in einem Zeitraum von $t\in\{10,50,100,1000\}$ zu lösen. Dabei werden
+die Funktionsaufrufe automatisch gezählt und
+die Laufzeiten über den Profiler von Blatt 2 gemessen, wobei zur Messung der Laufzeit die Passage zum Abspeichern der Funktionswerte auskommentiert wurde um eine bessere Vergleichbarkeit herzustellen. Die Ergebnisse
+für die Laufzeit sind in Abbildung \ref{fig:2_c_zeit} dargestellt und die Funktionsaufrufe in Abbildung \ref{fig:2_c_aufrufe}. Die Werte werden linear gefittet, woraus sich
+\begin{align}
+  \text{Laufzeit}_{AB}&=(0.003792 \pm 0.000015)\text{s}/t + (-0.012 \pm 0.008)\text{s} \\
+  \text{Laufzeit}_{RK}&= (0.01995 \pm 0.00004)\text{s}/t + (-0.033 \pm 0.021)\text{s} \\
+  \text{Funktionsaufrufe}_{AB}&\approx1000 \:/t+ 13 \\
+  \text{Funktionsaufrufe}_{RK}&\approx4000 \:/t+ 0 \\
+\end{align}
+ergibt. Die Geraden sind ebenfalls in Abbildung \ref{fig:2} eingezeichnet.
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_c_laufzeit.pdf}
+\subcaption{Vergleich der Laufzeit.}
+\label{fig:2_c_zeit}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt7/Plots/2_c_funktionsaufrufe.pdf}
+\subcaption{Vergleich der Funktionsaufrufe.}
+\label{fig:2_c_aufrufe}
+\end{subfigure}
+\end{figure}
+Es lässt sich erkennen, dass das Runge-Kutta Verfahren vier Funktionsaufrufe pro Schritt benötigt (1000 Schritte pro $t$) und das Adams-Bashforth hingegen nur einen, wie aus der Implementierung zu erwarten war. Auch die Laufzeit ist bei dem Adams-Bashforth deutlich geringer, sie beträgt nur etwa 19\% der Laufzeit von Runge-Kutta, wie sich aus den Steigungen erkennen lässt. Bei komplizierteren Funktionen wird dieser Laufzeitunterschied vermutlich noch stärker
+ausgeprägt sein und das Adams-Bashforth Verfahren ist in diesem Fall deutlich effizienter.
