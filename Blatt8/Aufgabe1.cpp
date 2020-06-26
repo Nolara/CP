@@ -21,13 +21,20 @@ string give_name( const string& basename, string index, const string& ext) {
 VectorXd Kraft_LJ(VectorXd &r, double &rc){
 	const int dim=r.size();
 	double r_squared=r.squaredNorm();
+
+
 	if (r_squared>(rc*rc)) {
 		VectorXd f=VectorXd::Zero(dim);
+		return f;
+	} else if (r_squared ==0) {
+		r_squared+=1e-9;
+		VectorXd f=24*(2*pow(r_squared,-7)-pow(r_squared,-4))*r;
 		return f;
 	} else {
 		VectorXd f=24*(2*pow(r_squared,-7)-pow(r_squared,-4))*r;
 		return f;
 	}
+
 }
 
 //Lennard Jones Potential zur Berechnung der Potentiellen Energie
@@ -35,13 +42,20 @@ VectorXd Kraft_LJ(VectorXd &r, double &rc){
 //Es wird der Werte der potentiellen Energie ausgegeben
 double Pot_LJ(VectorXd &r, double &rc){
 	double r_squared=r.squaredNorm();
+
 	if (r_squared>(rc*rc)) {
 		double f=0;
+		return f;
+	} else if (r_squared ==0) {
+		r_squared+=1e-9;
+		double f=4*(pow(r_squared,-6)-pow(r_squared,-3));
 		return f;
 	} else {
 		double f=4*(pow(r_squared,-6)-pow(r_squared,-3));
 		return f;
 	}
+
+
 }
 
 //Funktion zur Berechnung der Beschleunigung
@@ -53,6 +67,7 @@ MatrixXd accelaration(VectorXd (*f)(VectorXd &, double &), MatrixXd &Yn, double 
 	int row= Yn.rows();
 	int col= Yn.cols();
 	double rc=L/2.0;
+	//Verschiebungen aller Teilchen um +-L in beiden Dimensionen um virtuelle Teilchen zu simulieren
 	MatrixXd A=MatrixXd::Zero(row/2,col);
 
 	for (int x = 0; x < col; ++x)
@@ -68,11 +83,14 @@ MatrixXd accelaration(VectorXd (*f)(VectorXd &, double &), MatrixXd &Yn, double 
 					for (int j = -1; j <= 1; ++j)
 					{
 						Verschiebung(1)=j*L;
+						//Relativkoordinaten bestimmen
 						VectorXd rel=Yn.col(x).head(row/2)-(Yn.col(xstrich).head(row/2)+Verschiebung);
+						//Beschleunigung berrechnen
 						A.col(x)+=f(rel, rc);
 
 						if (x<xstrich)
 						{
+							//Potentielle Energie berechnen
 							Epot += pot(rel, rc);
 						}
 
@@ -91,9 +109,10 @@ MatrixXd accelaration(VectorXd (*f)(VectorXd &, double &), MatrixXd &Yn, double 
 void Paarkorrelation(MatrixXd &Yn, double L, VectorXd &g) {
 	int row= Yn.rows();
 	int col= Yn.cols();
-	int N=g.size();
+	int N=g.size()-1;
+	// Binlänge bestimmen
 	double dr=L/(2*N);
-
+	//Teilchen Verschieben um virtuelle Teilchen zu generieren
 	for (int xstrich = 0; xstrich < col; ++xstrich)
 	{
 		for (int x = 0; x < xstrich; ++x)
@@ -105,12 +124,16 @@ void Paarkorrelation(MatrixXd &Yn, double L, VectorXd &g) {
 				for (int j = -1; j <= 1; ++j)
 				{
 					Verschiebung(1)=j*L;
+					//Relativkoordinaten berechnen
 					VectorXd rel=Yn.col(x).head(row/2)-(Yn.col(xstrich).head(row/2)+Verschiebung);
+
 					double r =rel.norm();
 					if (r<L/2)
 					{
+						//Anzahl der Paare zwischen r und r+dr bestimmen
 						int l = (int) (r/dr);
-						//cout << r/dr << "\t" << l << "\n" << "\n";
+
+						//g mit entsprechender Normierung, je Paar wird aufaddiert
 						g(l)+=L*L/(col*col*M_PI*(-(l*dr)*(l*dr)+((l+1)*dr)*((l+1)*dr)));
 					}
 				}
@@ -124,7 +147,7 @@ void Paarkorrelation(MatrixXd &Yn, double L, VectorXd &g) {
 MatrixXd Initialsierung(double L) {
 	MatrixXd Y0(4,16);
 	int j=0;
-
+	//Teilchen auf Gitter erstellen
 	for (int n = 0; n <= 3; ++n)
 	{
 		for (int m = 0; m <= 3; ++m)
@@ -135,16 +158,26 @@ MatrixXd Initialsierung(double L) {
 			j+=1;
 		}
 	}
+	//Schwerpunktsgeschwindigkeit berechnen
 	VectorXd v_sum=VectorXd::Zero(2);
 	for (int i = 0; i < 16; ++i)
 	{
 		v_sum +=Y0.col(i).tail(2);
 	}
+	//normierte Schwerpunktsgeschwindigkeit subtrahieren
 	for (int i = 0; i < 16; ++i)
 	{
 		Y0.col(i).tail(2)-=v_sum/16;
 	}
+
+	//Startkonfiguration speichern
+	ofstream bfile ("Data/start.txt", std::ofstream::out);
+	for (int i = 0; i < 16; ++i)
+	{
+		bfile << Y0.col(i)(0) << "\t" << Y0.col(i)(1) << "\n";
+	}
 	return Y0;
+
 }
 
 //Funktion zur Ermittlung der Geschwindigkeit für Yn
@@ -201,12 +234,14 @@ void set_T(MatrixXd &Y, double &T0) {
 	double T_momentan=0;
 	int row= Y.rows();
 	int col= Y.cols();
-
+	//Momentane Geschwindigkeit berrechnen
 	for (int i = 0; i < col; ++i)
 	{
 		T_momentan+=Y.col(i).tail(row/2).squaredNorm();
 	}
-	T_momentan=T_momentan/col;
+	//Auf Teilchenzahl normieren
+	T_momentan=T_momentan/((2.0*col-2.0));
+	//Geschwindigkeit reskalieren, sodass T=T0
 	for (int i = 0; i < col; ++i)
 	{
 		Y.col(i).tail(row/2)=Y.col(i).tail(row/2)*(sqrt(T0/T_momentan));
@@ -218,14 +253,21 @@ void set_T(MatrixXd &Y, double &T0) {
 //Die Ausgangstemperatur T0, die Länge L des Kastens, die Anzahl der Schritte n, die Funktion pot zur Berechnung der potentiellen
 //Energie, und ein String iskon (yes oder no) der festlegt, ob das isokinetische Thermostat verwendet wird
 MatrixXd Aqu (string name,VectorXd (*f)(VectorXd &, double &), double h, double T0, double L, int n, double (*pot)(VectorXd &, double &), string isokin) {
+	//Initialsierung aufrufen
 	MatrixXd Y0=Initialsierung(L);
+
+	//File zum Speichern einiger Zwischenkonfigurationen
+	ofstream afile (give_name("Data/Werte_aqu_",name,".txt"), std::ofstream::out);
 
 	int row= Y0.rows();
 	int col= Y0.cols();
 
+	//Vektor zum Speichern der potentiellen Energie erstellen
 	VectorXd Epot=VectorXd::Zero(n);
 
+	//Auf gewünschte Anfangstemperatur reskalieren
 	set_T(Y0,T0);
+	//Y_{-1} für Verlet berechnen
 	MatrixXd Y_minus_1 =MatrixXd::Zero(row,col);
 	MatrixXd a0=accelaration(f,Y0, L, pot, Epot(0));
 	for (int i = 0; i < col; ++i)
@@ -235,36 +277,49 @@ MatrixXd Aqu (string name,VectorXd (*f)(VectorXd &, double &), double h, double 
 
 	MatrixXd Yn=Y0;
 	MatrixXd Yn_minus_1=Y_minus_1;
+
+	//Matrix für den Schwerpunkt erstellen
 	MatrixXd SP=MatrixXd::Zero(row/2,n+2);
+	//Vektor zum Speichern der Temperatur erstellen
 	VectorXd T=VectorXd::Zero(n);
+
+	//Eigentliche Simulation starten
 	for (int i = 0; i < n; ++i)
 	{
+		//Verlet Algorithmus aufrufen
 		MatrixXd Yn_plus_1=Verlet(f,Yn, Yn_minus_1,L, h, pot, Epot(i));
+		//Periodische Randbedingungen anwenden
 		Periodic(Yn_plus_1,Yn, Yn_minus_1, L);
+		//Geschwindigkeit ermitteln
 		Velocity(Yn_plus_1, Yn, Yn_minus_1,h );
+		//Prüfen, ob Thermostat verwendet werden soll und ggf, reskalieren
 		if (isokin.compare("yes") == 0)
 		{
 			set_T(Yn, T0);
 		}
+		//Schwerpunktsgeschwindigkeit und Temperatur berechnen
 		for (int j = 0; j < col; ++j)
 		{
-			SP.col(i)+=Yn.col(j).tail(row/2);
-			T(i)+= Yn.col(j).tail(row/2).squaredNorm()/col;
+			SP.col(i)+=Yn.col(j).tail(row/2)/col;
+			T(i)+= Yn.col(j).tail(row/2).squaredNorm()/(2.0*col-2.0);
 		}
+		//Jede 10ste Konfiguration speichern zur Visualisierung
+		if (i % 10 == 0)
+		{
+			for (int j = 0; j < col; ++j)
+				{
+					afile << Yn.col(j)(0) << "\t" << Yn.col(j)(1) << "\n";
+				}
+		}
+		//Matrizen umbennen
 		Yn_minus_1=Yn;
 		Yn=Yn_plus_1;
 	}
-
+	//Schwerpunktsgeschwindigkeit, Temperatur und potentielle Energie speichern
 	ofstream dfile (give_name("Data/aqu_",name,".txt"), std::ofstream::out);
 	for (int i = 0; i < n; ++i)
 	{
 		dfile << i*h << "\t" << SP.col(i)(0) << "\t" <<  SP.col(i)(1) << "\t" << T(i) << "\t" << Epot(i) << "\n";
-	}
-
-	ofstream bfile (give_name("Data/aqu_end_",name,".txt"), std::ofstream::out);
-	for (int i = 0; i < col; ++i)
-	{
-		bfile << Yn_minus_1.col(i)(0) << "\t" << Yn_minus_1.col(i)(1) << "\n";
 	}
 	return Yn_minus_1;
 }
@@ -275,11 +330,17 @@ MatrixXd Aqu (string name,VectorXd (*f)(VectorXd &, double &), double h, double 
 //und ein string isokin (yes oder no) zur Festlegung, ob das isokinetische Thermostat verwendet wird
 void MD (string name,VectorXd (*f)(VectorXd &, double &), double h, double T0, double L, int n,
 double (*pot)(VectorXd &, double &), string isokin) {
+	//Äquilibrierung durchführen
 	MatrixXd Y0=Aqu(name,f,h,T0,L,1000, pot, isokin);
 	int row= Y0.rows();
 	int col= Y0.cols();
-	VectorXd Epot=VectorXd::Zero(n);
 
+	//File zum Speichern einiger Zwischenkonfigurationen
+	ofstream dfile (give_name("Data/Werte_",name,".txt"), std::ofstream::out);
+
+	//Vektor zum Speichern der potentiellen Enerhie erstellen
+	VectorXd Epot=VectorXd::Zero(n);
+	//Y_{n-1} für Verlet berechnen
 	MatrixXd Y_minus_1 =MatrixXd::Zero(row,col);
 	MatrixXd a0=accelaration(f,Y0, L, pot, Epot(0));
 	for (int i = 0; i < col; ++i)
@@ -288,64 +349,92 @@ double (*pot)(VectorXd &, double &), string isokin) {
 	}
 	MatrixXd Yn=Y0;
 	MatrixXd Yn_minus_1=Y_minus_1;
+	//Vektor zum Speichern der Temperatur
 	VectorXd T=VectorXd::Zero(n);
+	//Vektor zum Speichern der Paarkorrelation
 	VectorXd g=VectorXd::Zero(100);
+	//Start der eigentlichen Simulation
 	for (int i = 0; i < n; ++i)
 	{
+		//Aufruf des Verlet Algorithmus
 		MatrixXd Yn_plus_1=Verlet(f,Yn, Yn_minus_1,L, h, pot, Epot(i));
+		//Anwenden der periodischen Randbedingungen
 		Periodic(Yn_plus_1,Yn, Yn_minus_1, L);
+		//Bestimmung der Geschwindigkeiten
 		Velocity(Yn_plus_1, Yn, Yn_minus_1,h );
-		//Y.push_back(Yn_plus_1);
+		//Prüfe ob Thermostat verwendet werden soll und ggf. reskalieren
 		if (isokin.compare("yes") == 0)
 		{
 			set_T(Yn, T0);
 		}
+		//Temperatur bestimmen
 		for (int j = 0; j < col; ++j)
 		{
-			T(i)+= Yn.col(j).tail(row/2).squaredNorm()/col;
+			T(i)+= Yn.col(j).tail(row/2).squaredNorm()/(2.0*col-2.0);
 		}
+		//Paarkorrelation bestimmen
 		Paarkorrelation(Yn, L, g);
 
+		//Jede 10te Konfiguration speichern zur Visualisierung
+		if (i % 10 == 0)
+		{
+			for (int j = 0; j < col; ++j)
+				{
+					dfile << Yn.col(j)(0) << "\t" << Yn.col(j)(1) << "\n";
+				}
+		}
+
+		//Umbennenung für nächsten Schritt
 		Yn_minus_1=Yn;
 		Yn=Yn_plus_1;
 	}
+
+	//Temperatur mitteln
+	double T_m=0;
+	for (int i = 0; i < n; ++i)
+	{
+		T_m+= T(i)/n;
+
+	}
+
+	//Länge von g, also Anzahl der Bins bestimmen
 	int gsize=g.size();
+	//Paarkorrelation speichern
 	ofstream afile (give_name("Data/g_",name,".txt"), std::ofstream::out);
 	for (int i = 0; i < gsize; ++i)
 	{
 		afile << L/(2*gsize)*i << "\t" << g(i)/n << "\n";
 	}
-
-	ofstream bfile (give_name("Data/end_",name,".txt"), std::ofstream::out);
-	for (int i = 0; i < col; ++i)
-	{
-		bfile << Yn.col(i)(0) << "\t" << Yn.col(i)(1) << "\n";
-	}
-
+	ofstream bfile (give_name("Data/T_m_",name,".txt"), std::ofstream::out);
+	bfile << T_m;
+	//Temperatur und potentielle Energie speichern
 	ofstream cfile (give_name("Data/T_",name,".txt"), std::ofstream::out);
 	for (int i = 0; i < n; ++i)
 	{
-		cfile << i*h << "\t" << T(i) << "\n";
+		cfile << i*h << "\t" << T(i) << "\t" << Epot(i) << "\n";
+
 	}
+
 
 }
 
 
 int main()
 {
-	double h=0.01;
-	double T1=1;
+	//Werte festsetzen
+	double h=0.01; //Schrittweite
+	double T1=1; //temperaturen
 	double T2=0.01;
 	double T3=10;
 
-	double L=8.0;
-	int n=10000;
+	double L=8.0; //Kastenlänge
+	int n=1e5; //Anzahl der Schritte
 
-
+	//Durchführung der Simulationen
 	MD("1",Kraft_LJ,h,T1,L,n, Pot_LJ, "no");
 	MD("0_01",Kraft_LJ,h,T2,L,n, Pot_LJ, "no");
 	MD("10",Kraft_LJ,h,T3,L,n, Pot_LJ, "no");
-	MD("isokin_1",Kraft_LJ,h,T1,L,n, Pot_LJ, "yes");
+	MD("isokin",Kraft_LJ,h,T2,L,n, Pot_LJ, "yes");
 
 
 
