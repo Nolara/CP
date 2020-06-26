@@ -1,0 +1,128 @@
+\section*{Aufgabe 1: }
+
+\subsection*{Aufgabenteil a) Initialisierung}
+
+Zur Initialsierung werden $N$ = 16 Teilchen zu Beginn auf Plätze
+$\vec{r}(0)=\frac{1}{8}(1+sn,1+2m)L$ mit $n,m=0,...,3$ in eine Box mit den Maßen
+$[0,L]\times[0,L]$ gesetzt, wie in Abbildung \ref{fig:start} beispielhaft für $L=8$ dargestellt ist.
+
+\begin{figure}[H]
+\includegraphics[width=0.7\textwidth]{../../Blatt8/Plots/start.pdf}
+\caption{Startkonfiguration mit $L=8$.}
+\label{fig:start}
+\end{figure}
+
+Die Geschwindigkeiten werden zunächst zufällig gewählt und dann reskaliert, damit die Schwerpunktsgeschwindigkeit
+zu Beginn $\vec{0}$ ist. Dazu wird zunächst die Schwerpunktsgeschwindigkeit der zufälligen Geschwindigkeiten errechnet und diese dann durch die Anzahl der Teilchen geteilt, dann wird dieser Wert von jeder einzelnen Geschwindigkeit subtrahiert.
+Zudem lassen sich die Geschwindigkeiten so umskalieren, dass eine beliebige Starttemperatur $T(0)$ gewählt werden kann.
+
+\subsection*{Aufgabenteil b) Messung/Äquilibrierung}
+
+Es wird zunächst mit einer Temperatur von $T(0)=1$ gestartet, wobei 1000 Schritte mit einer Schrittweite von 0.01
+durchgeführt werden. Dabei wird in jedem Schritt die Schwerpunktsgeschwindigkeit $\frac{1}{N}\sum_{i=1}^{16}\vec{v}_i$ errechnet und abgespeichert, welche in Abbildung \ref{fig:SP} in Abhängigkeit der Zeit dargestellt ist.
+Zudem wird auch die Temperatur $T(t)=\frac{1}{N_f}\sum_{i=1}^{16}\vec{v}_i^2$  mit der Anzahl $N_f=(2N-2)$ der Freiheitsgrade berechnet, wobei 2 Freiheitsgrade aufgrund der festgelegten Schwerpunktsgeschwindigkeit abgezogen werden. Diese ist in Abbildung \ref{fig:T1} ebenfalls in Abhängigkeit der Zeit dargestellt. Desweiteren wird auch die potentielle Energie
+$E_{\text{pot}}=\sum_{i<j}^N V(\lvert \vec{r}_i - \vec{r}_j \rvert)$ berechnet, wohingegen sich die kinetische Energie
+$E_{\text{kin}}=\sum_{i=1}\frac{1}{2} \vec{v}_i^2$ durch $E_{\text{kin}}=\frac{N_f}{2}T$
+aus der Temperatur ergibt. Beide sind in Abbildung \ref{fig:E1} dargestellt,
+zusammen mit der Gesamtenergie $E_{\text{ges}}=E_{\text{kin}}+E_{\text{pot}}$.
+
+\begin{figure}[H]
+\includegraphics[width=0.7\textwidth]{../../Blatt8/Plots/1_SP.pdf}
+\caption{Verlauf der Schwerpunktsgeschwindigkeit als Funktion der Zeit.}
+\label{fig:SP}
+\end{figure}
+\begin{figure}[H]
+\includegraphics[width=0.7\textwidth]{../../Blatt8/Plots/1_T_aqu.pdf}
+\caption{Verlauf der Temperatur als Funktion der Zeit.}
+\label{fig:T1}
+\end{figure}
+\begin{figure}[H]
+\includegraphics[width=0.7\textwidth]{../../Blatt8/Plots/1_E.pdf}
+\caption{Verlauf der kinetischen, potentiellen und der gesamten Energie als Funktion der Zeit.}
+\label{fig:E1}
+\end{figure}
+
+Es lässt sich erkennen, dass das System bereits nach etwa 100 Schritten äqulibriert, die Temperatur jedoch weiterhin stark um einen Mittelwert von etwa 1.4 schwankt.
+Der Schwerpunkt ist hingegen bis auf Schwankungen in der Größenordnung $10^{-13}$ konstant. Diese entstehen durch Rundungsfehler und numerisches Rauschen.
+Auch die Gesamtenergie ist abgesehen von numerischem Rauschen über die Zeit erhalten, wie es von einem physikalischen System erwartet wird.
+
+
+
+\subsection*{Aufgabenteil c) Messung}
+
+Nach der Äquilibrierungsphase werden nun über $10^{5}$ Schritte die Temperatur und die Paarkorrelationsfunktion
+$g(r_l)=\frac{\langle P_l \rangle}{N\rho\increment A}$ berrechnet, mit der mittleren Anzahl $\langle P_l \rangle$ der Paare mit Abstand zwischen $r_l$ und $r_l+dr$, der Teilchenzahl $N$, der Dichte $\rho=\frac{N}{V}$ und der Fläche $\increment A=\pi((r_l+dr)^2-(r_l)^2)$ des Kreisrings zwischen
+$r_l$ und $r_l+dr$ mit $r$ zwischen 0 und $L/2$ und 100 Bins der Länge $dr=\frac{L}{2\cdot100}$.
+Beides wird dann gemittelt, indem die Werte durch die Anzahl der Messungen geteilt werden. Dies wird für $N=16$ Teilchen in einer
+Box der Länge $L=8$ (in Einheiten von $\sigma$) bei drei verschiedenen Anfangstemperaturen $T(0)=1$, $T(0)=0.01$ und
+$T(0)=10$ durchgeführt. Da es in unserer Implementierung zu starken Rundungsfehlern bei der Funktion zur Anwendung der periodischen Randbedingungen
+kommt, divergiert die kinetische Energie und die Simulation bricht bei hohen Temperaturen schnell
+ab, so dass die Simulation nicht bei $T(0)=100$ läuft und wir stattdessen den Wert $T(0)=10$ verwenden. Selbst bei diesem Wert beginnt die kinetische Energie ab etwa $t=25$ aufgrund von Rundungsfehlern zu divergieren, weshalb sich kein vernünftiger Wert für die mittlere Temperatur ergibt und die Paarkorrelationsfunktion nicht korrekt normiert ist.
+In Abbildung \ref{fig:G} sind die Paarkorrelationsfunktionen dargestellt und in \ref{fig:T} der Verlauf der Temperaturen zusammen mit der mittleren Temperatur.
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/1_g1.pdf}
+\subcaption{Paarkorrelationsfunktion für $T(0)$=1.}
+\label{fig:g_1}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/1_g0_01.pdf}
+\subcaption{Paarkorrelationsfunktion für $T(0)$=0.01.}
+\label{fig:g_0_01}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/1_g10.pdf}
+\subcaption{Paarkorrelationsfunktion für $T(0)$=10.}
+\label{fig:g_10}
+\end{subfigure}
+\caption{Paarkorrelationsfunktionen.}
+\label{fig:G}
+\end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/1_T.pdf}
+\subcaption{Temperaturverlauf für $T(0)$=1.}
+\label{fig:T_1}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/0_01_T.pdf}
+\subcaption{Temperaturverlauf für $T(0)$=0.01.}
+\label{fig:T_0_01}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/10_T.pdf}
+\subcaption{Temperaturverlauf für $T(0)$=10.}
+\label{fig:T_10}
+\end{subfigure}
+\caption{Temperaturverläufe.}
+\label{fig:T}
+\end{figure}
+
+Für die Starttemperatur $T(0)=1$ ergibt sich dabei eine mittlere Temperatur von $\langle T \rangle =1.48182$ und für
+$T(0)=0.01$ ergibt sich $\langle T \rangle =0.700231$.
+Bei den Paarkorrelationsfunktionen lässt sich erkennen, dass bei hohen Temperaturen $g(r)$ nahezu gleich verteilt ist, was einer gasförmigen Phase entspricht. Bei tieferen Temperaturen lässt sich eine Peak bei etwa $r=1.1$ erkennen, wo anscheinend ein Minimum des Potentials liegt, sodass diese Abstände energetisch besonders günstig sind und sich viele Paare mit diesem Abstand bilden, was eventuell einer flüssigen Phase entsprechen könnte.
+Bei sehr niedrigen Temperaturen ist dieser Peak noch stärker ausgeprägt und es lässt sich ein zweites Maximum von $g(r)$ bei etwa
+$r=2.3$ erahnen, was der festen Phase entsprechen könnte. Es fällt außerdem auf, dass es vor allem bei niedrigen Temperaturen keine Paare mit Abständen unter $r\lesssim 0.8$ gibt, da hier die Abstoßung aufgrund des Potentials zu stark ist.
+
+\subsection*{Aufgabenteil d) Thermostat}
+
+Es wird nun zusätzlich ein isokinetisches Thermostat in die Simulation miteingebaut, welches die Geschwindigkeiten so reskaliert, dass die Temperatur konstant bleibt. Diese Implementierung wird nun auf eine Starttemperatur von $T(0)=0.01$ angewandt. Die Energien wärend der Äquilibrierung sind in Abbildung \ref{fig:E_iso} dragestellt. Es lässt sich erkennen, dass nun die kinetische Energie konstant ist, wohingegen die potentielle und die Gesamtenergie stark fluktuieren. Nach der Äquilibrierung wird auch hier die Paarkorrelationsfunktion $g(r)$ gemessen, welche in
+\ref{fig:g_0_01_iso} dargestellt ist. Im Vergleich zu Abbildung \ref{fig:g_0_01}, wo die Paarkorrelationsfunktion für die gleiche Starttemperatur jedoch ohne isokinetisches Thermostat dargestellt ist, lässt sich hier erkennen, dass der zweite Peak in der Verteilung deutlich stärker ausgeprägt ist und auch der erste Peak etwas höher ist, wohingegen der gleichverteilte Anteil mit dem isokinetischen Thermostat geringer ist. Dies lässt sich damit erklären, dass die mittlere Temperatur ohne isokinetisches Thermostat bei $\langle T \rangle =0.701273$ liegt, also deutlich über der Temperatur $\langle T \rangle =0.1$ mit dem isokinetischen Thermostat.
+
+\begin{figure}[H]
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/1_E_iso.pdf}
+\subcaption{Verlauf der kinetischen, potentiellen und der gesamten Energie als Funktion der Zeit mit isokinetischem Thermostat.}
+\label{fig:E_iso}
+\end{subfigure}
+\begin{subfigure}[c]{0.5\textwidth}
+\includegraphics[width=\textwidth]{../../Blatt8/Plots/1_g_iso.pdf}
+\subcaption{Paarkorrelationsfunktion für $T(0)$=0.01 mit isokinetischem Thermostat.}
+\label{fig:g_0_01_iso}
+\end{subfigure}
+\end{figure}
+
+
+\subsection*{Aufgabenteil e) Visualisierung}
+Zur Visualisierung der verschiedenen Phasen wurde im Programm jeder 10te Schritt gespeichert und mithilfe von Python Animationen erstellt, welche sich im Ordner Animations befinden.
