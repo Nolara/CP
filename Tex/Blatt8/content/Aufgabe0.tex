@@ -1,5 +1,40 @@
 \section*{Aufgabe 0: Verständnisfragen}
 
-\textbf{Frage 1): }\\
+\textbf{Frage 1): Welche typischen Vor-/Nachteile haben MD-Simulationen?}\\
+\begin{itemize}
+  \item[+] Statistische Physik: MD Simulation erzeugen Konfigurationen, diese entsprechenden thermodynam. Ensemble
+  \begin{itemize}
+    \item[] Monte-Carlo verwendet zBsp. Zustandssumme
+  \end{itemize}
+  \item[*] zum Lösen der newtonschen Bewegungsgleichungen wird der Verlet-Algorithmus verwendet
+  \begin{itemize}
+    \item[+] Energieerhaltung
+    \item[+] erhält Phasenraumvolumen
+    \item[+] hinreichend genaue Approximation durch Ensemble-Mittelwerte
+  \end{itemize}
+  \item[-] Computer kann nur eine sehr begrenzte Zahl an Teilchen simuliert werden
+  \begin{itemize}
+    \item[] im Allg. kleine Systemgröße, damit ausreichend Sampling der verw. Freiheitsgrade vorhanden ist
+  \end{itemize}
+  \item[-] numerischer Zeitschritt $t$ sollte als ein Bruchteil von $\Delta\tau$ ($h=0,01 \tau$) gewählt werden
+  \item[-] Randbedingung sind wichtig (am wenigsten störend periodische Randbedingung(vgl. Frage 3))
+\end{itemize}
 
-\textbf{Frage 2): }\\
+
+\textbf{Frage 2): Eine Grundsätzliche Idee der MD-Simulation ist das Lösen der mikrospkopischen newtonschen
+Bewegungsgleichungen. Wieso sollten Sie dafür nicht die Verfahren des vorigen Zettels verwenden?}\\ \\
+Die Verfahren auf dem letzten Blatt zum Beispiel das Runge-Kutta Verfahren 4. Ordnung, ist selbst mit einer adativen Schrittweite ein Verfahren, was bei wenigen $(N = 1,2,3, ...)$ Teilchen gewählt werden sollte. Bei der Anwendung des RK Verfahren auf kleine Systeme sind die Aufrufe der Funktion $f$ noch gering, das spielt dort im Wesentlichen keine Rolle. Aber bei Vielteilchen Problemen, welche bei der MD Simulation betrachtet werden, kann dies zu einem Problem führen, weil die DGL-Löser sehr oft aufgerufen wird und die Berechnung von $f$ teuer wird, insbesondere wenn alle Teilchen miteinander wechselwirken. (Berechnung von $f(t,y)$ erfordert $\symcal{O}(N^2)$ Rechenoperationen)
+Der AB-Algorithmus ist in der Regel schneller als RK (bei gleicher Genauigkeit), insbesondere, wenn die Berechnung von $f$ aufwendig ist, allerdings ist ist die automatische Schrittweitenanpassung komplizierter.
+Der Verlet Algorithmus ist nicht sehr genau, weil die Einzel-Trajektorie eines Teilchens ist nicht genau beschrieben. Allerdings werden in den MD Rechnungen am Ende Mittelungen durchgeführt, die zu hinreichender Genauigkeit führen. \\
+
+\textbf{Frage 3): Welche Möglichkeiten haben Sie, Randbedingungen bei einer MD-Simulation zu implementieren?
+Welche Probleme treten dabei auf?}\\
+\begin{itemize}
+  \item[*] (noch) können keine $10^{23}$ Teilchen simuliert werden, eher im Bereich $10^2$ bis $10^6$
+  \item[→] Simulationsvolumen muss dementsprechend angepasst werden
+  \item[→] Bevorzugt periodische Randbedingungen für das Simulationsvolumen, dabei ist zu beachten, dass:
+  \begin{itemize}
+    \item Teilchen, die sich aus dem Simulationsvolumen herausbewegen, müssen am anderen Ende wieder periodisch hinzugefügt werden
+    \item Paarwechselwirkungen, dabei sind nicht nur reale Teilchen-WW, sondern auch die WW mit den Bildteilchen zu berücksichtigen
+  \end{itemize}
+\end{itemize}
