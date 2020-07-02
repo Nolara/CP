@@ -1,5 +1,21 @@
 \section*{Aufgabe 1: Monte-Carlo-Simulation eines einzelnen Spins (Abgabe bis zum 3.07.2020)}
 
-%\subsection*{Aufgabenteil a)}
+In dieser Aufgabe wird mit Hilfe des Metropolis-Algorithmus ein einzelner Spin $\sigma=\pm1$ mit der Energie
+\begin{equation*}
+  \symcal{H}=-\sigma H
+\end{equation*}
+im äußeren Magnetfeld $H$ simuliert. Dies ist in der Aufgabe1.cpp implementiert, dabei wird $k_{\symup{B}} T=1$ gesetzt.
+Es werden für die numerischen Berechnungen Monte-Carlo-Simulationen für $10^4$ Werte für $H\in[-5,5]$ mit je $N=10^5$ Schritten durchgeführt.
+Die numerischen Ergebnisse werden mit dem analytischen Ergebnis
+\begin{equation*}
+  m=\tanh\left(\beta H \right)
+\end{equation*}
+in der Abbildung \ref{Magnetisierung} graphisch verglichen.
+Der Vergleich der numerischen und analytischen Ergebnisse zeigt, dass der Metropolis-Algorithmus das analytische Ergebnis genau approximiert.
 
-%\subsection*{Aufgabenteil b)}
+\begin{figure}[H]
+\includegraphics[width=0.8\textwidth]{../../Blatt9/Plots/plot_1.pdf}
+\centering
+\caption{Graphische Darstellung und Vergleich der analytischen und numerischen Berechnung der Magnetisierung $m$ in Abhängigkeit des äußeren Magentfeldes $H$.}
+\label{Magnetisierung}
+\end{figure}
