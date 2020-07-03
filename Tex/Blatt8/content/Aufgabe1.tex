@@ -56,7 +56,7 @@ $r_l$ und $r_l+dr$ mit $r$ zwischen 0 und $L/2$ und 100 Bins der Länge $dr=\fra
 Beides wird dann gemittelt, indem die Werte durch die Anzahl der Messungen geteilt werden. Dies wird für $N=16$ Teilchen in einer
 Box der Länge $L=8$ (in Einheiten von $\sigma$) bei drei verschiedenen Anfangstemperaturen $T(0)=1$, $T(0)=0.01$ und
 $T(0)=10$ durchgeführt. Da es in unserer Implementierung zu starken Rundungsfehlern bei der Funktion zur Anwendung der periodischen Randbedingungen
-kommt, divergiert die kinetische Energie und die Simulation bricht bei hohen Temperaturen schnell
+kommt, divergiert die kinetische Energie bei hohen Temperaturen und die Simulation bricht bei hohen Temperaturen schnell
 ab, so dass die Simulation nicht bei $T(0)=100$ läuft und wir stattdessen den Wert $T(0)=10$ verwenden. Selbst bei diesem Wert beginnt die kinetische Energie ab etwa $t=25$ aufgrund von Rundungsfehlern zu divergieren, weshalb sich kein vernünftiger Wert für die mittlere Temperatur ergibt und die Paarkorrelationsfunktion nicht korrekt normiert ist.
 In Abbildung \ref{fig:G} sind die Paarkorrelationsfunktionen dargestellt und in \ref{fig:T} der Verlauf der Temperaturen zusammen mit der mittleren Temperatur.
 \begin{figure}[H]
