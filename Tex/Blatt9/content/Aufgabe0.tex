@@ -1,0 +1,80 @@
+\section*{Aufgabe 0: Verständnisfragen}
+
+\textbf{Frage 1): Was unterscheidet eine echte Zufallszahl von einer Pseudozufallszahl? Wie können daraus
+Zufallszahlen einer beliebigen Verteilung erzeugt werden?}\\
+  Echte Zufallszahlen gibt es nur in Physikalischen Systemen, zum Beispiel bei einem
+  quantenmechanischen Experiment. Da Computer deterministisch
+  sind, können sie nur Pseudozufallszahlen mit Hilfe bestimmter Algorithmen erzeugen
+  oder es müsste eine exakte Kopplung an ein physikalisches System geben, was meistens zu
+  Aufwendig ist.
+
+  Pseudozufallszahlen werden durch Pseudo-Zufallszahlengeneratoren (RPNGs)
+  mit folgenden Eigenschaften erzeugt:
+  \begin{itemize}
+  \item[1)] Erzeugung gleichverteilter Zufallszahlen
+  \item[2)] iterativ, benötigen Startwert oder Seed
+  \item[3)] Bei gleichem Seed werden reproduzierbare Sequenzen erstellt
+  \item[4)] nach Periodenlänge wiederholen sich RPNGs (daher Zufallszahl nicht "echt")
+  \end{itemize}
+
+  Aus diesen Zufallszahlen lassen sich Zufallszahlen einer beliebigen
+  Verteilung erstellen. Dazu gibt es mehrere Methoden, wie zum Beispiel:
+  \begin{itemize}
+  \item[1)] Transformations-Methode
+
+      Mit gleichverteilten Zufallszahlen $x \in{x_1,x_2}$ (nach Verteilung $p(x)$) und
+      gegebener monotoner Funktion $y(x)$ ergeben sich Zahlen $y$ nach Verteilung
+      $\tilde{p}(y)$ mit
+      \begin{equation*}
+        \tilde{p}(y) = p(x) |\frac{dx}{dy}|
+      \end{equation*}
+
+  \item[2)] Box-Müller-Verfahren
+
+      Gaußverteilung ($\tilde{p}(y)=\frac{1}{\sqrt{2 \pi}} \text{exp}(-y^2/2)$) kann nicht mit 1) konstruiert werden.
+      $\rightarrow$ Nutze 2D  Verallgemeinerung, für die gilt:
+      \begin{equation*}
+        \left| \frac{\partial(x_1,x_2)}{\partial(y_1,y_2)} \right| = \left(\frac{1}{\sqrt{2\pi}}e^{-y_1^2/2}\right)\left(\frac{1}{\sqrt{2\pi}}e^{-y_2^2/2}\right)
+      \end{equation*}
+      $\rightarrow$ es werden zwei gaußverteilte Zahlen konstruiert:
+      \begin{equation*}
+        y_1 = \sqrt{-2 \log{x_1}} \cos{(2 \pi x_2)}
+      \end{equation*}
+      \begin{equation*}
+        y_2 = \sqrt{-2 \log{x_1} } \sin{(2 \pi x_2)}
+      \end{equation*}
+  \end{itemize}
+
+\newpage
+\textbf{Frage 2): Was sind die grundlegenden Eigenschaften eines Markov-Prozesses?}\\
+
+  \begin{itemize}
+    \item Zustände können diskret ($i$) oder kontinuierlich ($\vec{r}$) sein
+    \item stochastische Übergänge zwischen den Zuständen mit gegebener Wahrscheinlichkeit und kontinuierliche Zeit t
+    \item Übergangswahrscheinlichkeit nur von Anfangszustand und Endzustand abhängig
+    \item Ergebnis des Prozesses ist Aufenthaltswahrscheinlichkeit $p_i(t)$ bzw $p(\vec{r},t)dV$
+  \end{itemize}
+
+\textbf{Frage 3): Erklären Sie den Begriff detailed balance bzw. detailliertes Gleichgewicht.
+Ist die Übergangsmatrix durch diese Bedingung eindeutig definiert?}\\
+
+  Gesucht sind stationäre Zustände $\vec{p}_{s}$ der Master Gleichung
+  $\vec{p}^T_{k+1} = \vec{p}^T_k \underline{\underline{M}}$ für $k \rightarrow \infty$
+  \begin{equation*}
+    \vec{p}^T_{s} = \vec{p}^T_s \underline{\underline{M}}
+  \end{equation*}
+  Dabei muss $\vec{p}^T_{s}$ Links-Eigenvektor von $\underline{\underline{M}}$
+  zum EW 1 sein. Damit alles unabhängig von der Wahl von $\vec{p}^T_0$ ist, muss
+  1 der größte EW sein und der EV darf nicht entartet sein.
+
+  $\Rightarrow \underline{\underline{M}}$ muss richtig gewählt werden, damit die Gleichung erfüllt
+  werden kann.
+  Eine hinreichende Bedingung ist dabei die detailed balance (DB):
+  \begin{equation*}
+    j^S_{i,j}=0\,\, \forall i,j \,\,\,\,\Leftrightarrow \,\,\,\, p_s^i M_{ij} = p_s^j M_{ji} \,\,\forall i,j
+  \end{equation*}
+  Hier wird angenommen, dass es keine Ströme im System gibt, also dass ein
+  thermodynamisches Gleichgewicht besteht.
+
+  Die Übergangsmatrix $\underline{\underline{M}}$ ist durch diese Bedingung nicht
+  eindeutig definiert.
