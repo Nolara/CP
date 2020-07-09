@@ -9,7 +9,6 @@ using namespace std;
 using namespace Eigen;
 
 
-
 //Metropolis Algorithmus
 double Metropolis(double N_steps, double Magnetfeld, mt19937 &generator, uniform_real_distribution<double> &distribution ){
 

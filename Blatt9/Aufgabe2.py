@@ -1,0 +1,66 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+E_1_5= np.genfromtxt('./Data/2_E_1_5.txt', unpack=True)
+E_2_27= np.genfromtxt('./Data/2_E_2_27.txt', unpack=True)
+E_3= np.genfromtxt('./Data/2_E_3.txt', unpack=True)
+
+E_1_5_random= np.genfromtxt('./Data/2_E_1_5_random.txt', unpack=True)
+E_2_27_random= np.genfromtxt('./Data/2_E_2_27_random.txt', unpack=True)
+E_3_random= np.genfromtxt('./Data/2_E_3_random.txt', unpack=True)
+
+m_1_5= np.genfromtxt('./Data/2_m_1_5.txt', unpack=True)
+m_2_27= np.genfromtxt('./Data/2_m_2_27.txt', unpack=True)
+m_3= np.genfromtxt('./Data/2_m_3.txt', unpack=True)
+
+m_1_5_random= np.genfromtxt('./Data/2_m_1_5_random.txt', unpack=True)
+m_2_27_random= np.genfromtxt('./Data/2_m_2_27_random.txt', unpack=True)
+m_3_random= np.genfromtxt('./Data/2_m_3_random.txt', unpack=True)
+
+
+N_aqu=np.linspace(0,len(E_1_5), len(E_1_5))
+N_measure=np.linspace(0,len(m_1_5), len(m_1_5))
+
+plt.figure(1)
+plt.plot (N_aqu,E_1_5, 'b-', label='$k_B$T=1.5')
+plt.plot (N_aqu,E_2_27, 'y-', label='$k_B$T=2.27')
+plt.plot (N_aqu,E_3, 'r-', label='$k_B$T=3')
+plt.grid()
+plt.xlabel('Anzahl Schritte')
+plt.ylabel('$<H>$')
+plt.legend(loc="best")
+plt.tight_layout()
+plt.savefig('Plots/E_ordered.pdf')
+
+plt.figure(2)
+plt.plot (N_aqu,E_1_5_random, 'b-', label='$k_B$T=1.5')
+plt.plot (N_aqu,E_2_27_random, 'y-', label='$k_B$T=2.27')
+plt.plot (N_aqu,E_3_random, 'r-', label='$k_B$T=3')
+plt.grid()
+plt.xlabel('Anzahl Schritte')
+plt.ylabel('$<H>$')
+plt.legend(loc="best")
+plt.tight_layout()
+plt.savefig('Plots/E_random.pdf')
+
+plt.figure(3)
+plt.plot (N_measure,m_1_5, 'b-', label='$k_B$T=1.5')
+plt.plot (N_measure,m_2_27, 'y-', label='$k_B$T=2.27')
+plt.plot (N_measure,m_3, 'r-', label='$k_B$T=3')
+plt.grid()
+plt.xlabel('Anzahl Schritte')
+plt.ylabel('$<m>$')
+plt.legend(loc="best")
+plt.tight_layout()
+plt.savefig('Plots/m_ordered.pdf')
+
+plt.figure(4)
+plt.plot (N_measure,m_1_5_random, 'b-', label='$k_B$T=1.5')
+plt.plot (N_measure,m_2_27_random, 'y-', label='$k_B$T=2.27')
+plt.plot (N_measure,m_3_random, 'r-', label='$k_B$T=3')
+plt.grid()
+plt.xlabel('Anzahl Schritte')
+plt.ylabel('$<m>$')
+plt.legend(loc="best")
+plt.tight_layout()
+plt.savefig('Plots/m_random.pdf')
